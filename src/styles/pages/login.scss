@@ -1,0 +1,112 @@
+.login-full {
+    min-height: 100vh;
+    background: url("https://images.unsplash.com/photo-1502920514313-52581002a659") center / cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+/* overlay */
+.login-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(2px);
+}
+
+/* card */
+.login-card {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 420px;
+    padding: 32px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.35);
+    animation: slideUp 0.4s ease;
+
+    .back-home {
+        display: flex;
+        justify-content: flex-start;
+        margin-bottom: 16px;
+
+        a {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+
+            padding: 6px 14px;
+            border-radius: 999px;
+
+            background: #f5f7fa;
+            color: #333;
+
+            font-size: 13.5px;
+            font-weight: 500;
+
+            text-decoration: none; 
+            transition: all 0.25s ease;
+
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+
+            &:hover {
+                background: #1677ff;
+                color: #fff;
+                transform: translateX(-3px);
+            }
+        }
+    }
+
+    .heading {
+        text-align: center;
+        margin-bottom: 24px;
+
+        h2 {
+            font-size: 26px;
+            font-weight: 600;
+        }
+
+        p {
+            font-size: 14px;
+            color: #666;
+        }
+    }
+
+    input,
+    .ant-input-password {
+        height: 44px;
+        border-radius: 10px;
+    }
+
+    .ant-btn-primary {
+        height: 46px;
+        border-radius: 12px;
+        font-size: 16px;
+        margin-top: 8px;
+    }
+}
+
+.switch-auth {
+    text-align: center;
+    font-size: 14px;
+
+    a {
+        margin-left: 6px;
+        font-weight: 500;
+        color: #1677ff;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

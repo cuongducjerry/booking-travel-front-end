@@ -1,0 +1,19 @@
+.footer {
+    height: 60px;
+    background: #222;
+    color: #bbb;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+
+    a {
+        color: #bbb;
+        margin-left: 16px;
+        text-decoration: none;
+
+        &:hover {
+            color: white;
+        }
+    }
+}
