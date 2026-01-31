@@ -21,3 +21,18 @@ export const fetchAccountAPI = () => {
     const urlBackend = "/api/v1/auth/account";
     return axios.get<IBackendRes<IFetchAccount>>(urlBackend);
 }
+
+export const fetchHomeProperties = (params?: {
+    address?: string;
+    propertyType?: string;
+    guests?: number;
+    checkIn?: string;
+    checkOut?: string;
+    page?: number;
+    size?: number;
+}) => {
+    return axios.get<IBackendRes<IModelPaginate<IProperty>>>(
+        "/api/v1/properties/home",
+        { params }
+    );
+};

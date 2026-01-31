@@ -29,6 +29,10 @@ const LoginPage = () => {
             setIsAuthenticated(true);
             setUser(res.data.user);
             localStorage.setItem('access_token', res.data.access_token);
+            localStorage.setItem(
+                'permissions',
+                JSON.stringify(res.data.permissions)
+            );
             message.success("Đăng nhập tài khoản thành công.");
             navigate('/');
         } else {

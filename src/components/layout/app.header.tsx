@@ -22,6 +22,7 @@ const AppHeader = () => {
       setUser(null);
       setIsAuthenticated(false);
       localStorage.removeItem('access_token');
+      localStorage.removeItem('permissions');
       navigate('/');
     }
   };

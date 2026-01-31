@@ -45,4 +45,22 @@ declare global {
         user: IUser
     }
 
+    interface IModelPaginate<T> {
+        meta: {
+            current: number;
+            pageSize: number;
+            pages: number;
+            total: number;
+        },
+        result: T[]
+    }
+
+    interface IProperty {
+        id: number;
+        title: string;
+        address: string;
+        pricePerNight: number;
+        images: string[]; 
+    }
+
 }

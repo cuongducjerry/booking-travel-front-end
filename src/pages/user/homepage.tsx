@@ -1,16 +1,32 @@
 import Header from "@/components/layout/app.header";
 import Footer from "@/components/layout/app.footer";
 import "styles/pages/home.scss";
-import { useEffect } from "react";
-import { useCurrentApp } from "@/components/context/app.context";
+import { useEffect, useState } from "react";
 import HomeSearch from "@/components/user/homesearch";
+import { fetchHomeProperties } from "@/services/api";
 
 const HomePage = () => {
-  const { user } = useCurrentApp();
+  const [properties, setProperties] = useState<IProperty[]>([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    console.log("User in context:", user);
-  }, [user]);
+    loadProperties();
+  }, []);
+
+  const loadProperties = async () => {
+    try {
+      setLoading(true);
+      const res = await fetchHomeProperties({
+        page: 0,
+        size: 8,
+      });
+      setProperties(res.data?.result || []);
+    } catch (error) {
+      console.error("Fetch home properties error", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <>
@@ -21,16 +37,21 @@ const HomePage = () => {
           <h1>Find your next stay</h1>
           <p>Search deals on hotels, homes, and much more...</p>
 
-          <HomeSearch/>
+          <HomeSearch />
         </section>
 
         <section className="property-list">
-          {[1, 2, 3, 4].map(item => (
-            <div key={item} className="property-card">
-              <img src="https://picsum.photos/300/200" />
-              <h3>Luxury Apartment</h3>
-              <p>Hà Nội, Việt Nam</p>
-              <span>$120 / night</span>
+          {loading && <p>Loading...</p>}
+
+          {!loading && properties.map(item => (
+            <div key={item.id} className="property-card">
+              <img
+                src={item.images[0] || "https://picsum.photos/300/200"}
+                alt={item.title}
+              />
+              <h3>{item.title}</h3>
+              <p>{item.address}</p>
+              <span>${item.pricePerNight} / night</span>
             </div>
           ))}
         </section>
