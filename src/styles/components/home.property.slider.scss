@@ -1,0 +1,62 @@
+.airbnb-slider-wrapper {
+    position: relative;
+}
+
+/* HEADER */
+.slider-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+.slider-title {
+    font-size: 22px;
+    font-weight: 600;
+}
+
+/* BUTTONS */
+.slider-actions {
+    display: flex;
+    gap: 8px;
+
+    button {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        background: #fff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, .2);
+        font-size: 20px;
+
+        &:hover {
+            background: #f5f5f5;
+        }
+    }
+}
+
+/* SLIDER */
+.airbnb-slider {
+    display: flex;
+    gap: 24px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.slider-item {
+    min-width: 15.6%;
+}
+
+.empty-center {
+    width: 100%;
+    min-height: 240px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

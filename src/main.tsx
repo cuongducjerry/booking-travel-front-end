@@ -7,13 +7,25 @@ import {
 } from "react-router-dom";
 import LoginPage from 'pages/auth/login';
 import { AppProvider } from 'components/context/app.context';
-import HomePage from 'pages/user/homepage';
+import HomePage from '@/pages/user/home.page';
 import RegisterPage from './pages/auth/register';
+import PropertyPage from './pages/user/property';
+import Layout from '@/layout';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <HomePage />,
+    element: <Layout />,
+    children: [
+      {
+        index: true,
+        element: <HomePage />
+      },
+      {
+        path: "/property/:id",
+        element: <PropertyPage />,
+      },
+    ]
   },
   {
     path: "/login",

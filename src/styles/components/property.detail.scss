@@ -1,0 +1,154 @@
+.property-detail {
+    max-width: 1280px;
+    margin: 24px auto;
+    padding: 0 24px;
+}
+
+/* ===== HEADER ===== */
+.property-title {
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.property-location {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #555;
+    margin: 8px 0 16px;
+}
+
+/* ===== GALLERY ===== */
+.property-gallery {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 8px;
+    border-radius: 12px;
+    overflow: hidden;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .main-img {
+        height: 440px;
+    }
+
+    .sub-images {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+
+        img {
+            height: 216px;
+        }
+    }
+}
+
+/* ===== CONTENT ===== */
+.property-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 48px;
+    margin-top: 40px;
+}
+
+/* LEFT */
+.property-info {
+    font-size: 16px;
+
+    h2 {
+        font-size: 22px;
+        margin-bottom: 12px;
+    }
+}
+
+/* HOST */
+.host-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h3 {
+        margin: 0;
+        font-weight: 600;
+    }
+
+    p {
+        margin-top: 4px;
+        color: #666;
+    }
+}
+
+/* HIGHLIGHTS */
+.property-highlights {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+
+    div {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #333;
+        font-weight: 500;
+    }
+}
+
+.property-description {
+    line-height: 1.8;
+    color: #333;
+}
+
+/* AMENITIES */
+.amenities {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+
+    .amenity-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+}
+
+/* RIGHT */
+.booking-box {
+    border: 1px solid #e4e4e4;
+    border-radius: 14px;
+    padding: 24px;
+    height: fit-content;
+    position: sticky;
+    top: 90px;
+
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+
+    .price {
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+
+    .note {
+        text-align: center;
+        margin-top: 12px;
+        font-size: 13px;
+        color: #666;
+    }
+}
+
+.booking-dates {
+    margin-bottom: 16px;
+}
+
+.booking-guests {
+    margin-bottom: 16px;
+
+    label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 500;
+    }
+}

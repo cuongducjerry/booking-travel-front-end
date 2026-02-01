@@ -36,3 +36,8 @@ export const fetchHomeProperties = (params?: {
         { params }
     );
 };
+
+export const getPropertyById = (id: string) => {
+    const urlBackend = `/api/v1/properties/${id}`;
+    return axios.get<IBackendRes<IPropertyDetail>>(urlBackend)
+}

@@ -60,7 +60,59 @@ declare global {
         title: string;
         address: string;
         pricePerNight: number;
-        images: string[]; 
+        images: string[];
+    }
+
+    interface IPropertyDetail {
+        id: number;
+        title: string;
+        description: string;
+        address: string;
+        city: string;
+
+        pricePerNight: number;
+        currency: string;
+        maxGuests: number;
+
+        status: string;
+
+        createdAt: string;
+        updatedAt: string;
+
+        images: string[];
+
+        amenities: IAmenity[];
+        reviews: IReview[] | null;
+
+        propertyType: string;
+
+        host: IHostInfo;
+    }
+
+    interface IHostInfo {
+        hostId: number;
+        hostName: string;
+        avatarUrl: string | null;
+        bio: string | null;
+        address: string;
+    }
+
+    interface IAmenity {
+        id: number;
+        name: string;
+        icon?: string;
+    }
+
+    interface IReview {
+        id: number;
+        rating: number;
+        comment: string;
+        createdAt: string;
+        user: {
+            id: number;
+            fullName: string;
+            avatarUrl: string | null;
+        };
     }
 
 }

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { DatePicker, Dropdown, Input } from "antd";
-import "styles/components/home-search.scss";
+import "styles/components/home.search.scss";
 
 const locations = [
   "Hà Nội",
