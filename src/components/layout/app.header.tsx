@@ -31,14 +31,15 @@ const AppHeader = () => {
 
   const isUser = user?.role === "USER";
   const isHost = user?.role === "HOST";
-  const isAdmin =
-    user?.role === "ADMIN" || user?.role === "SUPER_ADMIN";
+  const isAdmin = user?.role === "ADMIN" || user?.role === "SUPER_ADMIN";
+
+  console.log(user?.role);
 
   /* ===== (USER + HOST + ADMIN) ===== */
   if (isUser || isHost || isAdmin) {
     items.push({
       key: "account",
-      label: <span>Quản lý tài khoản</span>,
+      label: <Link to={`/profile/${user?.id}`}>Quản lý tài khoản</Link>,
     });
   }
 
@@ -99,9 +100,14 @@ const AppHeader = () => {
             ) : (
               <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight">
                 <div className="user-dropdown">
-                  <Avatar size={30}>
-                    {user?.fullName?.charAt(0).toUpperCase()}
+                  <Avatar
+                    size={30}
+                    src={user?.avatarUrl || undefined}
+                  >
+                    {!user?.avatarUrl &&
+                      user?.fullName?.charAt(0).toUpperCase()}
                   </Avatar>
+
                   <span className="user-name">{user?.fullName}</span>
                 </div>
               </Dropdown>

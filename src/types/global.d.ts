@@ -87,7 +87,15 @@ declare global {
         propertyType: string;
 
         host: IHostInfo;
+
+        bookings: IBooking[];
     }
+
+    interface IBooking {
+        checkIn: date;   // "2026-02-05"
+        checkOut: date;  // "2026-02-10"
+    }
+
 
     interface IHostInfo {
         hostId: number;
@@ -98,9 +106,9 @@ declare global {
     }
 
     interface IAmenity {
-        id: number;
-        name: string;
-        icon?: string;
+        amenityId: number;
+        amenityName: string;
+        amenityIcon: string;
     }
 
     interface IReview {
@@ -113,6 +121,48 @@ declare global {
             fullName: string;
             avatarUrl: string | null;
         };
+    }
+
+    interface IUserDetail {
+        id: number;
+        email: string;
+        fullName: string;
+        phone: string;
+        address: string;
+        bio: string;
+        age: number;
+        avatarUrl: string;
+        status: string;
+        role: {
+            id: number;
+            name: string;
+        };
+    }
+
+    interface IReqUpdateProfileUser {
+        id: number;
+        fullName: string;
+        phone: string;
+        bio?: string;
+        address?: string;
+        age: number;
+    }
+
+    interface IReqUpdatePassword {
+        oldPassword: string;
+        newPassword: string;
+    }
+
+    interface IPaginationMeta {
+        current: number;
+        pageSize: number;
+        total: number;
+        pages: number;
+    }
+
+    interface IPropertyResponse {
+        result: IProperty[];
+        meta: IPaginationMeta;
     }
 
 }

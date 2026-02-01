@@ -41,3 +41,33 @@ export const getPropertyById = (id: string) => {
     const urlBackend = `/api/v1/properties/${id}`;
     return axios.get<IBackendRes<IPropertyDetail>>(urlBackend)
 }
+
+export const getUserById = (id: string) => {
+    const urlBackend = `/api/v1/users/${id}`;
+    return axios.get<IBackendRes<IUserDetail>>(urlBackend)
+}
+
+/* ===== Update profile ===== */
+export const updateUserProfileAPI = (data: IReqUpdateProfileUser) => {
+    const urlBackend = "/api/v1/users/profile";
+    return axios.put<IBackendRes<IUserDetail>>(urlBackend, data);
+};
+
+/* ===== Update avatar ===== */
+export const updateUserAvatarAPI = (file: File) => {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    return axios.put("/api/v1/users/avatar", formData, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    });
+};
+
+/* ===== Update password ===== */
+export const updateUserPasswordAPI = (data: IReqUpdatePassword) => {
+    const urlBackend = "/api/v1/users/password";
+    return axios.put<IBackendRes<IUserDetail>>(urlBackend, data);
+};
+

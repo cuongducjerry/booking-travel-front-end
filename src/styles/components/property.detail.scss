@@ -68,8 +68,6 @@
 /* HOST */
 .host-info {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
 
     h3 {
         margin: 0;
@@ -151,4 +149,28 @@
         margin-bottom: 6px;
         font-weight: 500;
     }
+}
+
+/* ===== GALLERY CLICK ===== */
+.property-gallery img {
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.property-gallery img:hover {
+    opacity: 0.9;
+}
+
+/* ===== MODAL GALLERY ===== */
+.gallery-slide {
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gallery-img {
+    width: 100%;
+    height: 520px;
+    object-fit: contain;
 }

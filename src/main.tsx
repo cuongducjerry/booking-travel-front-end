@@ -11,6 +11,9 @@ import HomePage from '@/pages/user/home.page';
 import RegisterPage from './pages/auth/register';
 import PropertyPage from './pages/user/property';
 import Layout from '@/layout';
+import ProfilePage from 'pages/user/profile';
+import ProtectedRoute from 'components/auth';
+import SearchPage from 'pages/user/search.page';
 
 const router = createBrowserRouter([
   {
@@ -24,6 +27,25 @@ const router = createBrowserRouter([
       {
         path: "/property/:id",
         element: <PropertyPage />,
+      },
+      {
+        path: "/search",
+        element: <SearchPage />
+      },
+      {
+        path: "/profile/:id",
+        element: (
+          <ProtectedRoute
+            permission={[
+              "USER_UPDATE_PROFILE",
+              "USER_UPDATE_AVATAR",
+              "USER_UPDATE_PASSWORD",
+              "USER_VIEW"
+            ]}
+          >
+            <ProfilePage />
+          </ProtectedRoute>
+        ),
       },
     ]
   },

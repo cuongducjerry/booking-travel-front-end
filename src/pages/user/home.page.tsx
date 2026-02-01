@@ -62,7 +62,7 @@ const HomePage = () => {
           <div className="property-slider-container">
             {loading ? <p>Loading...</p> :
               <HomePropertySlider
-                title="Homes"
+                title="Homestay"
                 properties={homes}
               />}
           </div>
@@ -72,7 +72,7 @@ const HomePage = () => {
           <div className="property-slider-container">
             {loading ? <p>Loading...</p> :
               <HomePropertySlider
-                title="Resorts"
+                title="Resort"
                 properties={resorts}
               />}
           </div>
@@ -82,7 +82,7 @@ const HomePage = () => {
           <div className="property-slider-container">
             {loading ? <p>Loading...</p> :
               <HomePropertySlider
-                title="Apartments"
+                title="Apartment"
                 properties={apartments}
               />}
           </div>

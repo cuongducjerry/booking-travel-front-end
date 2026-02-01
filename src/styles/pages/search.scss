@@ -1,0 +1,19 @@
+.search-page {
+    display: flex;
+    height: calc(100vh - 64px); 
+}
+
+/* LEFT – LIST */
+.search-left {
+    width: 50%;
+    padding: 16px;
+    overflow-y: auto;
+}
+
+/* RIGHT – MAP */
+.search-right {
+    width: 50%;
+    position: sticky;
+    top: 64px; 
+    height: calc(100vh - 64px);
+}

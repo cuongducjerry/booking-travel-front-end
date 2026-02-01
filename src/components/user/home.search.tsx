@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { DatePicker, Dropdown, Input } from "antd";
 import "styles/components/home.search.scss";
+import { useNavigate } from "react-router-dom";
+import dayjs from "dayjs";
 
 const locations = [
   "Hà Nội",
@@ -11,6 +13,7 @@ const locations = [
 ];
 
 const HomeSearch = () => {
+  const navigate = useNavigate();
   const [where, setWhere] = useState("");
   const [checkIn, setCheckIn] = useState<any>(null);
   const [checkOut, setCheckOut] = useState<any>(null);
@@ -21,6 +24,18 @@ const HomeSearch = () => {
   const filteredLocations = locations.filter(l =>
     l.toLowerCase().includes(where.toLowerCase())
   );
+
+  const onSearch = () => {
+    navigate({
+      pathname: "/search",
+      search: new URLSearchParams({
+        address: where,
+        guests: String(guests),
+        checkIn: checkIn ? dayjs(checkIn).format("YYYY-MM-DD") : "",
+        checkOut: checkOut ? dayjs(checkOut).format("YYYY-MM-DD") : "",
+      }).toString(),
+    });
+  };
 
   return (
     <div className="airbnb-search">
@@ -117,7 +132,7 @@ const HomeSearch = () => {
       </Dropdown>
 
       {/* SEARCH */}
-      <button className="search-btn">
+      <button className="search-btn" onClick={onSearch}>
         🔍 <span>Search</span>
       </button>
     </div>

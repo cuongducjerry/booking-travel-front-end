@@ -5,13 +5,13 @@ import { hasPermission } from "@/utils/permission.ts";
 
 interface IProps {
     children: React.ReactNode;
-    permission?: string;
+    permission?: string[];
 }
 
 const ProtectedRoute = (props: IProps) => {
-    const { isAuthenticated, user } = useCurrentApp();
+    const { isAuthenticated } = useCurrentApp();
 
-    // Not logged in
+    // Chưa đăng nhập
     if (!isAuthenticated) {
         return (
             <Result
@@ -27,23 +27,28 @@ const ProtectedRoute = (props: IProps) => {
         );
     }
 
-    // Check permission 
-    if (props.permission && !hasPermission(props.permission)) {
-        return (
-            <Result
-                status="403"
-                title="403"
-                subTitle="Bạn không có quyền truy cập chức năng này."
-                extra={
-                    <Button type="primary">
-                        <Link to="/">Back Home</Link>
-                    </Button>
-                }
-            />
+    // Check permission (AND)
+    if (props.permission && props.permission.length > 0) {
+        const hasAllPermissions = props.permission.every(p =>
+            hasPermission(p)
         );
+
+        if (!hasAllPermissions) {
+            return (
+                <Result
+                    status="403"
+                    title="403"
+                    subTitle="Bạn không có quyền truy cập chức năng này."
+                    extra={
+                        <Button type="primary">
+                            <Link to="/">Back Home</Link>
+                        </Button>
+                    }
+                />
+            );
+        }
     }
 
-    // OK
     return <>{props.children}</>;
 };
 

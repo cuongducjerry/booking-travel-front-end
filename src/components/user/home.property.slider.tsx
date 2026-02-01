@@ -1,3 +1,4 @@
+import { formatVND } from "@/utils/format";
 import { Empty } from "antd";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
@@ -43,7 +44,7 @@ const HomePropertySlider = ({ title = "Property", properties }: Props) => {
                                 <h3>{item.title}</h3>
                                 <p>{item.address}</p>
                                 <span>
-                                    <strong>${item.pricePerNight}</strong> / night
+                                    <strong>{formatVND(item.pricePerNight)}</strong> / night
                                 </span>
                             </div>
                         </div>
