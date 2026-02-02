@@ -132,3 +132,17 @@ export const fetchMyBookings = (page = 1, pageSize = 10) => {
         },
     });
 };
+
+export const getUsersAPI = (params: {
+    page: number;
+    size: number;
+    keyword?: string;
+    role?: string;
+    status?: string;
+    sort?: string;
+}) => {
+    return axios.get<IBackendRes<IModelPaginate<IUserTable>>>(
+        '/api/v1/admin/users',
+        { params }
+    );
+};

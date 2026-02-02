@@ -18,6 +18,9 @@ import BookingPage from 'pages/user/booking';
 import BookingHistoryPage from 'components/user/booking.history';
 import LayoutAdmin from 'components/layout/admin.layout';
 import DashBoardPage from 'pages/admin/dashboard';
+import ManageUserPage from './pages/admin/manage.user';
+import { ConfigProvider } from 'antd';
+import enUS from 'antd/locale/en_US';
 
 const router = createBrowserRouter([
   {
@@ -80,7 +83,15 @@ const router = createBrowserRouter([
             <DashBoardPage />
           </ProtectedRoute>
         )
-      }
+      },
+      {
+        path: "user",
+        element: (
+          <ProtectedRoute role={["ADMIN", "SUPER_ADMIN"]}>
+            <ManageUserPage />
+          </ProtectedRoute>
+        ),
+      },
     ]
   },
   {
@@ -96,7 +107,9 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AppProvider>
-      <RouterProvider router={router} />
+      <ConfigProvider locale={enUS}>
+        <RouterProvider router={router} />
+      </ConfigProvider>
     </AppProvider>
   </StrictMode>
 )

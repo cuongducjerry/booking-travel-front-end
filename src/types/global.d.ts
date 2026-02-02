@@ -92,8 +92,8 @@ declare global {
     }
 
     interface IBooking {
-        checkIn: date;   // "2026-02-05"
-        checkOut: date;  // "2026-02-10"
+        checkIn: string;   // "2026-02-05"
+        checkOut: string;  // "2026-02-10"
     }
 
 
@@ -195,6 +195,29 @@ declare global {
         // ---- Property info ----
         propertyId: number;
         propertyName: string;
+    }
+
+    interface IUserTable {
+        id: number;
+        email: string;
+        fullName: string;
+        phone?: string;
+        address?: string;
+        bio?: string;
+        age?: number;
+        avatarUrl?: string;
+
+        status: string;
+
+        role: {
+            id: number;
+            name: string;
+        };
+
+        createdAt?: string;
+        updatedAt?: string;
+        createdBy?: string;
+        updatedBy?: string;
     }
 
 }
