@@ -89,12 +89,15 @@ const HomeSearch = () => {
             placeholder="Check in"
             value={checkIn}
             onChange={setCheckIn}
+            format="DD-MM-YYYY"
             getPopupContainer={() => document.body}
           />
+
           <DatePicker
             placeholder="Check out"
             value={checkOut}
             onChange={setCheckOut}
+            format="DD-MM-YYYY"
             getPopupContainer={() => document.body}
           />
         </div>

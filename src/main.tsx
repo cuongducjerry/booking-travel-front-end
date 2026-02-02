@@ -8,12 +8,16 @@ import {
 import LoginPage from 'pages/auth/login';
 import { AppProvider } from 'components/context/app.context';
 import HomePage from '@/pages/user/home.page';
-import RegisterPage from './pages/auth/register';
-import PropertyPage from './pages/user/property';
-import Layout from '@/layout';
+import RegisterPage from 'pages/auth/register';
+import PropertyPage from 'pages/user/property';
+import Layout from '@/components/layout/layout';
 import ProfilePage from 'pages/user/profile';
 import ProtectedRoute from 'components/auth';
 import SearchPage from 'pages/user/search.page';
+import BookingPage from 'pages/user/booking';
+import BookingHistoryPage from 'components/user/booking.history';
+import LayoutAdmin from 'components/layout/admin.layout';
+import DashBoardPage from 'pages/admin/dashboard';
 
 const router = createBrowserRouter([
   {
@@ -47,6 +51,36 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+      {
+        path: "/booking/:propertyId",
+        element: (
+          <ProtectedRoute permission={["BOOKING_CREATE"]}>
+            <BookingPage />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: "/booking-history",
+        element: (
+          <ProtectedRoute permission={["BOOKING_LIST_PERSONAL"]}>
+            <BookingHistoryPage />
+          </ProtectedRoute>
+        )
+      }
+    ]
+  },
+  {
+    path: "admin",
+    element: <LayoutAdmin />,
+    children: [
+      {
+        index: true,
+        element: (
+          <ProtectedRoute role={["ADMIN", "SUPER_ADMIN"]}>
+            <DashBoardPage />
+          </ProtectedRoute>
+        )
+      }
     ]
   },
   {

@@ -1,4 +1,3 @@
-
 import PropertyDetail from "@/components/user/property.detail";
 import { getPropertyById } from "@/services/api";
 import { App } from "antd";

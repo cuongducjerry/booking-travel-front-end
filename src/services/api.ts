@@ -71,3 +71,64 @@ export const updateUserPasswordAPI = (data: IReqUpdatePassword) => {
     return axios.put<IBackendRes<IUserDetail>>(urlBackend, data);
 };
 
+
+
+// ===== BOOKING =====
+export const createBooking = (data: {
+    propertyId: number;
+    checkIn: string;
+    checkOut: string;
+}) => {
+    return axios.post<IBackendRes<IBookingDetail>>(
+        "/api/v1/bookings",
+        data
+    );
+};
+
+// ===== PAYMENT =====
+export const createVnpay = (bookingId: number) => {
+    return axios.post<
+        IBackendRes<{
+            paymentId: number;
+            urlPay: string;
+        }>
+    >(`/api/v1/payments/${bookingId}/vnpay`);
+};
+
+export const payAtProperty = (bookingId: number) => {
+    return axios.post<IBackendRes<{
+        paymentId: number;
+        urlPay: string;
+    }>>(
+        `/api/v1/payments/${bookingId}/pay-at-property`
+    );
+};
+
+/* ===== MOCK CALLBACK VNPAY ===== */
+export const mockCallBackVnpay = (
+    paymentId: number,
+    success: boolean
+) => {
+    return axios.post<
+        IBackendRes<{
+            paymentId: number;
+            message: string;
+        }>
+    >("/api/v1/payments/mock-callback", null, {
+        params: {
+            paymentId,
+            success,
+        },
+    });
+};
+
+export const fetchMyBookings = (page = 1, pageSize = 10) => {
+    return axios.get<
+        IBackendRes<IModelPaginate<IBookingDetail>>
+    >("/api/v1/bookings/my-booking", {
+        params: {
+            page: page - 1,
+            size: pageSize,
+        },
+    });
+};

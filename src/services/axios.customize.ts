@@ -25,7 +25,7 @@ const createInstanceAxios = (baseURL: string) => {
         const isAuthRequest =
             config.url?.includes("/api/v1/auth/login") ||
             config.url?.includes("/api/v1/auth/register") ||
-            config.url?.includes("/api/v1/properties/home");
+            config.url?.includes("/api/v1/properties/*");
         if (token && !isAuthRequest) {
             config.headers.Authorization = `Bearer ${token}`;
         } else {

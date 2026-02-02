@@ -17,6 +17,7 @@ import { Modal, Carousel } from "antd";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import { formatVND } from "@/utils/format";
+import { useNavigate } from "react-router-dom";
 
 interface IProps {
     currentProperty: IPropertyDetail | null;
@@ -27,6 +28,7 @@ const PropertyDetail = ({ currentProperty }: IProps) => {
     const [guests, setGuests] = useState<number>(1);
     const [openGallery, setOpenGallery] = useState(false);
     const [activeIndex, setActiveIndex] = useState(0);
+    const navigate = useNavigate();
     dayjs.extend(isSameOrAfter);
     dayjs.extend(isSameOrBefore);
 
@@ -39,7 +41,6 @@ const PropertyDetail = ({ currentProperty }: IProps) => {
         city,
         images,
         pricePerNight,
-        currency,
         maxGuests,
         propertyType,
         amenities,
@@ -231,12 +232,24 @@ const PropertyDetail = ({ currentProperty }: IProps) => {
                         style={{ width: "100%", marginTop: 12 }}
                     />
 
+                    <Divider/>
+
                     <Button
+
                         type="primary"
                         block
                         size="large"
-                        disabled={!dates?.[0] || !dates?.[1]}
-                        style={{ marginTop: 16 }}
+                        disabled={!dates}
+                        onClick={() => {
+                            if (!dates?.[0] || !dates?.[1]) return;
+
+                            navigate(`/booking/${currentProperty.id}`, {
+                                state: {
+                                    checkIn: dates[0].format("YYYY-MM-DD"),
+                                    checkOut: dates[1].format("YYYY-MM-DD"),
+                                },
+                            });
+                        }}
                     >
                         Reserve
                     </Button>

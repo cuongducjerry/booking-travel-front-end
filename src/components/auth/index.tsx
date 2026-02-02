@@ -6,12 +6,13 @@ import { hasPermission } from "@/utils/permission.ts";
 interface IProps {
     children: React.ReactNode;
     permission?: string[];
+    role?: Array<"USER" | "HOST" | "ADMIN" | "SUPER_ADMIN">;
 }
 
 const ProtectedRoute = (props: IProps) => {
-    const { isAuthenticated } = useCurrentApp();
+    const { isAuthenticated, user } = useCurrentApp();
 
-    // Chưa đăng nhập
+    // ===== 1. CHECK LOGIN =====
     if (!isAuthenticated) {
         return (
             <Result
@@ -27,7 +28,27 @@ const ProtectedRoute = (props: IProps) => {
         );
     }
 
-    // Check permission (AND)
+     // ===== 2. CHECK ROLE =====
+    if (props.role && props.role.length > 0) {
+        const hasRole = props.role.includes(user?.role as any);
+
+        if (!hasRole) {
+            return (
+                <Result
+                    status="403"
+                    title="Access denied"
+                    subTitle="Bạn không có vai trò phù hợp để truy cập chức năng này."
+                    extra={
+                        <Button type="primary">
+                            <Link to="/">Trang chủ</Link>
+                        </Button>
+                    }
+                />
+            );
+        }
+    }
+
+    // ===== 3. CHECK PERMISSION (AND) =====
     if (props.permission && props.permission.length > 0) {
         const hasAllPermissions = props.permission.every(p =>
             hasPermission(p)
@@ -48,6 +69,8 @@ const ProtectedRoute = (props: IProps) => {
             );
         }
     }
+
+
 
     return <>{props.children}</>;
 };

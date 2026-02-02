@@ -165,4 +165,36 @@ declare global {
         meta: IPaginationMeta;
     }
 
+    export type BookingStatus = "NEW" | "CONFIRMED" | "CANCELLED" | "DONE" | "PENDING" | "CANCEL_REQUESTED";
+
+    export interface IBookingDetail {
+        id: number;
+
+        checkIn: string;   // ISO date
+        checkOut: string;
+        nights: number;
+
+        pricePerNightSnapshot: number;
+        currency: string;
+
+        grossAmount: number;
+        commissionRate: number;
+        commissionFee: number;
+        hostEarning: number;
+
+        status: BookingStatus;
+
+        createdAt: string;
+        updatedAt: string;
+
+        // ---- User info ----
+        userId: number;
+        userName: string;
+        userEmail: string;
+
+        // ---- Property info ----
+        propertyId: number;
+        propertyName: string;
+    }
+
 }
