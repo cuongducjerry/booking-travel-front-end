@@ -14,10 +14,17 @@ import { useCurrentApp } from '../context/app.context';
 import type { MenuProps } from 'antd';
 import { logoutAPI } from '@/services/api';
 import { ROLE } from '@/utils/constants/global.var';
+import { hasPermission } from '@/utils/permission';
 type MenuItem = Required<MenuProps>['items'][number];
 
 const { Content, Footer, Sider } = Layout;
 
+type MenuConfig = {
+  label: React.ReactNode;
+  key: string;
+  icon: React.ReactNode;
+  permission?: string;
+};
 
 const LayoutAdmin = () => {
     const [collapsed, setCollapsed] = useState(false);
@@ -38,30 +45,41 @@ const LayoutAdmin = () => {
         }
     };
 
-    const items: MenuItem[] = [
+    const menuConfig: MenuConfig[] = [
         {
-            label: <Link to='/admin'>Dashboard</Link>,
-            key: '/admin',
-            icon: <AppstoreOutlined />
+            label: <Link to="/admin">Dashboard</Link>,
+            key: "/admin",
+            icon: <AppstoreOutlined />,
         },
         {
-            label: <Link to='/admin/user'>Manage Users</Link>,
-            key: '/admin/user',
-            icon: <UserOutlined />
-        },
-        
-        {
-            label: <Link to='/admin/role'>Manage Roles</Link>,
-            key: '/admin/role',
-            icon: <ExceptionOutlined />
+            label: <Link to="/admin/user">Manage Users</Link>,
+            key: "/admin/user",
+            icon: <UserOutlined />,
+            permission: "USER_LIST_ALL",
         },
         {
-            label: <Link to='/admin/permission'>Manage Permissions</Link>,
-            key: '/admin/permission',
-            icon: <ExceptionOutlined />
+            label: <Link to="/admin/role">Manage Roles</Link>,
+            key: "/admin/role",
+            icon: <ExceptionOutlined />,
+            permission: "ROLE_LIST_ALL",
         },
-
+        {
+            label: <Link to="/admin/permission">Manage Permissions</Link>,
+            key: "/admin/permission",
+            icon: <ExceptionOutlined />,
+            permission: "PERMISSION_LIST_ALL",
+        },
+        {
+            label: <Link to="/admin/amenity">Manage Amenities</Link>,
+            key: "/admin/amenity",
+            icon: <ExceptionOutlined />,
+            permission: "AMENITY_LIST_ALL",
+        },
     ];
+
+    const items: MenuItem[] = menuConfig.filter(item =>
+        !item.permission || hasPermission(item.permission)
+    );
 
     useEffect(() => {
         const active: any = items.find(item => location.pathname === (item!.key as any)) ?? "/admin";

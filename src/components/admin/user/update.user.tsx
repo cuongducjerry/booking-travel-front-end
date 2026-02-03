@@ -109,7 +109,7 @@ const UpdateUser = (props: IProps) => {
                     >
                         <Select placeholder="Chọn role">
                             {roles
-                                .filter(r => r.name !== ROLE.SUPER_ADMIN) // không tự gán super admin
+                                .filter(r => r.name !== ROLE.SUPER_ADMIN) 
                                 .map(r => (
                                     <Select.Option key={r.id} value={r.id}>
                                         {r.name}

@@ -7,6 +7,7 @@ import { hasPermission } from '@/utils/permission';
 import { DeleteTwoTone, EditTwoTone, PlusOutlined } from '@ant-design/icons';
 import CreateRole from 'components/admin/role/create.role';
 import UpdateRole from 'components/admin/role/update.role';
+import DetailRole from 'components/admin/role/detail.role';
 
 type TSearchRole = {
     keyword?: string;
@@ -24,21 +25,21 @@ const TableRole = () => {
     const [isDeleteRole, setIsDeleteRole] = useState<boolean>(false);
 
     const handleDeleteRole = async (id: number) => {
-            setIsDeleteRole(true);
-            const res = await deleteRoleAPI(id);
-            if (res.statusCode === 200) {
-                message.success('Xóa role thành công');
-                refreshTable();
-                return;
-            }
-            else {
-                notification.error({
-                    message: 'Đã có lỗi xảy ra',
-                    description: res.message
-                })
-            }
-            setIsDeleteRole(false);
+        setIsDeleteRole(true);
+        const res = await deleteRoleAPI(id);
+        if (res.statusCode === 200) {
+            message.success('Xóa role thành công');
+            refreshTable();
+            return;
         }
+        else {
+            notification.error({
+                message: 'Đã có lỗi xảy ra',
+                description: res.message
+            })
+        }
+        setIsDeleteRole(false);
+    }
 
     const columns: ProColumns<IRole>[] = [
         {
@@ -47,6 +48,22 @@ const TableRole = () => {
             sorter: true,
             width: 80,
             hideInSearch: true,
+            render(dom, entity, index, action, schema) {
+                const canView = hasPermission('ROLE_VIEW');
+
+                return canView ? (
+                    <a
+                        onClick={() => {
+                            setDataViewDetail(entity);
+                            setOpenViewDetail(true);
+                        }}
+                    >
+                        {entity.id}
+                    </a>
+                ) : (
+                    <span>{entity.id}</span>
+                );
+            }
         },
         {
             title: 'Keyword',
@@ -114,7 +131,6 @@ const TableRole = () => {
     ];
 
     const refreshTable = () => {
-        console.log('REFRESH TABLE ROLE', actionRef.current);
         actionRef.current?.reload();
     }
 
@@ -137,7 +153,7 @@ const TableRole = () => {
                         };
                     }
 
-                    // xác định field + direction
+                    // field + direction
                     let sortParam = 'id,desc'; // default
 
                     if (sort?.id) {
@@ -160,17 +176,26 @@ const TableRole = () => {
                     };
                 }}
                 toolBarRender={() => [
-                    <Button
-                        key="add"
-                        type="primary"
-                        icon={<PlusOutlined />}
-                        onClick={() => {
-                            setOpenModalCreate(true);
-                        }}
-                    >
-                        Add role
-                    </Button>,
+                    hasPermission("ROLE_CREATE") && (
+                        <Button
+                            key="add"
+                            type="primary"
+                            icon={<PlusOutlined />}
+                            onClick={() => {
+                                setOpenModalCreate(true);
+                            }}
+                        >
+                            Add role
+                        </Button>
+                    )
                 ]}
+            />
+
+            <DetailRole
+                openViewDetail={openViewDetail}
+                setOpenViewDetail={setOpenViewDetail}
+                dataViewDetail={dataViewDetail}
+                setDataViewDetail={setDataViewDetail}
             />
 
             <CreateRole

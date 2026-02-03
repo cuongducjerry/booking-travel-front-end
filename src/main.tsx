@@ -25,6 +25,7 @@ import { App as AntdApp } from 'antd';
 import ManageRolePage from 'pages/admin/manage.role';
 import ManagePermissionPage from 'pages/admin/manage.permission';
 import { ROLE } from '@/utils/constants/global.var';
+import ManageAmenityPage from 'pages/admin/manage.amenity';
 
 const router = createBrowserRouter([
   {
@@ -83,7 +84,7 @@ const router = createBrowserRouter([
       {
         index: true,
         element: (
-          <ProtectedRoute role={[ROLE.ADMIN, ROLE.SUPER_ADMIN]}>
+          <ProtectedRoute>
             <DashBoardPage />
           </ProtectedRoute>
         )
@@ -91,7 +92,7 @@ const router = createBrowserRouter([
       {
         path: "user",
         element: (
-          <ProtectedRoute role={[ROLE.ADMIN, ROLE.SUPER_ADMIN]}>
+          <ProtectedRoute>
             <ManageUserPage />
           </ProtectedRoute>
         ),
@@ -111,7 +112,15 @@ const router = createBrowserRouter([
             <ManagePermissionPage />
           </ProtectedRoute>
         )
-      }
+      },
+      {
+        path: "amenity",
+        element: (
+          <ProtectedRoute>
+            <ManageAmenityPage />
+          </ProtectedRoute>
+        )
+      },
     ]
   },
   {

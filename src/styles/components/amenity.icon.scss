@@ -1,0 +1,39 @@
+.amenity-icon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 12px;
+}
+
+.amenity-icon-item {
+    border: 1px solid #d9d9d9;
+    border-radius: 6px;
+    padding: 10px 6px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.amenity-icon-item:hover {
+    border-color: #1677ff;
+    color: #1677ff;
+}
+
+.amenity-icon-item .label {
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.amenity-icon-item.disabled {
+    opacity: 0.35;
+    pointer-events: none;
+}
+
+.amenity-icon-item.selected {
+  border-color: #1677ff;
+  background-color: rgba(22, 119, 255, 0.08);
+  color: #1677ff;
+}
+
+.amenity-icon-item.selected svg {
+  transform: scale(1.15);
+}

@@ -50,14 +50,20 @@ const TableUser = () => {
             sorter: true,
             hideInSearch: true,
             render(dom, entity, index, action, schema) {
-                return (
+                const canView = hasPermission('USER_VIEW');
+
+                return canView ? (
                     <a
                         onClick={() => {
                             setDataViewDetail(entity);
                             setOpenViewDetail(true);
                         }}
-                        href='#'>{entity.id}</a>
-                )
+                    >
+                        {entity.id}
+                    </a>
+                ) : (
+                    <span>{entity.id}</span>
+                );
             }
         },
 
@@ -152,7 +158,6 @@ const TableUser = () => {
     ];
 
     const refreshTable = () => {
-        console.log('REFRESH TABLE USER', actionRef.current);
         actionRef.current?.reload();
     }
 
@@ -166,7 +171,7 @@ const TableUser = () => {
                     collapseRender: false
                 }}
                 request={async (params, sort) => {
-                    let sortParam = 'id,desc'; 
+                    let sortParam = 'id,desc';
 
                     if (sort?.id) {
                         sortParam = `id,${sort.id === 'ascend' ? 'asc' : 'desc'}`;
@@ -194,16 +199,16 @@ const TableUser = () => {
                 }}
                 headerTitle="User Management"
                 toolBarRender={() => [
-                    <Button
-                        key="add"
-                        type="primary"
-                        icon={<PlusOutlined />}
-                        onClick={() => {
-                            setOpenModalCreate(true);
-                        }}
-                    >
-                        Add user
-                    </Button>,
+                    hasPermission("USER_CREATE") && (
+                        <Button
+                            key="add"
+                            type="primary"
+                            icon={<PlusOutlined />}
+                            onClick={() => setOpenModalCreate(true)}
+                        >
+                            Add user
+                        </Button>
+                    )
                 ]}
             />
 

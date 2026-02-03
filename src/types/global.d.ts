@@ -252,4 +252,19 @@ declare global {
         permissionIds: number[];
     }
 
+    interface IAmenity {
+        id: number;
+        name: string;
+        icon: string;
+        createdAt?: string;
+        updatedAt?: string;
+        createdBy?: string;
+        updatedBy?: string;
+    }
+
+    interface ICreateAmenityReq {
+        name: string;
+        icon: AmenityIconKey;
+    }
+
 }

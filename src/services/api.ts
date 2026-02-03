@@ -218,3 +218,31 @@ export const updateRoleAPI = (data: {
     return axios.put<IBackendRes<any>>("/api/v1/admin/roles", data);
 };
 
+
+export const getAmenitiesAPI = (params: {
+    page: number;
+    size: number;
+    keyword?: string;
+    sort?: string;
+}) => {
+    return axios.get<IBackendRes<IModelPaginate<IAmenity>>>('/api/v1/admin/amenities', { params });
+};
+
+export const deleteAmenityAPI = (id: number) => {
+    return axios.delete<IBackendRes<void>>(
+        `/api/v1/admin/amenities/${id}`
+    );
+};
+
+export const createAmenityAPI = (data: ICreateAmenityReq) => {
+    return axios.post<IBackendRes<IAmenity>>("/api/v1/admin/amenities", data);
+};
+
+export const updateAmenityAPI = (payload: {
+  id: number;
+  name: string;
+  icon: string;
+}) => {
+  return axios.put<IBackendRes<IAmenity>>("/api/v1/admin/amenities", payload); 
+};
+
