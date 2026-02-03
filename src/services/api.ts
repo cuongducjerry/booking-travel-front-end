@@ -146,3 +146,53 @@ export const getUsersAPI = (params: {
         { params }
     );
 };
+
+export const createUserAPI = (data: ICreateUserReq) => {
+    return axios.post<IBackendRes<IUserTable>>(
+        '/api/v1/admin/users',
+        data
+    );
+};
+
+export const deleteUserAPI = (id: number) => {
+    return axios.delete<IBackendRes<void>>(
+        `/api/v1/admin/users/${id}`
+    );
+};
+
+export const updateUserStatusAPI = (id: number, status: string) => {
+    return axios.put<IBackendRes<any>>(
+        `/api/v1/admin/users/${id}/status`,
+        { status }
+    );
+};
+
+export const assignUserRoleAPI = (id: number, roleId: number) => {
+    return axios.put<IBackendRes<any>>(
+        `/api/v1/admin/users/${id}/roles`,
+        { roleId }
+    );
+};
+
+export const getRolesAPI = (params?: {
+    page?: number;
+    size?: number;
+    keyword?: string;
+    sort?: string;
+}) => {
+    return axios.get<IBackendRes<IModelPaginate<IRole>>>(
+        '/api/v1/admin/roles',
+        { params }
+    );
+};
+
+
+export const getPermissionsAPI = (params: {
+    page?: number;
+    size?: number;
+    keyword?: string;
+    sort?: string;
+}) => {
+    return axios.get<IBackendRes<IModelPaginate<IPermission>>>('/api/v1/admin/permissions', { params });
+};
+

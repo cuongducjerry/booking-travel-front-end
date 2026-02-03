@@ -3,9 +3,7 @@ import {
     AppstoreOutlined,
     ExceptionOutlined,
     HeartTwoTone,
-    TeamOutlined,
     UserOutlined,
-    DollarCircleOutlined,
     MenuFoldOutlined,
     MenuUnfoldOutlined,
 } from '@ant-design/icons';
@@ -15,6 +13,7 @@ import { Link } from 'react-router-dom';
 import { useCurrentApp } from '../context/app.context';
 import type { MenuProps } from 'antd';
 import { logoutAPI } from '@/services/api';
+import { ROLE } from '@/utils/constants/global.var';
 type MenuItem = Required<MenuProps>['items'][number];
 
 const { Content, Footer, Sider } = Layout;
@@ -50,15 +49,16 @@ const LayoutAdmin = () => {
             key: '/admin/user',
             icon: <UserOutlined />
         },
+        
         {
-            label: <Link to='/admin/book'>Manage Books</Link>,
-            key: '/admin/book',
+            label: <Link to='/admin/role'>Manage Roles</Link>,
+            key: '/admin/role',
             icon: <ExceptionOutlined />
         },
         {
-            label: <Link to='/admin/order'>Manage Orders</Link>,
-            key: '/admin/order',
-            icon: <DollarCircleOutlined />
+            label: <Link to='/admin/permission'>Manage Permissions</Link>,
+            key: '/admin/permission',
+            icon: <ExceptionOutlined />
         },
 
     ];
@@ -96,7 +96,7 @@ const LayoutAdmin = () => {
     const isAdminRoute = location.pathname.includes("admin");
     if (isAuthenticated === true && isAdminRoute === true) {
         const role = user?.role;
-        if (role === "USER") {
+        if (role === ROLE.USER) {
             return (
                 <Outlet />
             )

@@ -5,13 +5,13 @@ import {
     Button,
     Upload,
     Avatar,
-    message,
     Card,
     Row,
     Col,
     Typography,
     Space,
     Divider,
+    App,
 } from "antd";
 import { UploadOutlined, UserOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
@@ -27,6 +27,7 @@ const ProfileDetail = ({ user }: Props) => {
     const [loading, setLoading] = useState(false);
     const [avatar, setAvatar] = useState<string | null>(null);
     const [form] = Form.useForm();
+    const { message, notification, modal } = App.useApp();
 
     /* ===== FILL DATA KHI LOAD USER ===== */
     useEffect(() => {

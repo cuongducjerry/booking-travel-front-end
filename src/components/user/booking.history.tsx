@@ -4,7 +4,7 @@ import {
     Tag,
     Typography,
     Space,
-    message,
+    App
 } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { useEffect, useState } from "react";
@@ -16,6 +16,7 @@ const { Title, Text } = Typography;
 const BookingHistoryPage = () => {
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState<IBookingDetail[]>([]);
+    const { message, notification, modal } = App.useApp();
     const [pagination, setPagination] = useState({
         current: 1,
         pageSize: 10,

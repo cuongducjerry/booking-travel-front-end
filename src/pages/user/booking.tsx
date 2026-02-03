@@ -2,11 +2,11 @@ import {
     Steps,
     Button,
     Radio,
-    message,
     Card,
     Descriptions,
     Space,
     Typography,
+    App,
 } from "antd";
 import { useLocation, useParams } from "react-router-dom";
 import { createBooking, createVnpay, mockCallBackVnpay, payAtProperty } from "@/services/api";
@@ -19,6 +19,7 @@ const BookingPage = () => {
     const { propertyId } = useParams<{ propertyId: string }>();
     const location = useLocation();
     const { checkIn, checkOut } = location.state || {};
+    const { message, notification, modal } = App.useApp();
 
     const numericPropertyId = Number(propertyId);
     if (!propertyId || Number.isNaN(numericPropertyId)) {

@@ -28,7 +28,7 @@ const ProtectedRoute = (props: IProps) => {
         );
     }
 
-     // ===== 2. CHECK ROLE =====
+    // ===== 2. CHECK ROLE =====
     if (props.role && props.role.length > 0) {
         const hasRole = props.role.includes(user?.role as any);
 

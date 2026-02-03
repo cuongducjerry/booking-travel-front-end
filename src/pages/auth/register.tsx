@@ -1,5 +1,5 @@
 import { registerAPI } from "@/services/api";
-import { Button, Divider, Form, Input, message, type FormProps } from "antd";
+import { App, Button, Divider, Form, Input, type FormProps } from "antd";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "styles/pages/register.scss";
@@ -17,6 +17,7 @@ type FieldType = {
 const RegisterPage = () => {
     const [isSubmit, setIsSubmit] = useState(false);
     const navigate = useNavigate();
+    const { message, notification, modal } = App.useApp();
 
     const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
         setIsSubmit(true);
@@ -35,7 +36,7 @@ const RegisterPage = () => {
 
         const res = await registerAPI(payload);
 
-        if (res.data) {
+        if (res.statusCode === 201 && res.data) {
             message.success("Đăng ký thành công.");
             navigate("/login");
         } else {

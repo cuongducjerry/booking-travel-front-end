@@ -4,6 +4,7 @@ import { useNavigate, Link, useLocation } from 'react-router-dom';
 import 'styles/layouts/header.scss';
 import { useCurrentApp } from 'components/context/app.context';
 import { logoutAPI } from '@/services/api';
+import { ROLE } from '@/utils/constants/global.var';
 
 const AppHeader = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -29,9 +30,9 @@ const AppHeader = () => {
 
   const items: any[] = [];
 
-  const isUser = user?.role === "USER";
-  const isHost = user?.role === "HOST";
-  const isAdmin = user?.role === "ADMIN" || user?.role === "SUPER_ADMIN";
+  const isUser = user?.role === ROLE.USER;
+  const isHost = user?.role === ROLE.HOST;
+  const isAdmin = user?.role === ROLE.ADMIN || user?.role === ROLE.SUPER_ADMIN;
 
   console.log(user?.role);
 

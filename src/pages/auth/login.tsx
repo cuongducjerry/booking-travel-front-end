@@ -1,6 +1,6 @@
 import { useCurrentApp } from "@/components/context/app.context";
 import { loginAPI } from "@/services/api";
-import { Button, Divider, Form, Input, message, notification, type FormProps } from "antd";
+import { App, Button, Divider, Form, Input, type FormProps } from "antd";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import 'styles/pages/login.scss';
@@ -15,6 +15,7 @@ const LoginPage = () => {
     const [isSubmit, setIsSubmit] = useState(false);
     const navigate = useNavigate();
     const { setIsAuthenticated, setUser, user } = useCurrentApp();
+    const { message, notification, modal } = App.useApp();
 
     const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
 

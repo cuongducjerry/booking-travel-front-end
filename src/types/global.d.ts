@@ -220,4 +220,30 @@ declare global {
         updatedBy?: string;
     }
 
+    interface ICreateUserReq {
+        email: string,
+        password: string,
+        fullName: string,
+        phone: string,
+        address: string,
+        age: number,
+        role: {
+            id: number
+        }
+    }
+
+    interface IRole {
+        id: number;
+        name: string;
+        description: string;
+        createdAt?: string;
+        updatedAt?: string;
+        permissions: IPermission[];
+    }
+
+    interface IPermission {
+        id: number;
+        code: string;
+    }
+
 }

@@ -18,9 +18,13 @@ import BookingPage from 'pages/user/booking';
 import BookingHistoryPage from 'components/user/booking.history';
 import LayoutAdmin from 'components/layout/admin.layout';
 import DashBoardPage from 'pages/admin/dashboard';
-import ManageUserPage from './pages/admin/manage.user';
+import ManageUserPage from 'pages/admin/manage.user';
 import { ConfigProvider } from 'antd';
 import enUS from 'antd/locale/en_US';
+import { App as AntdApp } from 'antd';
+import ManageRolePage from 'pages/admin/manage.role';
+import ManagePermissionPage from 'pages/admin/manage.permission';
+import { ROLE } from '@/utils/constants/global.var';
 
 const router = createBrowserRouter([
   {
@@ -79,7 +83,7 @@ const router = createBrowserRouter([
       {
         index: true,
         element: (
-          <ProtectedRoute role={["ADMIN", "SUPER_ADMIN"]}>
+          <ProtectedRoute role={[ROLE.ADMIN, ROLE.SUPER_ADMIN]}>
             <DashBoardPage />
           </ProtectedRoute>
         )
@@ -87,11 +91,27 @@ const router = createBrowserRouter([
       {
         path: "user",
         element: (
-          <ProtectedRoute role={["ADMIN", "SUPER_ADMIN"]}>
+          <ProtectedRoute role={[ROLE.ADMIN, ROLE.SUPER_ADMIN]}>
             <ManageUserPage />
           </ProtectedRoute>
         ),
       },
+      {
+        path: "role",
+        element: (
+          <ProtectedRoute role={[ROLE.SUPER_ADMIN]}>
+            <ManageRolePage />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: "permission",
+        element: (
+          <ProtectedRoute role={[ROLE.SUPER_ADMIN]}>
+            <ManagePermissionPage />
+          </ProtectedRoute>
+        )
+      }
     ]
   },
   {
@@ -108,8 +128,10 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AppProvider>
       <ConfigProvider locale={enUS}>
-        <RouterProvider router={router} />
+        <AntdApp>
+          <RouterProvider router={router} />
+        </AntdApp>
       </ConfigProvider>
     </AppProvider>
   </StrictMode>
-)
+);
