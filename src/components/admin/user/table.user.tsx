@@ -152,7 +152,7 @@ const TableUser = () => {
     ];
 
     const refreshTable = () => {
-        console.log('REFRESH TABLE', actionRef.current);
+        console.log('REFRESH TABLE USER', actionRef.current);
         actionRef.current?.reload();
     }
 

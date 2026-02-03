@@ -246,4 +246,10 @@ declare global {
         code: string;
     }
 
+    interface ICreateRoleReq {
+        name: string;
+        description?: string;
+        permissionIds: number[];
+    }
+
 }

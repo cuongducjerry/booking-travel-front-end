@@ -196,3 +196,25 @@ export const getPermissionsAPI = (params: {
     return axios.get<IBackendRes<IModelPaginate<IPermission>>>('/api/v1/admin/permissions', { params });
 };
 
+export const createRoleAPI = (data: ICreateRoleReq) => {
+    return axios.post<IBackendRes<IUserTable>>(
+        '/api/v1/admin/roles', 
+        data
+    );
+};
+
+export const deleteRoleAPI = (id: number) => {
+    return axios.delete<IBackendRes<void>>(
+        `/api/v1/admin/roles/${id}`
+    );
+};
+
+export const updateRoleAPI = (data: {
+    id: number;
+    name: string;
+    description?: string;
+    permissionIds: number[];
+}) => {
+    return axios.put<IBackendRes<any>>("/api/v1/admin/roles", data);
+};
+
