@@ -20,10 +20,10 @@ type MenuItem = Required<MenuProps>['items'][number];
 const { Content, Footer, Sider } = Layout;
 
 type MenuConfig = {
-  label: React.ReactNode;
-  key: string;
-  icon: React.ReactNode;
-  permission?: string;
+    label: React.ReactNode;
+    key: string;
+    icon: React.ReactNode;
+    permission?: string;
 };
 
 const LayoutAdmin = () => {
@@ -75,6 +75,18 @@ const LayoutAdmin = () => {
             icon: <ExceptionOutlined />,
             permission: "AMENITY_LIST_ALL",
         },
+        {
+            label: <Link to="/admin/property-type">Manage Property Types</Link>,
+            key: "/admin/property-type",
+            icon: <ExceptionOutlined />,
+            permission: "PROPERTY_TYPE_LIST_ALL",
+        },
+        {
+            label: <Link to="/admin/booking">Manage Bookings</Link>,
+            key: "/admin/booking",
+            icon: <ExceptionOutlined />,
+            permission: "BOOKING_LIST_ALL",
+        },
     ];
 
     const items: MenuItem[] = menuConfig.filter(item =>
@@ -88,12 +100,12 @@ const LayoutAdmin = () => {
 
     const itemsDropdown = [
         {
-            label: <Link to={`/profile/${user?.id}`}>Quản lý tài khoản</Link>,
-            key: 'account',
-        },
-        {
             label: <Link to={'/'}>Trang chủ</Link>,
             key: 'home',
+        },
+        {
+            label: <Link to={`/profile/${user?.id}`}>Quản lý tài khoản</Link>,
+            key: 'account',
         },
         {
             label: <label

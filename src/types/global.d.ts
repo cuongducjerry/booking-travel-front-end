@@ -267,4 +267,20 @@ declare global {
         icon: AmenityIconKey;
     }
 
+    interface IPropertyType {
+        id: number;
+        name: string;
+        createdAt: string;
+        updatedAt: string;
+        createdBy: string;
+        updatedBy: string;
+    }
+
+    interface IFetchHostBookingReq {
+        page?: number;
+        size?: number;
+        status?: "NEW" | "PENDING" | "CONFIRMED" | "CANCEL_REQUESTED" | "CANCELLED" | "DONE";
+        sort?: string;
+    }
+
 }

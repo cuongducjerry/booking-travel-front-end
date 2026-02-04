@@ -26,6 +26,11 @@ import ManageRolePage from 'pages/admin/manage.role';
 import ManagePermissionPage from 'pages/admin/manage.permission';
 import { ROLE } from '@/utils/constants/global.var';
 import ManageAmenityPage from 'pages/admin/manage.amenity';
+import ManagePropertyTypePage from 'pages/admin/manage.property.type';
+import LayoutHost from 'components/layout/host.layout';
+import HostDashboardPage from 'pages/host/dashboard';
+import HostManageBookingPage from 'pages/host/manage.booking';
+import ManageBookingPage from './pages/admin/manage.booking';
 
 const router = createBrowserRouter([
   {
@@ -121,7 +126,45 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         )
       },
+      {
+        path: "property-type",
+        element: (
+          <ProtectedRoute>
+            <ManagePropertyTypePage />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: "booking",
+        element: (
+          <ProtectedRoute>
+            <ManageBookingPage />
+          </ProtectedRoute>
+        )
+      },
     ]
+  },
+  {
+    path: "host",
+    element: <LayoutHost />,
+    children: [
+      {
+        index: true,
+        element: (
+          <ProtectedRoute>
+            <HostDashboardPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "booking",
+        element: (
+          <ProtectedRoute>
+            <HostManageBookingPage />
+          </ProtectedRoute>
+        ),
+      },
+    ],
   },
   {
     path: "/login",

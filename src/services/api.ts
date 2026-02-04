@@ -198,7 +198,7 @@ export const getPermissionsAPI = (params: {
 
 export const createRoleAPI = (data: ICreateRoleReq) => {
     return axios.post<IBackendRes<IUserTable>>(
-        '/api/v1/admin/roles', 
+        '/api/v1/admin/roles',
         data
     );
 };
@@ -239,10 +239,78 @@ export const createAmenityAPI = (data: ICreateAmenityReq) => {
 };
 
 export const updateAmenityAPI = (payload: {
-  id: number;
-  name: string;
-  icon: string;
+    id: number;
+    name: string;
+    icon: string;
 }) => {
-  return axios.put<IBackendRes<IAmenity>>("/api/v1/admin/amenities", payload); 
+    return axios.put<IBackendRes<IAmenity>>("/api/v1/admin/amenities", payload);
 };
 
+export const getPropertyTypesAPI = (params: {
+    page?: number;
+    size?: number;
+    keyword?: string;
+    sort?: string;
+}) => {
+    return axios.get<IBackendRes<IModelPaginate<IPropertyType>>>(
+        '/api/v1/admin/property-types',
+        {
+            params
+        }
+    );
+};
+
+export const deletePropertyTypeAPI = (id: number) => {
+    return axios.delete<IBackendRes<void>>(
+        `/api/v1/admin/property-types/${id}`
+    );
+};
+
+export const createPropertyTypeAPI = (payload: { name: string }) => {
+    return axios.post<IBackendRes<IPropertyType>>(
+        "/api/v1/admin/property-types",
+        payload
+    );
+};
+
+export const updatePropertyTypeAPI = (payload: {
+    id: number;
+    name: string;
+}) => {
+    return axios.put<IBackendRes<IPropertyType>>(
+        "/api/v1/admin/property-types",
+        payload
+    );
+};
+
+export const getHostBookingsAPI = async (params: IFetchHostBookingReq) => {
+    return axios.get<IBackendRes<IModelPaginate<IBookingDetail>>>(
+        "/api/v1/host/bookings",
+        { params }
+    );
+};
+
+// HOST booking actions
+export const confirmBookingAPI = (id: number) => {
+    return axios.put<IBackendRes<void>>(`/api/v1/host/bookings/${id}/confirm`);
+};
+
+export const cancelBookingAPI = (id: number) => {
+    return axios.put<IBackendRes<void>>(`/api/v1/host/bookings/${id}/cancel`);
+};
+
+export const doneBookingAPI = (id: number) => {
+    return axios.put<IBackendRes<void>>(`/api/v1/host/bookings/${id}/done`);
+};
+
+export const getAllBookingsAPI = (params: {
+    page: number;
+    size: number;
+    status?: "NEW" | "PENDING" | "CONFIRMED" | "CANCEL_REQUESTED" | "CANCELLED" | "DONE";
+    sort?: string;
+}) => {
+    return axios.get<IBackendRes<IModelPaginate<IBookingDetail>>>(
+        "/api/v1/admin/bookings",
+        { params }
+    );
+};
