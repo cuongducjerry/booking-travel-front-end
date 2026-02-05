@@ -323,4 +323,37 @@ declare global {
         hasActiveContract: boolean;
     }
 
+    interface IPropertyTable {
+        // basic
+        id: number;
+        title: string;
+        description: string;
+        address: string;
+        city: string;
+
+        pricePerNight: number;
+        currency: string;
+        maxGuests: number;
+
+        // property type
+        propertyTypeId: number;
+        propertyTypeName: string;
+
+        // media + booking 
+        images: string[];
+        bookings: IBooking[];
+        amenities: IAmenity[];
+
+        // host
+        hostId: number;
+        hostName: string;
+
+        // contract
+        contractId?: number;
+
+        // status & meta
+        status: string;
+        createdAt: string;
+    }
+
 }

@@ -1,0 +1,198 @@
+import { getMyPropertiesAPI, getPropertyTypesAPI } from "@/services/api";
+import type { ActionType, ProColumns } from "@ant-design/pro-components";
+import { ProTable } from "@ant-design/pro-components";
+import { App, Tag, Select } from "antd";
+import { useEffect, useRef, useState } from "react";
+import { hasPermission } from "@/utils/permission";
+import { EditTwoTone } from "@ant-design/icons";
+import DetailProperty from "components/host/property/detail.property";
+
+type TSearch = {
+    title?: string;
+    status?: string;
+    propertyType?: string;
+};
+
+const HostTableProperty = () => {
+    const actionRef = useRef<ActionType>();
+    const { message } = App.useApp();
+
+    const [openViewDetail, setOpenViewDetail] = useState<boolean>(false);
+    const [dataViewDetail, setDataViewDetail] = useState<IPropertyTable | null>(null);
+    const [openModalCreate, setOpenModalCreate] = useState<boolean>(false);
+    const [propertyTypes, setPropertyTypes] = useState<IPropertyType[]>([]);
+
+    // =======================
+    // LOAD PROPERTY TYPES
+    // =======================
+    useEffect(() => {
+        const fetchPropertyTypes = async () => {
+            try {
+                const res = await getPropertyTypesAPI({
+                    page: 0,
+                    size: 1000,
+                });
+                setPropertyTypes(res.data?.result ?? []);
+            } catch (err) {
+                message.error("Không tải được danh sách Property Type");
+            }
+        };
+
+        fetchPropertyTypes();
+    }, []);
+
+    const columns: ProColumns<IPropertyTable>[] = [
+        {
+            title: "ID",
+            dataIndex: "id",
+            sorter: true,
+            hideInSearch: true,
+            render(dom, entity, index, action, schema) {
+
+                return (
+                    <a
+                        onClick={() => {
+                            setDataViewDetail(entity);
+                            setOpenViewDetail(true);
+                        }}
+                    >
+                        {entity.id}
+                    </a>
+                )
+            }
+        },
+
+        {
+            title: "Title",
+            dataIndex: "title",
+        },
+
+        {
+            title: "Property Type",
+            dataIndex: "propertyTypeName",
+            hideInSearch: true,
+        },
+
+        // =======================
+        // SEARCH: PROPERTY TYPE
+        // =======================
+        {
+            title: "Property Type",
+            dataIndex: "propertyType",
+            valueType: "select",
+            fieldProps: {
+                showSearch: true,
+                placeholder: "Select property type",
+                options: propertyTypes.map((pt) => ({
+                    label: pt.name,
+                    value: pt.name,
+                })),
+            },
+        },
+
+        {
+            title: "Status",
+            dataIndex: "status",
+            valueType: "select",
+            valueEnum: {
+                DRAFT: { text: "Draft", status: "Default" },
+                PENDING: { text: "Pending", status: "Processing" },
+                APPROVED: { text: "Approved", status: "Success" },
+                REJECTED: { text: "Rejected", status: "Error" },
+            },
+            render: (_, record) => {
+                const map: any = {
+                    DRAFT: "default",
+                    PENDING: "processing",
+                    APPROVED: "green",
+                    REJECTED: "red",
+                };
+                return <Tag color={map[record.status]}>{record.status}</Tag>;
+            },
+        },
+
+        {
+            title: "Price / Night",
+            dataIndex: "pricePerNight",
+            hideInSearch: true,
+            render: (_, record) =>
+                `${record.pricePerNight.toLocaleString()} ${record.currency}`,
+        },
+
+        {
+            title: "Created At",
+            dataIndex: "createdAt",
+            valueType: "dateTime",
+            sorter: true,
+            hideInSearch: true,
+        },
+
+        {
+            hideInSearch: true,
+            render: (_, entity) => (
+                <>
+                    {(entity.status === "DRAFT" || entity.status === "REJECTED") &&
+                        hasPermission("PROPERTY_UPDATE") && (
+                            <EditTwoTone
+                                twoToneColor="#f57800"
+                                style={{ cursor: "pointer" }}
+                            />
+                        )}
+                </>
+            ),
+        },
+    ];
+
+    return (
+        <>
+            <ProTable<IPropertyTable, TSearch>
+                actionRef={actionRef}
+                columns={columns}
+                rowKey="id"
+                headerTitle="My Properties"
+                search={{
+                    labelWidth: 120,
+                    collapseRender: false,
+                }}
+                pagination={{ showSizeChanger: true }}
+                request={async (params, sort) => {
+                    let sortParam = "id,desc";
+
+                    if (sort?.id) {
+                        sortParam = `id,${sort.id === "ascend" ? "asc" : "desc"}`;
+                    } else if (sort?.createdAt) {
+                        sortParam = `createdAt,${sort.createdAt === "ascend" ? "asc" : "desc"
+                            }`;
+                    }
+
+                    const res = await getMyPropertiesAPI({
+                        page: (params.current ?? 1) - 1,
+                        size: params.pageSize ?? 10,
+                        sort: sortParam,
+                        title: params.title,
+                        status: params.status,
+                        propertyType: params.propertyType, // string
+                    });
+
+                    return {
+                        data: res.data?.result ?? [],
+                        total: res.data?.meta.total ?? 0,
+                        success: true,
+                    };
+                }}
+            />
+
+            <DetailProperty
+                openViewDetail={openViewDetail}
+                setOpenViewDetail={setOpenViewDetail}
+                dataViewDetail={dataViewDetail}
+                setDataViewDetail={setDataViewDetail}
+            />
+
+        </>
+
+    );
+};
+
+export default HostTableProperty;
+

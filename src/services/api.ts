@@ -253,7 +253,7 @@ export const getPropertyTypesAPI = (params: {
     sort?: string;
 }) => {
     return axios.get<IBackendRes<IModelPaginate<IPropertyType>>>(
-        '/api/v1/admin/property-types',
+        '/api/v1/property-types',
         {
             params
         }
@@ -348,3 +348,18 @@ export const rejectContractAPI = (id: number, reason: string) => {
         params: { reason },
     });
 };
+
+export const getMyPropertiesAPI = (params: {
+  page: number;
+  size: number;
+  title?: string;
+  status?: string;
+  propertyType?: string;
+  sort?: string;
+}) => {
+  return axios.get<IBackendRes<IModelPaginate<IPropertyTable>>>(
+    "/api/v1/properties",
+    { params }
+  );
+};
+

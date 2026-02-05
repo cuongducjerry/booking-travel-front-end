@@ -60,11 +60,17 @@ const LayoutHost = () => {
             icon: <BookOutlined />,
             permission: "BOOKING_LIST_OWN"
         },
-          {
+        {
             label: <Link to="/host/contract">Manage Contract</Link>,
             key: "/host/contract",
             icon: <BookOutlined />,
             permission: "CONTRACT_LIST_PERSONAL"
+        },
+        {
+            label: <Link to="/host/property">Manage Property</Link>,
+            key: "/host/property",
+            icon: <BookOutlined />,
+            permission: "PROPERTY_LIST_OWN"
         },
     ];
 
