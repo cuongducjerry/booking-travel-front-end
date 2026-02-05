@@ -165,9 +165,9 @@ declare global {
         meta: IPaginationMeta;
     }
 
-    export type BookingStatus = "NEW" | "CONFIRMED" | "CANCELLED" | "DONE" | "PENDING" | "CANCEL_REQUESTED";
+    type BookingStatus = "NEW" | "CONFIRMED" | "CANCELLED" | "DONE" | "PENDING" | "CANCEL_REQUESTED";
 
-    export interface IBookingDetail {
+    interface IBookingDetail {
         id: number;
 
         checkIn: string;   // ISO date
@@ -281,6 +281,46 @@ declare global {
         size?: number;
         status?: "NEW" | "PENDING" | "CONFIRMED" | "CANCEL_REQUESTED" | "CANCELLED" | "DONE";
         sort?: string;
+    }
+
+    interface IHostContractTable {
+        id: number;
+        contractCode: string;
+        status: 'DRAFT' | 'ACTIVE' | 'EXPIRED' | 'TERMINATED';
+        commissionRate: number;
+
+        startDate: string;
+        endDate: string;
+        signedAt?: string;
+        terminatedAt?: string;
+        terminationReason?: string;
+
+        active: boolean;
+        createdAt: string;
+        updatedAt: string;
+
+        hostId: number;
+        hostName: string;
+
+        properties?: {
+            id: number;
+            title: string;
+            propertyTypeName: string;
+            address: string;
+        }[];
+    }
+
+    interface ICreateHostContractReq {
+        expectedCommissionRate: number; // 0.15 = 15%
+        startDate: string;              // yyyy-MM-dd
+        endDate: string;                // yyyy-MM-dd
+        propertyIds: number[];
+    }
+
+    interface IPropertyCheck {
+        id: number;
+        title: string;
+        hasActiveContract: boolean;
     }
 
 }

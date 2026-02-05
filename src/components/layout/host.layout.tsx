@@ -55,11 +55,17 @@ const LayoutHost = () => {
             icon: <AppstoreOutlined />,
         },
         {
-            label: <Link to="/host/booking">Booking Customers</Link>,
+            label: <Link to="/host/booking">Manage Booking</Link>,
             key: "/host/booking",
             icon: <BookOutlined />,
             permission: "BOOKING_LIST_OWN"
-        }
+        },
+          {
+            label: <Link to="/host/contract">Manage Contract</Link>,
+            key: "/host/contract",
+            icon: <BookOutlined />,
+            permission: "CONTRACT_LIST_PERSONAL"
+        },
     ];
 
 

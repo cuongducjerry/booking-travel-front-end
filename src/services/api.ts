@@ -314,3 +314,24 @@ export const getAllBookingsAPI = (params: {
         { params }
     );
 };
+
+export const getMyContractsAPI = (params: any) => {
+    return axios.get<IBackendRes<IModelPaginate<IHostContractTable>>>(
+        '/api/v1/host/contracts/me',
+        { params }
+    );
+};
+
+export const getContractDetailAPI = (id: number) => {
+    return axios.get<IBackendRes<IHostContractTable>>(`/api/v1/host/contracts/${id}`);
+};
+
+export const createHostContractAPI = (data: ICreateHostContractReq) => {
+    return axios.post<IBackendRes<IHostContractTable>>('/api/v1/host/contracts', data);
+};
+
+export const getMyPropertiesInActiveAPI = () => {
+    return axios.get<IBackendRes<IPropertyDetail[]>>("/api/v1/host/properties/inactive");
+};
+
+
