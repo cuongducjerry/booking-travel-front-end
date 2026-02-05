@@ -87,6 +87,12 @@ const LayoutAdmin = () => {
             icon: <ExceptionOutlined />,
             permission: "BOOKING_LIST_ALL",
         },
+        {
+            label: <Link to="/admin/contract">Manage Contracts</Link>,
+            key: "/admin/contract",
+            icon: <ExceptionOutlined />,
+            permission: "CONTRACT_LIST_ALL",
+        },
     ];
 
     const items: MenuItem[] = menuConfig.filter(item =>

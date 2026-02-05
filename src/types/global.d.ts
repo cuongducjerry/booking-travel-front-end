@@ -286,7 +286,7 @@ declare global {
     interface IHostContractTable {
         id: number;
         contractCode: string;
-        status: 'DRAFT' | 'ACTIVE' | 'EXPIRED' | 'TERMINATED';
+        status: 'DRAFT' | 'PENDING' | 'ACTIVE' | 'SUSPENDED' | 'EXPIRED' | 'TERMINATED';
         commissionRate: number;
 
         startDate: string;

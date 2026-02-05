@@ -334,4 +334,17 @@ export const getMyPropertiesInActiveAPI = () => {
     return axios.get<IBackendRes<IPropertyDetail[]>>("/api/v1/host/properties/inactive");
 };
 
+export const getAllContractsAPI = (params: any) =>
+    axios.get<IBackendRes<IModelPaginate<IHostContractTable>>>('/api/v1/admin/contracts', { params });
 
+// APPROVE
+export const approveContractAPI = (id: number) => {
+    return axios.put<IBackendRes<void>>(`/api/v1/admin/contracts/${id}/approve`);
+};
+
+// REJECT
+export const rejectContractAPI = (id: number, reason: string) => {
+    return axios.put<IBackendRes<void>>(`/api/v1/admin/contracts/${id}/reject`, null, {
+        params: { reason },
+    });
+};
