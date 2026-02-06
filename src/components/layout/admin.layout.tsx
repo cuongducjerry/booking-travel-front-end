@@ -93,6 +93,12 @@ const LayoutAdmin = () => {
             icon: <ExceptionOutlined />,
             permission: "CONTRACT_LIST_ALL",
         },
+        {
+            label: <Link to="/admin/property">Manage Properties</Link>,
+            key: "/admin/property",
+            icon: <ExceptionOutlined />,
+            permission: "PROPERTY_LIST_ALL",
+        },
     ];
 
     const items: MenuItem[] = menuConfig.filter(item =>

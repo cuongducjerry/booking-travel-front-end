@@ -34,6 +34,8 @@ import ManageBookingPage from 'pages/admin/manage.booking';
 import HostManageContractPage from 'pages/host/manage.contract';
 import AdminManageContractPage from 'pages/admin/manage.contract';
 import HostManagePropertyPage from 'pages/host/manage.property';
+import AdminManagePropertyPage from 'pages/admin/manage.property';
+import HostCreatePropertyPage from 'pages/host/create.property';
 
 const router = createBrowserRouter([
   {
@@ -153,6 +155,14 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+      {
+        path: "property",
+        element: (
+          <ProtectedRoute>
+            <AdminManagePropertyPage />
+          </ProtectedRoute>
+        ),
+      }
     ]
   },
   {
@@ -188,6 +198,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <HostManagePropertyPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "property/create",
+        element: (
+          <ProtectedRoute>
+            <HostCreatePropertyPage />
           </ProtectedRoute>
         ),
       },

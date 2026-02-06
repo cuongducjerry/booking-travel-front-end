@@ -81,7 +81,7 @@ declare global {
 
         images: string[];
 
-        amenities: IAmenity[];
+        amenities: IAmenityDTO[];
         reviews: IReview[] | null;
 
         propertyType: string;
@@ -105,7 +105,7 @@ declare global {
         address: string;
     }
 
-    interface IAmenity {
+    interface IAmenityDTO {
         amenityId: number;
         amenityName: string;
         amenityIcon: string;
@@ -342,7 +342,7 @@ declare global {
         // media + booking 
         images: string[];
         bookings: IBooking[];
-        amenities: IAmenity[];
+        amenities: IAmenityDTO[];
 
         // host
         hostId: number;

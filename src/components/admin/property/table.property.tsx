@@ -1,13 +1,12 @@
 import { getMyPropertiesAPI, getPropertyTypesAPI } from "@/services/api";
 import type { ActionType, ProColumns } from "@ant-design/pro-components";
 import { ProTable } from "@ant-design/pro-components";
-import { App, Tag, Select, Button } from "antd";
+import { App, Tag, Space, Button } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { hasPermission } from "@/utils/permission";
-import { EditTwoTone, PlusOutlined } from "@ant-design/icons";
+import { EditTwoTone } from "@ant-design/icons";
 import DetailProperty from "components/host/property/detail.property";
-import { useNavigate } from "react-router-dom";
-import { getAmenitiesAPI } from "@/services/api";
+import UpdateProperty from "./update.property";
 
 type TSearch = {
     title?: string;
@@ -15,34 +14,28 @@ type TSearch = {
     propertyType?: string;
 };
 
-const HostTableProperty = () => {
+const AdminTableProperty = () => {
     const actionRef = useRef<ActionType>();
     const { message } = App.useApp();
-    const navigate = useNavigate();
 
-    const [openViewDetail, setOpenViewDetail] = useState<boolean>(false);
+    const [openViewDetail, setOpenViewDetail] = useState(false);
     const [dataViewDetail, setDataViewDetail] = useState<IPropertyTable | null>(null);
-    const [openModalCreate, setOpenModalCreate] = useState<boolean>(false);
+    const [openModalUpdate, setOpenModalUpdate] = useState<boolean>(false);
+    const [dataUpdate, setDataUpdate] = useState<IPropertyTable | null>(null);
     const [propertyTypes, setPropertyTypes] = useState<IPropertyType[]>([]);
-
 
     // =======================
     // LOAD PROPERTY TYPES
     // =======================
     useEffect(() => {
-        const fetchPropertyTypes = async () => {
+        (async () => {
             try {
-                const res = await getPropertyTypesAPI({
-                    page: 0,
-                    size: 1000,
-                });
+                const res = await getPropertyTypesAPI({ page: 0, size: 1000 });
                 setPropertyTypes(res.data?.result ?? []);
-            } catch (err) {
+            } catch {
                 message.error("Không tải được danh sách Property Type");
             }
-        };
-
-        fetchPropertyTypes();
+        })();
     }, []);
 
     const columns: ProColumns<IPropertyTable>[] = [
@@ -51,19 +44,16 @@ const HostTableProperty = () => {
             dataIndex: "id",
             sorter: true,
             hideInSearch: true,
-            render(dom, entity, index, action, schema) {
-
-                return (
-                    <a
-                        onClick={() => {
-                            setDataViewDetail(entity);
-                            setOpenViewDetail(true);
-                        }}
-                    >
-                        {entity.id}
-                    </a>
-                )
-            }
+            render: (_, entity) => (
+                <a
+                    onClick={() => {
+                        setDataViewDetail(entity);
+                        setOpenViewDetail(true);
+                    }}
+                >
+                    {entity.id}
+                </a>
+            ),
         },
 
         {
@@ -72,14 +62,18 @@ const HostTableProperty = () => {
         },
 
         {
+            title: "Owner",
+            dataIndex: "hostName",
+            hideInSearch: true,
+        },
+
+        {
             title: "Property Type",
             dataIndex: "propertyTypeName",
             hideInSearch: true,
         },
 
-        // =======================
-        // SEARCH: PROPERTY TYPE
-        // =======================
+        // SEARCH PROPERTY TYPE
         {
             title: "Property Type",
             dataIndex: "propertyType",
@@ -120,8 +114,7 @@ const HostTableProperty = () => {
             title: "Price / Night",
             dataIndex: "pricePerNight",
             hideInSearch: true,
-            render: (_, record) =>
-                `${record.pricePerNight.toLocaleString()} ${record.currency}`,
+            render: (_, r) => `${r.pricePerNight.toLocaleString()} ${r.currency}`,
         },
 
         {
@@ -132,19 +125,28 @@ const HostTableProperty = () => {
             hideInSearch: true,
         },
 
+        // =======================
+        // ACTIONS (ADMIN)
+        // =======================
         {
+            title: "Action",
             hideInSearch: true,
-            render: (_, entity) => (
-                <>
-                    {(entity.status === "DRAFT" || entity.status === "REJECTED") &&
-                        hasPermission("PROPERTY_UPDATE") && (
+            render(dom, entity, index, action, schema) {
+                return (
+                    <>
+                        {hasPermission(["PROPERTY_APPROVE", "PROPERTY_DELETE_APPROVE"], "ALL") && (
                             <EditTwoTone
                                 twoToneColor="#f57800"
-                                style={{ cursor: "pointer" }}
+                                style={{ cursor: "pointer", marginRight: 15 }}
+                                onClick={() => {
+                                    setDataUpdate(entity);
+                                    setOpenModalUpdate(true);
+                                }}
                             />
                         )}
-                </>
-            ),
+                    </>
+                )
+            },
         },
     ];
 
@@ -158,21 +160,17 @@ const HostTableProperty = () => {
                 actionRef={actionRef}
                 columns={columns}
                 rowKey="id"
-                headerTitle="My Properties"
-                search={{
-                    labelWidth: 120,
-                    collapseRender: false,
-                }}
+                headerTitle="All Properties (Admin)"
+                search={{ labelWidth: 120, collapseRender: false }}
                 pagination={{ showSizeChanger: true }}
                 request={async (params, sort) => {
                     let sortParam = "id,desc";
 
-                    if (sort?.id) {
+                    if (sort?.id)
                         sortParam = `id,${sort.id === "ascend" ? "asc" : "desc"}`;
-                    } else if (sort?.createdAt) {
+                    else if (sort?.createdAt)
                         sortParam = `createdAt,${sort.createdAt === "ascend" ? "asc" : "desc"
                             }`;
-                    }
 
                     const res = await getMyPropertiesAPI({
                         page: (params.current ?? 1) - 1,
@@ -180,7 +178,7 @@ const HostTableProperty = () => {
                         sort: sortParam,
                         title: params.title,
                         status: params.status,
-                        propertyType: params.propertyType, // string
+                        propertyType: params.propertyType,
                     });
 
                     return {
@@ -189,18 +187,6 @@ const HostTableProperty = () => {
                         success: true,
                     };
                 }}
-                toolBarRender={() => [
-                    hasPermission("PROPERTY_CREATE") && (
-                        <Button
-                            key="add"
-                            type="primary"
-                            icon={<PlusOutlined />}
-                            onClick={() => navigate("/host/property/create")}
-                        >
-                            Add Property
-                        </Button>
-                    )
-                ]}
             />
 
             <DetailProperty
@@ -210,10 +196,16 @@ const HostTableProperty = () => {
                 setDataViewDetail={setDataViewDetail}
             />
 
-        </>
+            <UpdateProperty
+                openModalUpdate={openModalUpdate}
+                setOpenModalUpdate={setOpenModalUpdate}
+                refreshTable={refreshTable}
+                setDataUpdate={setDataUpdate}
+                dataUpdate={dataUpdate}
+            />
 
+        </>
     );
 };
 
-export default HostTableProperty;
-
+export default AdminTableProperty;

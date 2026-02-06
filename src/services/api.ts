@@ -225,7 +225,7 @@ export const getAmenitiesAPI = (params: {
     keyword?: string;
     sort?: string;
 }) => {
-    return axios.get<IBackendRes<IModelPaginate<IAmenity>>>('/api/v1/admin/amenities', { params });
+    return axios.get<IBackendRes<IModelPaginate<IAmenity>>>('/api/v1/amenities', { params });
 };
 
 export const deleteAmenityAPI = (id: number) => {
@@ -350,16 +350,99 @@ export const rejectContractAPI = (id: number, reason: string) => {
 };
 
 export const getMyPropertiesAPI = (params: {
-  page: number;
-  size: number;
-  title?: string;
-  status?: string;
-  propertyType?: string;
-  sort?: string;
+    page: number;
+    size: number;
+    title?: string;
+    status?: string;
+    propertyType?: string;
+    sort?: string;
 }) => {
-  return axios.get<IBackendRes<IModelPaginate<IPropertyTable>>>(
-    "/api/v1/properties",
-    { params }
-  );
+    return axios.get<IBackendRes<IModelPaginate<IPropertyTable>>>(
+        "/api/v1/properties",
+        { params }
+    );
 };
 
+export const decidePropertyAPI = (
+    id: number,
+    data: {
+        decision: "APPROVED" | "REJECTED" | "DRAFT";
+        reason?: string;
+    }
+) => {
+    return axios.put<IBackendRes<void>>(`/api/v1/admin/properties/${id}/decision`, data);
+};
+
+export const approveDeletePropertyAPI = (id: number) => {
+    return axios.put<IBackendRes<void>>(`/api/v1/admin/properties/${id}/approve-delete`);
+};
+
+/* =========================
+   HOST CREATE PROPERTY (STEP 1)
+   ========================= */
+export const createPropertyAPI = (data: {
+    title: string;
+    description: string;
+    address: string;
+    city: string;
+    pricePerNight: number;
+    maxGuests: number;
+    currency: string;
+    propertyTypeId: number;
+    contractId: number;
+}) => {
+    return axios.post<IBackendRes<IPropertyTable>>("/api/v1/host/properties", data);
+};
+
+/* =========================
+   HOST UPLOAD IMAGES (STEP 2)
+   ========================= */
+export const uploadPropertyImagesAPI = (
+    propertyId: number,
+    files: File[]
+) => {
+    const formData = new FormData();
+    files.forEach((file) => formData.append("files", file));
+
+    return axios.post<IBackendRes<void>>(
+        `/api/v1/host/properties/${propertyId}/images`,
+        formData,
+        {
+            headers: { "Content-Type": "multipart/form-data" },
+        }
+    );
+};
+
+/* =========================
+   HOST DELETE IMAGE (STEP 2)
+   ========================= */
+export const deletePropertyImageAPI = (
+    propertyId: number,
+    imageId: number
+) => {
+    return axios.delete<IBackendRes<void>>(
+        `/api/v1/host/properties/${propertyId}/images/${imageId}`
+    );
+};
+
+/* =========================
+   HOST UPDATE AMENITIES (STEP 3)
+   ========================= */
+export const updatePropertyAmenitiesAPI = (
+    propertyId: number,
+    amenityIds: number[]
+) => {
+    return axios.put<IBackendRes<void>>(
+        `/api/v1/host/properties/${propertyId}/amenities`,
+        { amenityIds }
+    );
+};
+
+/* =========================
+   HOST SUBMIT PROPERTY (STEP 4)
+   ========================= */
+export const submitPropertyAPI = (propertyId: number) => {
+    return axios.put<IBackendRes<IPropertyTable>>(
+        `/api/v1/host/properties/${propertyId}/submit`
+    );
+};
