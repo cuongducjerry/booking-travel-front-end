@@ -133,19 +133,27 @@ const HostTableProperty = () => {
         },
 
         {
+            title: "Action",
+            valueType: "option",
             hideInSearch: true,
-            render: (_, entity) => (
-                <>
-                    {(entity.status === "DRAFT" || entity.status === "REJECTED") &&
-                        hasPermission("PROPERTY_UPDATE") && (
-                            <EditTwoTone
-                                twoToneColor="#f57800"
-                                style={{ cursor: "pointer" }}
-                            />
-                        )}
-                </>
-            ),
-        },
+            render: (_, entity) => {
+                const allowEdit =
+                    hasPermission(["PROPERTY_UPDATE", "PROPERTY_VIEW", "PROPERTY_DRAFT_IMAGE_LIST"], "ALL") &&
+                    ["DRAFT", "REJECTED", "APPROVED", "PENDING"].includes(entity.status); // PENDING just view, not edit
+
+                if (!allowEdit) return null;
+
+                return (
+                    <EditTwoTone
+                        twoToneColor="#f57800"
+                        style={{ cursor: "pointer", fontSize: 18 }}
+                        onClick={() => {
+                            navigate(`/host/property/update/${entity.id}`);
+                        }}
+                    />
+                );
+            },
+        }
     ];
 
     const refreshTable = () => {

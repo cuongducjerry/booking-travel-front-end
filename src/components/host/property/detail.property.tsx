@@ -44,8 +44,8 @@ const DetailProperty = (props: IProps) => {
               dataViewDetail?.status === "APPROVED"
                 ? "success"
                 : dataViewDetail?.status === "REJECTED"
-                ? "error"
-                : "processing"
+                  ? "error"
+                  : "processing"
             }
             text={dataViewDetail?.status}
           />
@@ -110,41 +110,71 @@ const DetailProperty = (props: IProps) => {
 
       <br />
 
-      <Descriptions bordered column={2} title="Bookings (Confirmed)">
-        <Descriptions.Item span={2}>
-          {dataViewDetail?.bookings?.length ? (
-            dataViewDetail.bookings.map((b, index) => (
-              <Tag key={index}>
-                {dayjs(b.checkIn).format(FORMATE_DATE_VN)} →{" "}
-                {dayjs(b.checkOut).format(FORMATE_DATE_VN)}
-              </Tag>
-            ))
-          ) : (
-            "--"
-          )}
-        </Descriptions.Item>
-      </Descriptions>
+      {dataViewDetail?.status === "APPROVED" && (
+        <>
+          <Descriptions bordered column={2} title="Bookings (Confirmed)">
+            <Descriptions.Item span={2}>
+              {dataViewDetail?.bookings?.length ? (
+                dataViewDetail.bookings.map((b, index) => (
+                  <Tag key={index}>
+                    {dayjs(b.checkIn).format(FORMATE_DATE_VN)} →{" "}
+                    {dayjs(b.checkOut).format(FORMATE_DATE_VN)}
+                  </Tag>
+                ))
+              ) : (
+                "--"
+              )}
+            </Descriptions.Item>
+          </Descriptions>
+
+          <br />
+
+          <Descriptions bordered column={2} title="Images">
+            <Descriptions.Item span={2}>
+              {dataViewDetail?.images?.length ? (
+                <Image.PreviewGroup>
+                  {dataViewDetail.images.map((img, idx) => (
+                    <Image
+                      key={idx}
+                      src={img.imageUrl}
+                      width={120}
+                      style={{ marginRight: 8 }}
+                    />
+                  ))}
+                </Image.PreviewGroup>
+              ) : (
+                "--"
+              )}
+            </Descriptions.Item>
+          </Descriptions>
+        </>
+      )}
 
       <br />
 
-      <Descriptions bordered column={2} title="Images">
-        <Descriptions.Item span={2}>
-          {dataViewDetail?.images?.length ? (
-            <Image.PreviewGroup>
-              {dataViewDetail.images.map((img, idx) => (
-                <Image
-                  key={idx}
-                  src={img}
-                  width={120}
-                  style={{ marginRight: 8 }}
-                />
-              ))}
-            </Image.PreviewGroup>
-          ) : (
-            "--"
-          )}
-        </Descriptions.Item>
-      </Descriptions>
+      {dataViewDetail?.status !== "APPROVED" && (
+        <>
+          <br />
+          <Descriptions bordered column={2} title="Image Drafts">
+            <Descriptions.Item span={2}>
+              {dataViewDetail?.imageDrafts?.length ? (
+                <Image.PreviewGroup>
+                  {dataViewDetail.imageDrafts.map((img, idx) => (
+                    <Image
+                      key={idx}
+                      src={img.imageUrl}
+                      width={120}
+                      style={{ marginRight: 8 }}
+                    />
+                  ))}
+                </Image.PreviewGroup>
+              ) : (
+                "--"
+              )}
+            </Descriptions.Item>
+          </Descriptions>
+        </>
+      )}
 
       <br />
 

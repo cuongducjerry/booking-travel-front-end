@@ -60,7 +60,7 @@ declare global {
         title: string;
         address: string;
         pricePerNight: number;
-        images: string[];
+        images: IPropertyImage[];
     }
 
     interface IPropertyDetail {
@@ -340,7 +340,8 @@ declare global {
         propertyTypeName: string;
 
         // media + booking 
-        images: string[];
+        images: IPropertyImage[];
+        imageDrafts?: IPropertyImage[]; 
         bookings: IBooking[];
         amenities: IAmenityDTO[];
 
@@ -354,6 +355,11 @@ declare global {
         // status & meta
         status: string;
         createdAt: string;
+    }
+
+    interface IPropertyImage {
+        id: number;
+        imageUrl: string;
     }
 
 }

@@ -40,7 +40,7 @@ const HomePropertySlider = ({ title = "Property", properties }: Props) => {
                             onClick={() => navigate(`/property/${item.id}`)}
                         >
                             <div className="property-card">
-                                <img src={item.images?.[0]} alt={item.title} />
+                                <img src={item.images?.[0].imageUrl} alt={item.title} />
                                 <h3>{item.title}</h3>
                                 <p>{item.address}</p>
                                 <span>

@@ -425,6 +425,16 @@ export const deletePropertyImageAPI = (
     );
 };
 
+export const deletePropertyImageDraftAPI = (
+    propertyId: number,
+    imageId: number
+) => {
+    return axios.delete<IBackendRes<void>>(
+        `/api/v1/host/properties/${propertyId}/image-drafts/${imageId}`
+    );
+};
+
+
 /* =========================
    HOST UPDATE AMENITIES (STEP 3)
    ========================= */
@@ -446,3 +456,19 @@ export const submitPropertyAPI = (propertyId: number) => {
         `/api/v1/host/properties/${propertyId}/submit`
     );
 };
+
+
+export const updatePropertyAPI = (id: number, data: any) =>
+  axios.put<IBackendRes<IPropertyDetail>>(`/api/v1/host/properties/${id}`, data);
+
+
+export const getHostPropertyById = (id: string) => {
+    const urlBackend = `/api/v1/host/view/properties/${id}`;
+    return axios.get<IBackendRes<IPropertyTable>>(urlBackend)
+}
+
+export const getDraftImageByPropertyId = (id: string) => {
+    const urlBackend = `/api/v1/host/image-drafts/${id}`;
+    return axios.get<IBackendRes<IPropertyImage[]>>(urlBackend)
+}
+

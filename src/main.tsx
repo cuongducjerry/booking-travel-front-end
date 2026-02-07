@@ -36,6 +36,7 @@ import AdminManageContractPage from 'pages/admin/manage.contract';
 import HostManagePropertyPage from 'pages/host/manage.property';
 import AdminManagePropertyPage from 'pages/admin/manage.property';
 import HostCreatePropertyPage from 'pages/host/create.property';
+import HostUpdatePropertyPage from 'pages/host/update.property';
 
 const router = createBrowserRouter([
   {
@@ -206,6 +207,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <HostCreatePropertyPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "property/update/:id",
+        element: (
+          <ProtectedRoute>
+            <HostUpdatePropertyPage />
           </ProtectedRoute>
         ),
       },
