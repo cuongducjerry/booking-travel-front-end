@@ -1,10 +1,10 @@
-import { getMyPropertiesAPI, getPropertyTypesAPI } from "@/services/api";
+import { getMyPropertiesAPI, getPropertyTypesAPI, hostDeletePropertyAPI } from "@/services/api";
 import type { ActionType, ProColumns } from "@ant-design/pro-components";
 import { ProTable } from "@ant-design/pro-components";
-import { App, Tag, Select, Button } from "antd";
+import { App, Tag, Select, Button, Space, Popconfirm } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { hasPermission } from "@/utils/permission";
-import { EditTwoTone, PlusOutlined } from "@ant-design/icons";
+import { DeleteTwoTone, EditTwoTone, PlusOutlined } from "@ant-design/icons";
 import DetailProperty from "components/host/property/detail.property";
 import { useNavigate } from "react-router-dom";
 import { getAmenitiesAPI } from "@/services/api";
@@ -137,20 +137,62 @@ const HostTableProperty = () => {
             valueType: "option",
             hideInSearch: true,
             render: (_, entity) => {
-                const allowEdit =
-                    hasPermission(["PROPERTY_UPDATE", "PROPERTY_VIEW", "PROPERTY_DRAFT_IMAGE_LIST"], "ALL") &&
-                    ["DRAFT", "REJECTED", "APPROVED", "PENDING"].includes(entity.status); // PENDING just view, not edit
 
-                if (!allowEdit) return null;
+                // ===== EDIT =====
+                const allowEdit =
+                    hasPermission(
+                        ["PROPERTY_UPDATE", "PROPERTY_VIEW", "PROPERTY_DRAFT_IMAGE_LIST"],
+                        "ALL"
+                    ) &&
+                    ["DRAFT", "REJECTED", "APPROVED", "PENDING"].includes(entity.status);
+
+                // ===== DELETE =====
+                const allowDelete =
+                    hasPermission("PROPERTY_DELETE") &&
+                    ["DRAFT", "REJECTED"].includes(entity.status); // chỉ cho xoá khi hợp lệ
+
+                if (!allowEdit && !allowDelete) return null;
 
                 return (
-                    <EditTwoTone
-                        twoToneColor="#f57800"
-                        style={{ cursor: "pointer", fontSize: 18 }}
-                        onClick={() => {
-                            navigate(`/host/property/update/${entity.id}`);
-                        }}
-                    />
+                    <Space size="middle">
+                        {allowEdit && (
+                            <EditTwoTone
+                                twoToneColor="#f57800"
+                                style={{ cursor: "pointer", fontSize: 18 }}
+                                onClick={() =>
+                                    navigate(`/host/property/update/${entity.id}`)
+                                }
+                            />
+                        )}
+
+                        {allowDelete && (
+                            <Popconfirm
+                                title="Xác nhận xóa property"
+                                description="Property sẽ được gửi yêu cầu xóa và chờ admin duyệt"
+                                okText="Xóa"
+                                cancelText="Hủy"
+                                onConfirm={async () => {
+                                    try {
+                                        await hostDeletePropertyAPI(entity.id);
+                                        message.success(
+                                            "Đã gửi yêu cầu xóa, chờ admin duyệt"
+                                        );
+                                        actionRef.current?.reload();
+                                    } catch (err: any) {
+                                        message.error(
+                                            err?.response?.data?.message ||
+                                            "Xóa property thất bại"
+                                        );
+                                    }
+                                }}
+                            >
+                                <DeleteTwoTone
+                                    twoToneColor="#ff4d4f"
+                                    style={{ cursor: "pointer", fontSize: 18 }}
+                                />
+                            </Popconfirm>
+                        )}
+                    </Space>
                 );
             },
         }

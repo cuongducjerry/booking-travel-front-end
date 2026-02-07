@@ -472,3 +472,11 @@ export const getDraftImageByPropertyId = (id: string) => {
     return axios.get<IBackendRes<IPropertyImage[]>>(urlBackend)
 }
 
+// =======================
+// HOST REQUEST DELETE
+// =======================
+export const hostDeletePropertyAPI = (propertyId: number) => {
+    return axios.delete<IBackendRes<void>>(
+        `/api/v1/host/properties/${propertyId}`
+    );
+};
