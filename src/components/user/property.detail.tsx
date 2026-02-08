@@ -6,8 +6,8 @@ import {
     TeamOutlined
 } from "@ant-design/icons";
 import dayjs, { Dayjs } from "dayjs";
-import { Button, Tag, Avatar, Divider, Empty, DatePicker, Select, InputNumber } from "antd";
-import { useState } from "react";
+import { Button, Tag, Avatar, Divider, Empty, DatePicker, Select, InputNumber, Pagination, Rate } from "antd";
+import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     AMENITY_ICON_MAP,
@@ -18,6 +18,7 @@ import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import { formatVND } from "@/utils/format";
 import { useNavigate } from "react-router-dom";
+import { getReviewsByPropertyAPI } from "@/services/api";
 
 interface IProps {
     currentProperty: IPropertyDetail | null;
@@ -28,9 +29,34 @@ const PropertyDetail = ({ currentProperty }: IProps) => {
     const [guests, setGuests] = useState<number>(1);
     const [openGallery, setOpenGallery] = useState(false);
     const [activeIndex, setActiveIndex] = useState(0);
+    const [reviews, setReviews] = useState<IResReviewDTO[]>([]);
+    const [totalReviews, setTotalReviews] = useState(0);
+    const [page, setPage] = useState(1);
     const navigate = useNavigate();
     dayjs.extend(isSameOrAfter);
     dayjs.extend(isSameOrBefore);
+
+
+    useEffect(() => {
+        if (!currentProperty?.id) return;
+
+        const fetchReviews = async () => {
+            try {
+                const res = await getReviewsByPropertyAPI(currentProperty.id, page, 5);
+
+                const data = res?.data;
+                if (!data) return;
+
+                setReviews(data.result ?? []);
+                setTotalReviews(data.meta.total ?? 0);
+            } catch {
+                setReviews([]);
+                setTotalReviews(0);
+            }
+        };
+
+        fetchReviews();
+    }, [currentProperty?.id, page]);
 
     if (!currentProperty) return <Empty />;
 
@@ -174,7 +200,46 @@ const PropertyDetail = ({ currentProperty }: IProps) => {
 
                     {/* REVIEWS */}
                     <h2>Reviews</h2>
-                    <Empty description="No reviews yet" />
+
+                    {reviews.length === 0 ? (
+                        <Empty description="No reviews yet" />
+                    ) : (
+                        <div className="review-list">
+                            {reviews.map((r) => (
+                                <div key={r.id} className="review-item">
+                                    <div style={{ display: "flex", gap: 12 }}>
+                                        <Avatar src={r.imageUrl}>
+                                            {!r.imageUrl && r.commentUserName.charAt(0).toUpperCase()}
+                                        </Avatar>
+
+                                        <div style={{ flex: 1 }}>
+                                            <strong>{r.commentUserName}</strong>
+                                            <div>
+                                                <Rate disabled value={r.rating} />
+                                            </div>
+                                            <p style={{ marginTop: 6 }}>{r.comment}</p>
+                                            <small style={{ color: "#888" }}>
+                                                {dayjs(r.createdAt).format("DD/MM/YYYY")}
+                                            </small>
+                                        </div>
+                                    </div>
+
+                                    <Divider />
+                                </div>
+                            ))}
+
+                            {totalReviews > 5 && (
+                                <Pagination
+                                    current={page}
+                                    pageSize={5}
+                                    total={totalReviews}
+                                    onChange={(p) => setPage(p)}
+                                    style={{ textAlign: "center" }}
+                                />
+                            )}
+                        </div>
+                    )}
+
                     <Divider />
                 </div>
 
@@ -232,7 +297,7 @@ const PropertyDetail = ({ currentProperty }: IProps) => {
                         style={{ width: "100%", marginTop: 12 }}
                     />
 
-                    <Divider/>
+                    <Divider />
 
                     <Button
 

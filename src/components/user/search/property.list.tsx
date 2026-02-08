@@ -52,7 +52,7 @@ const PropertyList = ({
                         xs={24}
                         md={12}
                     >
-                        <PropertyCard p={p} />
+                        <PropertyCard propertyId={p.id} />
                     </Col>
                 ))}
             </Row>

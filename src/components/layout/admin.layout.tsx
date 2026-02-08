@@ -105,6 +105,12 @@ const LayoutAdmin = () => {
             icon: <ExceptionOutlined />,
             permission: "PAYOUT_LIST_ALL",
         },
+        {
+            label: <Link to="/admin/fee">Manage Fees</Link>,
+            key: "/admin/fee",
+            icon: <ExceptionOutlined />,
+            permission: "FEE_LIST",
+        },
     ];
 
     const items: MenuItem[] = menuConfig.filter(item =>

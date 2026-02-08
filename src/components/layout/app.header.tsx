@@ -46,10 +46,16 @@ const AppHeader = () => {
 
   /* ===== USER ===== */
   if (isUser) {
-    items.push({
-      key: "history",
-      label: <Link to="/booking-history">Lịch sử booking</Link>,
-    });
+    items.push(
+      {
+        key: "history",
+        label: <Link to="/booking-history">Lịch sử booking</Link>,
+      },
+      {
+        key: "wishlist",
+        label: <Link to="/my-wishlist">Danh sách yêu thích</Link>,
+      },
+    );
   }
 
   /* ===== HOST ===== */

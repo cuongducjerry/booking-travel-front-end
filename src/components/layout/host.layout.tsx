@@ -78,6 +78,12 @@ const LayoutHost = () => {
             icon: <BookOutlined />,
             permission: "PAYOUT_LIST_OWN"
         },
+        {
+            label: <Link to="/host/fee">Manage Fee</Link>,
+            key: "/host/fee",
+            icon: <BookOutlined />,
+            permission: "FEE_LIST"
+        },
     ];
 
 

@@ -195,6 +195,12 @@ declare global {
         // ---- Property info ----
         propertyId: number;
         propertyName: string;
+
+        review?: {
+            id: number;
+            rating: number;
+            comment: string;
+        } | null;
     }
 
     interface IUserTable {
@@ -403,6 +409,34 @@ declare global {
         contractId: number;
         periodFrom: string; // yyyy-MM-dd
         periodTo: string;   // yyyy-MM-dd
+    }
+
+    interface IResHostFee {
+        id: number;
+        bookingId: number;
+        amount: number;
+        rate: number;
+        status: "PENDING" | "PAID" | "OVERDUE";
+        dueAt: string;
+        paidAt?: string;
+    }
+
+    interface IResPropertyWishlist {
+        propertyId: number;
+        propertyName: string;
+        address: string;
+        imageUrl: string;
+        isWishlisted: boolean;
+    }
+
+    interface IResReviewDTO {
+        id: number;
+        rating: number;
+        comment: string;
+        createdAt: string;
+        updatedAt: string;
+        imageUrl?: string;
+        commentUserName: string;
     }
 
 }

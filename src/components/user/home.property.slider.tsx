@@ -1,8 +1,8 @@
-import { formatVND } from "@/utils/format";
 import { Empty } from "antd";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "styles/components/home.property.slider.scss";
+import PropertyCard from "./search/property.card";
 
 interface Props {
     title?: string;
@@ -11,7 +11,6 @@ interface Props {
 
 const HomePropertySlider = ({ title = "Property", properties }: Props) => {
     const sliderRef = useRef<HTMLDivElement>(null);
-    const navigate = useNavigate();
 
     const scroll = (offset: number) => {
         sliderRef.current?.scrollBy({
@@ -35,18 +34,9 @@ const HomePropertySlider = ({ title = "Property", properties }: Props) => {
 
             <div className="airbnb-slider" ref={sliderRef}>
                 {properties.length > 0 ? (
-                    properties.map(item => (
-                        <div className="slider-item" key={item.id}
-                            onClick={() => navigate(`/property/${item.id}`)}
-                        >
-                            <div className="property-card">
-                                <img src={item.images?.[0].imageUrl} alt={item.title} />
-                                <h3>{item.title}</h3>
-                                <p>{item.address}</p>
-                                <span>
-                                    <strong>{formatVND(item.pricePerNight)}</strong> / night
-                                </span>
-                            </div>
+                    properties.map((item) => (
+                        <div className="slider-item" key={item.id}>
+                            <PropertyCard propertyId={item.id} />
                         </div>
                     ))
                 ) : (
@@ -60,3 +50,4 @@ const HomePropertySlider = ({ title = "Property", properties }: Props) => {
 };
 
 export default HomePropertySlider;
+

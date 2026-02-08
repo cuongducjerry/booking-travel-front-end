@@ -533,3 +533,87 @@ export const getMyPayoutsAPI = (params: any) =>
     );
 
 
+export const getAllFeesAPI = (params: {
+    page: number;
+    size: number;
+    sort?: string;
+    status?: string;
+}) => {
+    return axios.get<IBackendRes<IModelPaginate<IResHostFee>>>("/api/v1/fees", {
+        params,
+    });
+};
+
+export const updateFeeStatusAPI = (
+    feeId: number,
+    status: "PAID" | "OVERDUE"
+) => {
+    return axios.put<IBackendRes<IResHostFee>>(
+        `/api/v1/admin/fees/${feeId}/status`,
+        { status }
+    );
+};
+
+
+export const getMyWishlistAPI = (params: {
+    page: number;
+    size: number;
+}) => {
+    return axios.get<IBackendRes<IModelPaginate<IResPropertyWishlist>>>(
+        "/api/v1/wishlists/my-wishlist",
+        { params }
+    );
+};
+
+export const toggleWishlistAPI = (propertyId: number) => {
+    return axios.post<IBackendRes<void>>(
+        `/api/v1/wishlists/toggle/${propertyId}`
+    );
+};
+
+export const checkWishlistAPI = (propertyId: number) => {
+    return axios.get<IBackendRes<boolean>>(`/api/v1/wishlists/check/${propertyId}`);
+};
+
+
+export const createReviewAPI = (
+    propertyId: number,
+    data: {
+        rating: number;
+        comment: string;
+    }
+) => {
+    return axios.post<IBackendRes<IResReviewDTO>>(
+        `/api/v1/reviews/${propertyId}`,
+        data
+    );
+};
+
+export const updateReviewAPI = (data: {
+    id: number;
+    rating: number;
+    comment: string;
+}) =>
+    axios.put(`/api/v1/reviews/update`, data);
+
+export const deleteReviewAPI = (id: number) =>
+    axios.delete<IBackendRes<void>>(`/api/v1/reviews/${id}`);
+
+
+export const getReviewsByPropertyAPI = (
+    propertyId: number,
+    page = 1,
+    size = 5
+) => {
+    return axios.get<IBackendRes<IModelPaginate<IResReviewDTO>>>(
+        `/api/v1/reviews/property/${propertyId}`,
+        {
+            params: {
+                page: page - 1, 
+                size,
+            },
+        }
+    );
+};
+
+

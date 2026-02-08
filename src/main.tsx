@@ -39,6 +39,9 @@ import HostCreatePropertyPage from 'pages/host/create.property';
 import HostUpdatePropertyPage from 'pages/host/update.property';
 import AdminManagePayoutPage from 'pages/admin/manage.payout';
 import HostManagePayoutPage from 'pages/host/manage.payout';
+import AdminManageFeePage from 'pages/admin/manage.fee';
+import HostManageFeePage from 'pages/host/manage.fee';
+import MyWishlist from 'pages/user/wishlist';
 
 const router = createBrowserRouter([
   {
@@ -85,6 +88,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute permission={["BOOKING_LIST_PERSONAL"]}>
             <BookingHistoryPage />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: "/my-wishlist",
+        element: (
+          <ProtectedRoute permission={["WISHLIST_PERSONAL"]}>
+            <MyWishlist />
           </ProtectedRoute>
         )
       }
@@ -173,6 +184,14 @@ const router = createBrowserRouter([
             <AdminManagePayoutPage />
           </ProtectedRoute>
         ),
+      },
+      {
+        path: "fee",
+        element: (
+          <ProtectedRoute>
+            <AdminManageFeePage />
+          </ProtectedRoute>
+        ),
       }
     ]
   },
@@ -233,6 +252,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <HostManagePayoutPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "fee",
+        element: (
+          <ProtectedRoute>
+            <HostManageFeePage />
           </ProtectedRoute>
         ),
       }
