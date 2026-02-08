@@ -44,16 +44,22 @@ const AdminTableProperty = () => {
             dataIndex: "id",
             sorter: true,
             hideInSearch: true,
-            render: (_, entity) => (
-                <a
-                    onClick={() => {
-                        setDataViewDetail(entity);
-                        setOpenViewDetail(true);
-                    }}
-                >
-                    {entity.id}
-                </a>
-            ),
+            render: (_, entity) => {
+                const allowView = hasPermission(["PAYOUT_VIEW_ALL"]);
+
+                return allowView ? (
+                    <a
+                        onClick={() => {
+                            setDataViewDetail(entity);
+                            setOpenViewDetail(true);
+                        }}
+                    >
+                        {entity.id}
+                    </a>
+                ) : (
+                    <span>{entity.id}</span>
+                );
+            },
         },
 
         {

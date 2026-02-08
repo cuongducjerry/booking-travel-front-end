@@ -37,6 +37,8 @@ import HostManagePropertyPage from 'pages/host/manage.property';
 import AdminManagePropertyPage from 'pages/admin/manage.property';
 import HostCreatePropertyPage from 'pages/host/create.property';
 import HostUpdatePropertyPage from 'pages/host/update.property';
+import AdminManagePayoutPage from 'pages/admin/manage.payout';
+import HostManagePayoutPage from 'pages/host/manage.payout';
 
 const router = createBrowserRouter([
   {
@@ -163,6 +165,14 @@ const router = createBrowserRouter([
             <AdminManagePropertyPage />
           </ProtectedRoute>
         ),
+      },
+      {
+        path: "payout",
+        element: (
+          <ProtectedRoute>
+            <AdminManagePayoutPage />
+          </ProtectedRoute>
+        ),
       }
     ]
   },
@@ -218,6 +228,14 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+      {
+        path: "payout",
+        element: (
+          <ProtectedRoute>
+            <HostManagePayoutPage />
+          </ProtectedRoute>
+        ),
+      }
     ],
   },
   {

@@ -341,7 +341,7 @@ declare global {
 
         // media + booking 
         images: IPropertyImage[];
-        imageDrafts?: IPropertyImage[]; 
+        imageDrafts?: IPropertyImage[];
         bookings: IBooking[];
         amenities: IAmenityDTO[];
 
@@ -360,6 +360,49 @@ declare global {
     interface IPropertyImage {
         id: number;
         imageUrl: string;
+    }
+
+    interface IResHostPayout {
+        id: number;
+        hostId: number;
+        contractId: number;
+
+        periodFrom: string;
+        periodTo: string;
+
+        grossAmount: number;
+        commissionFee: number;
+        netAmount: number;
+
+        status: "PENDING" | "PAID" | "REJECTED";
+
+        // audit
+        createdAt: string;
+        updatedAt: string;
+
+        // paid
+        paidAt?: string;
+        transactionRef?: string;
+
+        // rejected
+        rejectedAt?: string;
+        rejectReason?: string;
+
+        items: IResHostPayoutItem[];
+    }
+
+    interface IResHostPayoutItem {
+        id: number;
+        bookingId: number;
+        bookingAmount: number;
+        commissionFee: number;
+        netAmount: number;
+    }
+
+    interface IReqCreateHostPayout {
+        contractId: number;
+        periodFrom: string; // yyyy-MM-dd
+        periodTo: string;   // yyyy-MM-dd
     }
 
 }

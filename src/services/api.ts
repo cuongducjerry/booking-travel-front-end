@@ -459,7 +459,7 @@ export const submitPropertyAPI = (propertyId: number) => {
 
 
 export const updatePropertyAPI = (id: number, data: any) =>
-  axios.put<IBackendRes<IPropertyDetail>>(`/api/v1/host/properties/${id}`, data);
+    axios.put<IBackendRes<IPropertyDetail>>(`/api/v1/host/properties/${id}`, data);
 
 
 export const getHostPropertyById = (id: string) => {
@@ -480,3 +480,56 @@ export const hostDeletePropertyAPI = (propertyId: number) => {
         `/api/v1/host/properties/${propertyId}`
     );
 };
+
+export const getAllPayoutsAPI = (params: {
+    page: number;
+    size: number;
+    sort?: string;
+    status?: string;
+}) => {
+    return axios.get<IBackendRes<IModelPaginate<IResHostPayout>>>(
+        "/api/v1/admin/host-payouts",
+        { params }
+    );
+};
+
+export const markPaidPayoutAPI = (
+    payoutId: number,
+    transactionRef: string
+) => {
+    return axios.put<IBackendRes<IResHostPayout>>(
+        `/api/v1/admin/host-payouts/${payoutId}/mark-paid`,
+        null,
+        {
+            params: { transactionRef },
+        }
+    );
+};
+
+export const markRejectedPayoutAPI = (
+    payoutId: number,
+    reason: string
+) => {
+    return axios.put<IBackendRes<IResHostPayout>>(
+        `/api/v1/admin/host-payouts/${payoutId}/mark-rejected`,
+        null,
+        {
+            params: { reason },
+        }
+    );
+};
+
+export const createHostPayoutAPI = (data: IReqCreateHostPayout) => {
+    return axios.post<IBackendRes<IResHostPayout>>(
+        "/api/v1/admin/host-payouts",
+        data
+    );
+};
+
+export const getMyPayoutsAPI = (params: any) =>
+    axios.get<IBackendRes<IModelPaginate<IResHostPayout>>>(
+        "/api/v1/host/host-payouts/me",
+        { params }
+    );
+
+

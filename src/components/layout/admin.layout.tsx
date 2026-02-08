@@ -99,6 +99,12 @@ const LayoutAdmin = () => {
             icon: <ExceptionOutlined />,
             permission: "PROPERTY_LIST_ALL",
         },
+        {
+            label: <Link to="/admin/payout">Manage Payouts</Link>,
+            key: "/admin/payout",
+            icon: <ExceptionOutlined />,
+            permission: "PAYOUT_LIST_ALL",
+        },
     ];
 
     const items: MenuItem[] = menuConfig.filter(item =>

@@ -72,6 +72,12 @@ const LayoutHost = () => {
             icon: <BookOutlined />,
             permission: "PROPERTY_LIST_OWN"
         },
+        {
+            label: <Link to="/host/payout">Manage Payout</Link>,
+            key: "/host/payout",
+            icon: <BookOutlined />,
+            permission: "PAYOUT_LIST_OWN"
+        },
     ];
 
 
