@@ -12,6 +12,9 @@ export default defineConfig(({ command, mode }) => {
       react(),
       tsconfigPaths()
     ],
+    define: {
+      global: "window",
+    },
     server: {
       port: parseInt(env.PORT)
     }

@@ -103,7 +103,11 @@ const router = createBrowserRouter([
   },
   {
     path: "admin",
-    element: <LayoutAdmin />,
+    element: (
+      <ProtectedRoute role={[ROLE.ADMIN, ROLE.SUPER_ADMIN]}>
+        <LayoutAdmin />
+      </ProtectedRoute>
+    ),
     children: [
       {
         index: true,
@@ -197,7 +201,11 @@ const router = createBrowserRouter([
   },
   {
     path: "host",
-    element: <LayoutHost />,
+    element: (
+      <ProtectedRoute role={[ROLE.HOST]}>
+        <LayoutHost />
+      </ProtectedRoute>
+    ),
     children: [
       {
         index: true,

@@ -12,6 +12,7 @@ import { useCurrentApp } from "@/components/context/app.context";
 import { logoutAPI } from "@/services/api";
 import { ROLE } from "@/utils/constants/global.var";
 import { hasPermission } from "@/utils/permission";
+import NotificationBell from "components/layout/notification";
 
 const { Content, Footer, Sider } = Layout;
 type MenuItem = Required<MenuProps>["items"][number];
@@ -55,31 +56,31 @@ const LayoutHost = () => {
             icon: <AppstoreOutlined />,
         },
         {
-            label: <Link to="/host/booking">Manage Booking</Link>,
+            label: <Link to="/host/booking">Manage Bookings</Link>,
             key: "/host/booking",
             icon: <BookOutlined />,
             permission: "BOOKING_LIST_OWN"
         },
         {
-            label: <Link to="/host/contract">Manage Contract</Link>,
+            label: <Link to="/host/contract">Manage Contracts</Link>,
             key: "/host/contract",
             icon: <BookOutlined />,
             permission: "CONTRACT_LIST_PERSONAL"
         },
         {
-            label: <Link to="/host/property">Manage Property</Link>,
+            label: <Link to="/host/property">Manage Properties</Link>,
             key: "/host/property",
             icon: <BookOutlined />,
             permission: "PROPERTY_LIST_OWN"
         },
         {
-            label: <Link to="/host/payout">Manage Payout</Link>,
+            label: <Link to="/host/payout">Manage Payouts</Link>,
             key: "/host/payout",
             icon: <BookOutlined />,
             permission: "PAYOUT_LIST_OWN"
         },
         {
-            label: <Link to="/host/fee">Manage Fee</Link>,
+            label: <Link to="/host/fee">Manage Fees</Link>,
             key: "/host/fee",
             icon: <BookOutlined />,
             permission: "FEE_LIST"
@@ -152,12 +153,22 @@ const LayoutHost = () => {
                         { onClick: () => setCollapsed(!collapsed) }
                     )}
 
-                    <Dropdown menu={{ items: dropdownItems }} trigger={["click"]}>
-                        <Space style={{ cursor: "pointer" }}>
-                            <Avatar src={user?.avatarUrl} />
-                            {user?.fullName}
-                        </Space>
-                    </Dropdown>
+                    <div
+                        style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 16,
+                        }}
+                    >
+                        {isAuthenticated && <NotificationBell />}
+
+                        <Dropdown menu={{ items: dropdownItems }} trigger={['click']}>
+                            <Space style={{ cursor: "pointer" }}>
+                                <Avatar src={user?.avatarUrl} />
+                                <span>{user?.fullName}</span>
+                            </Space>
+                        </Dropdown>
+                    </div>
                 </div>
 
                 <Content style={{ padding: 16 }}>

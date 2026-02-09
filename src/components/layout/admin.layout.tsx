@@ -15,6 +15,7 @@ import type { MenuProps } from 'antd';
 import { logoutAPI } from '@/services/api';
 import { ROLE } from '@/utils/constants/global.var';
 import { hasPermission } from '@/utils/permission';
+import NotificationBell from 'components/layout/notification';
 type MenuItem = Required<MenuProps>['items'][number];
 
 const { Content, Footer, Sider } = Layout;
@@ -194,12 +195,22 @@ const LayoutAdmin = () => {
                                 onClick: () => setCollapsed(!collapsed),
                             })}
                         </span>
-                        <Dropdown menu={{ items: itemsDropdown }} trigger={['click']}>
-                            <Space style={{ cursor: "pointer" }}>
-                                <Avatar src={user?.avatarUrl} />
-                                {user?.fullName}
-                            </Space>
-                        </Dropdown>
+                        <div
+                            style={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: 16,
+                            }}
+                        >
+                            {isAuthenticated && <NotificationBell />}
+
+                            <Dropdown menu={{ items: itemsDropdown }} trigger={['click']}>
+                                <Space style={{ cursor: "pointer" }}>
+                                    <Avatar src={user?.avatarUrl} />
+                                    <span>{user?.fullName}</span>
+                                </Space>
+                            </Dropdown>
+                        </div>
                     </div>
                     <Content style={{ padding: '15px' }}>
                         <Outlet />

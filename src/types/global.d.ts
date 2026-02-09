@@ -1,3 +1,5 @@
+import type { NotificationType } from "@/utils/constants/notification.type";
+
 export { };
 
 declare global {
@@ -437,6 +439,15 @@ declare global {
         updatedAt: string;
         imageUrl?: string;
         commentUserName: string;
+    }
+
+    interface IResNotification {
+        id: number;
+        title: string;
+        content: string;
+        type: NotificationType;
+        read: boolean;
+        createdAt: string; 
     }
 
 }

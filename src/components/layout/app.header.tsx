@@ -5,6 +5,7 @@ import 'styles/layouts/header.scss';
 import { useCurrentApp } from 'components/context/app.context';
 import { logoutAPI } from '@/services/api';
 import { ROLE } from '@/utils/constants/global.var';
+import NotificationBell from 'components/layout/notification';
 
 const AppHeader = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -95,6 +96,7 @@ const AppHeader = () => {
           </div>
 
           <div className="right">
+            {isAuthenticated && <NotificationBell />}
             {!isAuthenticated ? (
               !isAuthPage && (
                 <div className="auth-actions">

@@ -616,4 +616,19 @@ export const getReviewsByPropertyAPI = (
     );
 };
 
+export const getNotificationsAPI = () => {
+  return axios.get<IBackendRes<IResNotification[]>>("/api/v1/notifications");
+};
+
+export const getUnreadNotificationsAPI = () => {
+  return axios.get<IBackendRes<number>>("/api/v1/notifications/unread");
+};
+
+export const readAllNotificationsAPI = () => {
+  return axios.post<IBackendRes<void>>("/api/v1/notifications/read-all");
+};
+
+export const readNotificationAPI = (id: number) =>
+  axios.post<IBackendRes<void>>(`/api/v1/notifications/${id}/read`);
+
 
