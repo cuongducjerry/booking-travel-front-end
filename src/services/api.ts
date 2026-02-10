@@ -631,4 +631,16 @@ export const readAllNotificationsAPI = () => {
 export const readNotificationAPI = (id: number) =>
   axios.post<IBackendRes<void>>(`/api/v1/notifications/${id}/read`);
 
+export const loginWithGoogleAPI = (payload: {
+    provider: "GOOGLE",
+    email: string,
+    name?: string,
+    avatar?: string
+}) => {
+    return axios.post<IBackendRes<ILogin>>("/api/v1/auth/social-login", payload);
+};
+
+export const forgotPasswordAPI = (email: string) => {
+    return axios.post<IBackendRes<void>>("/api/v1/auth/forgot-password", { email });
+};
 

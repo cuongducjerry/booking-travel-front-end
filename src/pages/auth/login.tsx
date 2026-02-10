@@ -1,6 +1,9 @@
 import { useCurrentApp } from "@/components/context/app.context";
-import { loginAPI } from "@/services/api";
+import { loginAPI, loginWithGoogleAPI } from "@/services/api";
+import { GooglePlusOutlined } from "@ant-design/icons";
+import { useGoogleLogin } from "@react-oauth/google";
 import { App, Button, Divider, Form, Input, type FormProps } from "antd";
+import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import 'styles/pages/login.scss';
@@ -46,40 +49,46 @@ const LoginPage = () => {
         }
     };
 
-    // const loginGoogle = useGoogleLogin({
-    //     onSuccess: async (tokenResponse) => {
-    //         console.log(tokenResponse);
 
-    //         const { data } = await axios(
-    //             "https://www.googleapis.com/oauth2/v3/userinfo",
-    //             {
-    //                 headers: {
-    //                     Authorization: `Bearer ${tokenResponse?.access_token}`,
-    //                 },
-    //             }
-    //         );
-    //         if (data && data.email) {
-    //             //call backend create user
-    //             const res = await loginWithGoogleAPI("GOOGLE", data.email);
+    const loginGoogle = useGoogleLogin({
+        onSuccess: async (tokenResponse) => {
+            // 1. Lấy info Google
+            const { data } = await axios.get(
+                "https://www.googleapis.com/oauth2/v3/userinfo",
+                {
+                    headers: {
+                        Authorization: `Bearer ${tokenResponse.access_token}`,
+                    },
+                }
+            );
 
-    //             if (res?.data) {
-    //                 setIsAuthenticated(true);
-    //                 setUser(res.data.user)
-    //                 localStorage.setItem('access_token', res.data.access_token);
-    //                 message.success('Đăng nhập tài khoản thành công!');
-    //                 navigate('/')
-    //             } else {
-    //                 notification.error({
-    //                     message: "Có lỗi xảy ra",
-    //                     description:
-    //                         res.message && Array.isArray(res.message) ? res.message[0] : res.message,
-    //                     duration: 5
-    //                 })
-    //             }
-    //         }
+            // 2. Gửi backend
+            const res = await loginWithGoogleAPI({
+                provider: "GOOGLE",
+                email: data.email,
+                name: data.name,
+                avatar: data.picture
+            });
 
-    //     }
-    // });
+            if (res?.data) {
+                setIsAuthenticated(true);
+                setUser(res.data.user);
+
+                localStorage.setItem(
+                    "access_token",
+                    res.data.access_token
+                );
+
+                localStorage.setItem(
+                    "permissions",
+                    JSON.stringify(res.data.permissions)
+                );
+
+                message.success("Đăng nhập Google thành công 🎉");
+                navigate("/");
+            }
+        }
+    });
 
     return (
         <div className="login-full">
@@ -114,10 +123,33 @@ const LoginPage = () => {
                     <Form.Item<FieldType>
                         label="Mật khẩu"
                         name="password"
-                        rules={[{ required: true, message: 'Mật khẩu không được để trống!' }]}
+                        rules={[
+                            { required: true, message: 'Mật khẩu không được để trống!' }
+                        ]}
                     >
                         <Input.Password />
                     </Form.Item>
+
+                    {/* Register | Forgot password */}
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            marginBottom: 16,
+                            fontSize: 14
+                        }}
+                    >
+                        <span>
+                            Chưa có tài khoản?
+                            <Link to="/register" style={{ marginLeft: 4 }}>
+                                Đăng ký
+                            </Link>
+                        </span>
+
+                        <Link to="/forgot-password">
+                            Quên mật khẩu?
+                        </Link>
+                    </div>
 
                     <Button
                         type="primary"
@@ -128,12 +160,25 @@ const LoginPage = () => {
                         Đăng nhập
                     </Button>
 
-                    <Divider />
+                    <Divider>Hoặc</Divider>
 
-                    <p className="switch-auth">
-                        Chưa có tài khoản?
-                        <Link to="/register"> Đăng ký</Link>
-                    </p>
+                    <div
+                        onClick={() => loginGoogle()}
+                        title="Đăng nhập với Google"
+                        style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            gap: 10,
+                            cursor: "pointer",
+                            padding: "8px 0",
+                            borderRadius: 6,
+                            border: "1px solid #eee"
+                        }}
+                    >
+                        <span>Đăng nhập với</span>
+                        <GooglePlusOutlined style={{ fontSize: 26, color: "orange" }} />
+                    </div>
                 </Form>
             </div>
         </div>

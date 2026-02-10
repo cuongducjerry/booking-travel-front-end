@@ -25,8 +25,6 @@ const NotificationBell = () => {
             const unreadRes = await getUnreadNotificationsAPI();
             const listRes = await getNotificationsAPI();
 
-            console.log(listRes);
-
             if (unreadRes?.data) {
                 setUnread(unreadRes.data);
             }

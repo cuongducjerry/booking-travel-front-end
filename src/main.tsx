@@ -42,6 +42,8 @@ import HostManagePayoutPage from 'pages/host/manage.payout';
 import AdminManageFeePage from 'pages/admin/manage.fee';
 import HostManageFeePage from 'pages/host/manage.fee';
 import MyWishlist from 'pages/user/wishlist';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import ForgotPasswordPage from 'pages/auth/forget.password';
 
 const router = createBrowserRouter([
   {
@@ -281,16 +283,22 @@ const router = createBrowserRouter([
     path: "/register",
     element: <RegisterPage />,
   },
+  {
+    path: "/forgot-password",
+    element: <ForgotPasswordPage />,
+  },
 ]);
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AppProvider>
-      <ConfigProvider locale={enUS}>
-        <AntdApp>
-          <RouterProvider router={router} />
-        </AntdApp>
-      </ConfigProvider>
+      <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+        <ConfigProvider locale={enUS}>
+          <AntdApp>
+            <RouterProvider router={router} />
+          </AntdApp>
+        </ConfigProvider>
+      </GoogleOAuthProvider>
     </AppProvider>
   </StrictMode>
 );
