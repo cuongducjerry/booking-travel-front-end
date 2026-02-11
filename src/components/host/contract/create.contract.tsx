@@ -16,7 +16,7 @@ interface IProps {
     openModalCreate: boolean;
     setOpenModalCreate: (v: boolean) => void;
     refreshTable: () => void;
-    properties: IProperty[]; // truyền từ parent (property của host)
+    properties: IPropertyDetail[]; // truyền từ parent (property của host)
 }
 
 const CreateHostContract = (props: IProps) => {
@@ -115,7 +115,6 @@ const CreateHostContract = (props: IProps) => {
                 <Form.Item<FieldType>
                     label="Property áp dụng"
                     name="propertyIds"
-                    rules={[{ required: true, message: "Chọn ít nhất 1 property" }]}
                 >
                     <Select
                         mode="multiple"

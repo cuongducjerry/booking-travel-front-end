@@ -19,6 +19,8 @@ import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import { formatVND } from "@/utils/format";
 import { useNavigate } from "react-router-dom";
 import { getReviewsByPropertyAPI } from "@/services/api";
+import GoogleMapReact from "google-map-react";
+import PropertyMarker from "components/user/map/property.marker";
 
 interface IProps {
     currentProperty: IPropertyDetail | null;
@@ -72,7 +74,9 @@ const PropertyDetail = ({ currentProperty }: IProps) => {
         amenities,
         status,
         host,
-        bookings
+        bookings,
+        latitude,
+        longitude
     } = currentProperty;
 
     // ================= BOOKING LOGIC =================
@@ -175,6 +179,39 @@ const PropertyDetail = ({ currentProperty }: IProps) => {
                     </p>
 
                     <Divider />
+
+
+
+                    {/* ===== MAP ===== */}
+                    <h2>Location</h2>
+
+                    {latitude && longitude ? (
+                        <div className="property-map">
+                            <GoogleMapReact
+                                bootstrapURLKeys={{
+                                    key: import.meta.env.VITE_GOOGLE_MAP_KEY as string,
+                                }}
+                                defaultCenter={{
+                                    lat: Number(latitude),
+                                    lng: Number(longitude),
+                                }}
+                                defaultZoom={15}
+                            >
+                                <PropertyMarker
+                                    lat={Number(latitude)}
+                                    lng={Number(longitude)}
+                                    text={formatVND(pricePerNight)}
+                                />
+                            </GoogleMapReact>
+                        </div>
+                    ) : (
+                        <Empty description="Location not available" />
+                    )}
+
+                    <Divider />
+
+
+
 
                     {/* AMENITIES */}
                     <h2>Amenities</h2>

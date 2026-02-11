@@ -45,9 +45,7 @@ const AdminTableProperty = () => {
             sorter: true,
             hideInSearch: true,
             render: (_, entity) => {
-                const allowView = hasPermission(["PAYOUT_VIEW_ALL"]);
-
-                return allowView ? (
+                return (
                     <a
                         onClick={() => {
                             setDataViewDetail(entity);
@@ -56,9 +54,7 @@ const AdminTableProperty = () => {
                     >
                         {entity.id}
                     </a>
-                ) : (
-                    <span>{entity.id}</span>
-                );
+                ) 
             },
         },
 

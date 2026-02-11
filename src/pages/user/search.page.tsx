@@ -2,7 +2,7 @@ import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchHomeProperties } from "@/services/api";
 import PropertyList from "components/user/search/property.list";
-import PropertyMap from "components/user/search/property.map";
+import PropertyMap from "@/components/user/map/property.map";
 import "styles/pages/search.scss";
 
 const SearchPage = () => {
@@ -52,11 +52,6 @@ const SearchPage = () => {
             setMeta({ current: page, pageSize })
           }
         />
-      </div>
-
-      {/* RIGHT */}
-      <div className="search-right">
-        <PropertyMap properties={data?.result || []} />
       </div>
     </div>
   );

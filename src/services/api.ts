@@ -327,7 +327,7 @@ export const getContractDetailAPI = (id: number) => {
 };
 
 export const createHostContractAPI = (data: ICreateHostContractReq) => {
-    return axios.post<IBackendRes<IHostContractTable>>('/api/v1/host/contracts', data);
+    return axios.post<IBackendRes<IHostContractTable>>('/api/v1/host/contracts/request', data);
 };
 
 export const getMyPropertiesInActiveAPI = () => {
@@ -390,9 +390,15 @@ export const createPropertyAPI = (data: {
     currency: string;
     propertyTypeId: number;
     contractId: number;
+    latitude: number;
+    longitude: number;
 }) => {
-    return axios.post<IBackendRes<IPropertyTable>>("/api/v1/host/properties", data);
+    return axios.post<IBackendRes<IPropertyTable>>(
+        "/api/v1/host/properties",
+        data
+    );
 };
+
 
 /* =========================
    HOST UPLOAD IMAGES (STEP 2)

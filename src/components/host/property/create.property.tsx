@@ -28,6 +28,8 @@ import {
     AMENITY_ICON_MAP,
     DEFAULT_AMENITY_ICON,
 } from "@/utils/constants/amenity.icon";
+import GoogleMapReact from "google-map-react";
+import { useRef } from "react";
 
 const { Title } = Typography;
 
@@ -42,6 +44,9 @@ const CreateProperty = () => {
     const canSubmit = hasPermission("PROPERTY_SUBMIT");
 
     /* ================= STATE ================= */
+    const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null);
+    const mapRef = useRef<any>(null);
+    const mapsRef = useRef<any>(null);
     const [amenityList, setAmenityList] = useState<IAmenity[]>([]);
     const [activeTab, setActiveTab] = useState("1");
     const [propertyId, setPropertyId] = useState<number | null>(null);
@@ -96,6 +101,11 @@ const CreateProperty = () => {
 
     /* ================= STEP 1 ================= */
     const onCreateProperty = async (values: any) => {
+        if (!values.latitude || !values.longitude) {
+            message.error("Vui lòng chọn vị trí trên bản đồ");
+            return;
+        }
+
         if (!canCreate) return;
 
         const res = await createPropertyAPI(values);
@@ -193,6 +203,26 @@ const CreateProperty = () => {
         });
     };
 
+    interface MapMarkerProps {
+        lat: number;
+        lng: number;
+    }
+
+    const MapMarker: React.FC<MapMarkerProps> = () => {
+        return (
+            <div
+                style={{
+                    width: 20,
+                    height: 20,
+                    background: "#ff385c",
+                    borderRadius: "50%",
+                    border: "3px solid white",
+                    transform: "translate(-50%, -50%)",
+                }}
+            />
+        );
+    };
+
     return (
         <Card style={{ maxWidth: 800, margin: "40px auto" }}>
             <Title level={3}>Tạo Property</Title>
@@ -251,6 +281,51 @@ const CreateProperty = () => {
                                     value: c.id,
                                 }))}
                             />
+                        </Form.Item>
+
+                        <Divider />
+
+                        <Form.Item label="Chọn vị trí trên bản đồ">
+                            <div
+                                style={{
+                                    height: 400,
+                                    width: "100%",
+                                    borderRadius: 8,
+                                    overflow: "hidden",
+                                }}
+                            >
+                                <GoogleMapReact
+                                    bootstrapURLKeys={{
+                                        key: import.meta.env.VITE_GOOGLE_MAP_KEY as string,
+                                    }}
+                                    defaultCenter={{ lat: 16.0544, lng: 108.2022 }}
+                                    defaultZoom={12}
+                                    onClick={({ lat, lng }: { lat: number; lng: number }) => {
+                                        setLocation({ lat, lng });
+
+                                        form.setFieldsValue({
+                                            latitude: lat,
+                                            longitude: lng,
+                                        });
+                                    }}
+                                >
+                                    {location && (
+                                        <MapMarker
+                                            lat={location.lat}
+                                            lng={location.lng}
+                                        />
+                                    )}
+                                </GoogleMapReact>
+                            </div>
+                        </Form.Item>
+
+                        {/* Hidden fields để submit */}
+                        <Form.Item name="latitude" hidden>
+                            <Input />
+                        </Form.Item>
+
+                        <Form.Item name="longitude" hidden>
+                            <Input />
                         </Form.Item>
 
                         <Button type="primary" htmlType="submit" block>

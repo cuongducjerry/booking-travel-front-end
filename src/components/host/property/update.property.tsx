@@ -25,6 +25,8 @@ import {
     getDraftImageByPropertyId,
     deletePropertyImageDraftAPI,
 } from "@/services/api";
+import GoogleMapReact from "google-map-react";
+import { useRef } from "react";
 
 const { Title } = Typography;
 
@@ -41,6 +43,7 @@ const HostUpdateProperty = ({ propertyId }: Props) => {
     const [amenityList, setAmenityList] = useState<any[]>([]);
     const [propertyTypes, setPropertyTypes] = useState<any[]>([]);
     const [status, setStatus] = useState<string>("");
+    const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null);
 
     /* ================= LOAD DETAIL ================= */
     useEffect(() => {
@@ -63,6 +66,18 @@ const HostUpdateProperty = ({ propertyId }: Props) => {
             if (!p) {
                 message.error("Không tìm thấy property");
                 return;
+            }
+
+            if (typeof p.latitude === "number" && typeof p.longitude === "number") {
+                const lat = Number(p.latitude);
+                const lng = Number(p.longitude);
+
+                setLocation({ lat, lng });
+
+                form.setFieldsValue({
+                    latitude: lat,
+                    longitude: lng,
+                });
             }
 
             const normalizedStatus = String(p.status || "").toUpperCase();
@@ -141,7 +156,7 @@ const HostUpdateProperty = ({ propertyId }: Props) => {
                     name: file.name,
                     status: "done",
                     url: img.imageUrl,
-                    imageId: img.id,   
+                    imageId: img.id,
                     isDraft: true,
                 })),
             ]);
@@ -210,6 +225,26 @@ const HostUpdateProperty = ({ propertyId }: Props) => {
         } catch {
             message.error("Submit thất bại");
         }
+    };
+
+    interface MapMarkerProps {
+        lat: number;
+        lng: number;
+    }
+
+    const MapMarker: React.FC<MapMarkerProps> = () => {
+        return (
+            <div
+                style={{
+                    width: 20,
+                    height: 20,
+                    background: "#ff385c",
+                    borderRadius: "50%",
+                    border: "3px solid white",
+                    transform: "translate(-50%, -50%)",
+                }}
+            />
+        );
     };
 
     /* ================= RULES ================= */
@@ -282,6 +317,55 @@ const HostUpdateProperty = ({ propertyId }: Props) => {
                         }))}
                     />
                 </Form.Item>
+
+
+                <Divider orientation="left">Location</Divider>
+
+                <Form.Item label="Chọn vị trí trên bản đồ">
+                    <div
+                        style={{
+                            height: 400,
+                            width: "100%",
+                            borderRadius: 8,
+                            overflow: "hidden",
+                        }}
+                    >
+                        <GoogleMapReact
+                            bootstrapURLKeys={{
+                                key: import.meta.env.VITE_GOOGLE_MAP_KEY as string,
+                            }}
+                            center={location ?? { lat: 16.0544, lng: 108.2022 }}
+                            zoom={location ? 15 : 12}
+                            onClick={({ lat, lng }: { lat: number; lng: number }) => {
+                                if (isPending) return;
+
+                                setLocation({ lat, lng });
+
+                                form.setFieldsValue({
+                                    latitude: lat,
+                                    longitude: lng,
+                                });
+                            }}
+                        >
+                            {location && (
+                                <MapMarker
+                                    lat={location.lat}
+                                    lng={location.lng}
+                                />
+                            )}
+                        </GoogleMapReact>
+                    </div>
+                </Form.Item>
+
+                <Form.Item name="latitude" hidden>
+                    <Input />
+                </Form.Item>
+
+                <Form.Item name="longitude" hidden>
+                    <Input />
+                </Form.Item>
+
+
 
                 <Divider orientation="left">Images</Divider>
 

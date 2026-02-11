@@ -91,6 +91,8 @@ declare global {
         host: IHostInfo;
 
         bookings: IBooking[];
+        latitude: number;
+        longitude: number;
     }
 
     interface IBooking {
@@ -322,7 +324,7 @@ declare global {
         expectedCommissionRate: number; // 0.15 = 15%
         startDate: string;              // yyyy-MM-dd
         endDate: string;                // yyyy-MM-dd
-        propertyIds: number[];
+        propertyIds?: number[];
     }
 
     interface IPropertyCheck {
@@ -362,6 +364,8 @@ declare global {
 
         // status & meta
         status: string;
+        latitude: number;
+        longitude: number;
         createdAt: string;
     }
 
