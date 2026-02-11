@@ -44,20 +44,21 @@ const PropertyList = ({
 
     return (
         <div style={{ paddingRight: 24 }}>
-            {/* LIST */}
-            <Row gutter={[32, 32]}>
+            <Row
+                gutter={[24, 24]}
+                justify="start"
+            >
                 {properties.map((p) => (
                     <Col
                         key={p.id}
-                        xs={24}
-                        md={12}
+                        flex="0 0 360px"
+                        style={{ display: "flex", justifyContent: "center" }}
                     >
                         <PropertyCard propertyId={p.id} />
                     </Col>
                 ))}
             </Row>
 
-            {/* PAGINATION */}
             <div
                 style={{
                     marginTop: 48,

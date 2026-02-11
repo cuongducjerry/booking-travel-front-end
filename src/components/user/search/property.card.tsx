@@ -67,6 +67,7 @@ const PropertyCard = ({ propertyId }: IProps) => {
             onClick={() => navigate(`/property/${p.id}`)}
             style={{
                 height: 360,
+                width: 360,
                 display: "flex",
                 flexDirection: "column",
             }}
