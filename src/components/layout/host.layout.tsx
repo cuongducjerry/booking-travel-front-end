@@ -54,6 +54,7 @@ const LayoutHost = () => {
             label: <Link to="/host">Dashboard</Link>,
             key: "/host",
             icon: <AppstoreOutlined />,
+            permission: "BOOKING_LIST_OWN"
         },
         {
             label: <Link to="/host/booking">Manage Bookings</Link>,

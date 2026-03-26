@@ -1,31 +1,32 @@
-import { useState } from 'react';
-import { Divider, Drawer, Avatar, Dropdown, Space } from 'antd';
-import { useNavigate, Link, useLocation } from 'react-router-dom';
-import 'styles/layouts/header.scss';
-import { useCurrentApp } from 'components/context/app.context';
-import { logoutAPI } from '@/services/api';
-import { ROLE } from '@/utils/constants/global.var';
-import NotificationBell from 'components/layout/notification';
+import { useState } from "react";
+import { Divider, Drawer, Avatar, Dropdown, Space } from "antd";
+import { useNavigate, Link, useLocation } from "react-router-dom";
+import "styles/layouts/header.scss";
+import { useCurrentApp } from "components/context/app.context";
+import { logoutAPI } from "@/services/api";
+import { ROLE } from "@/utils/constants/global.var";
+import NotificationBell from "components/layout/notification";
 
 const AppHeader = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openManageAccount, setOpenManageAccount] = useState(false);
 
-  const { isAuthenticated, user, setUser, setIsAuthenticated } = useCurrentApp();
+  const { isAuthenticated, user, setUser, setIsAuthenticated } =
+    useCurrentApp();
   const navigate = useNavigate();
   const location = useLocation();
 
   const isAuthPage =
-    location.pathname === '/login' || location.pathname === '/register';
+    location.pathname === "/login" || location.pathname === "/register";
 
   const handleLogout = async () => {
     const res = await logoutAPI();
     if (res?.statusCode === 200) {
       setUser(null);
       setIsAuthenticated(false);
-      localStorage.removeItem('access_token');
-      localStorage.removeItem('permissions');
-      navigate('/');
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("permissions");
+      navigate("/");
     }
   };
 
@@ -90,13 +91,17 @@ const AppHeader = () => {
               ☰
             </span>
 
-            <div className="logo" onClick={() => navigate('/')}>
+            <div className="logo" onClick={() => navigate("/")}>
               <span>Booking Travel</span>
             </div>
           </div>
 
           <div className="right">
-            {isAuthenticated && <NotificationBell />}
+            {isAuthenticated && (
+              <div style={{ marginRight: 20 }}>
+                <NotificationBell />
+              </div>
+            )}
             {!isAuthenticated ? (
               !isAuthPage && (
                 <div className="auth-actions">
@@ -107,12 +112,13 @@ const AppHeader = () => {
                 </div>
               )
             ) : (
-              <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight">
+              <Dropdown
+                menu={{ items }}
+                trigger={["click"]}
+                placement="bottomRight"
+              >
                 <div className="user-dropdown">
-                  <Avatar
-                    size={30}
-                    src={user?.avatarUrl || undefined}
-                  >
+                  <Avatar size={30} src={user?.avatarUrl || undefined}>
                     {!user?.avatarUrl &&
                       user?.fullName?.charAt(0).toUpperCase()}
                   </Avatar>
@@ -130,7 +136,7 @@ const AppHeader = () => {
         onClose={() => setOpenDrawer(false)}
         open={openDrawer}
       >
-        <p onClick={() => navigate('/')}>Trang chủ</p>
+        <p onClick={() => navigate("/")}>Trang chủ</p>
         <Divider />
         {isAuthenticated && (
           <>

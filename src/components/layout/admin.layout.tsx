@@ -51,6 +51,7 @@ const LayoutAdmin = () => {
             label: <Link to="/admin">Dashboard</Link>,
             key: "/admin",
             icon: <AppstoreOutlined />,
+            permission: "USER_LIST_ALL",
         },
         {
             label: <Link to="/admin/user">Manage Users</Link>,

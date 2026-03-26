@@ -650,3 +650,51 @@ export const forgotPasswordAPI = (email: string) => {
     return axios.post<IBackendRes<void>>("/api/v1/auth/forgot-password", { email });
 };
 
+export const getDashboardAPI = () => {
+    return axios.get<IBackendRes<{
+        countUser: number;
+        countProperty: number;
+        countBooking: number;
+        countContract: number;
+        countPayout: number;
+
+        totalGross: number;
+        totalCommission: number;
+        totalNet: number;
+    }>>("/api/v1/admin/dashboard");
+};
+
+export const getRevenueMonthlyAPI = () => {
+    return axios.get<IBackendRes<{
+        year: number;
+        month: number;
+        totalGross: number;
+        totalCommission: number;
+        totalNet: number;
+    }[]>>("/api/v1/admin/revenue/monthly");
+};
+
+
+// HOST DASHBOARD
+export const getHostDashboardAPI = () => {
+    return axios.get<IBackendRes<{
+        countProperty: number;
+        countBooking: number;
+        countPayout: number;
+
+        totalGross: number;
+        totalCommission: number;
+        totalNet: number;
+    }>>("/api/v1/host/dashboard");
+};
+
+export const getHostRevenueMonthlyAPI = () => {
+    return axios.get<IBackendRes<{
+        year: number;
+        month: number;
+        totalGross: number;
+        totalCommission: number;
+        totalNet: number;
+    }[]>>("/api/v1/host/revenue/monthly");
+};
+
