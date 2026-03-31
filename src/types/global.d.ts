@@ -37,7 +37,7 @@ declare global {
         password: string;
         phone: string;
         address: string;
-        age: number;
+        dateOfBirth?: string;
         role: {
             id: 3 | 4;
         };
@@ -134,7 +134,7 @@ declare global {
         phone: string;
         address: string;
         bio: string;
-        age: number;
+        dateOfBirth?: string;
         avatarUrl: string;
         status: string;
         role: {
@@ -149,7 +149,7 @@ declare global {
         phone: string;
         bio?: string;
         address?: string;
-        age: number;
+        dateOfBirth?: string;
     }
 
     interface IReqUpdatePassword {
@@ -214,7 +214,7 @@ declare global {
         phone?: string;
         address?: string;
         bio?: string;
-        age?: number;
+        dateOfBirth?: string;
         avatarUrl?: string;
 
         status: string;
@@ -236,7 +236,7 @@ declare global {
         fullName: string,
         phone: string,
         address: string,
-        age: number,
+        dateOfBirth?: string;
         role: {
             id: number
         }
