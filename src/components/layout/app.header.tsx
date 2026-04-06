@@ -62,18 +62,30 @@ const AppHeader = () => {
 
   /* ===== HOST ===== */
   if (isHost) {
-    items.push({
-      key: "host",
-      label: <Link to="/host">Host administration page</Link>,
-    });
+    items.push(
+      {
+        key: "host",
+        label: <Link to="/host">Host administration page</Link>,
+      },
+      {
+        key: "wishlist",
+        label: <Link to="/my-wishlist">Favorites list</Link>,
+      },
+    );
   }
 
   /* ===== ADMIN / SUPER ADMIN ===== */
   if (isAdmin) {
-    items.push({
-      key: "admin",
-      label: <Link to="/admin">Administration page</Link>,
-    });
+    items.push(
+      {
+        key: "admin",
+        label: <Link to="/admin">Administration page</Link>,
+      },
+      {
+        key: "wishlist",
+        label: <Link to="/my-wishlist">Favorites list</Link>,
+      },
+    );
   }
 
   /* ===== LOGOUT (TẤT CẢ ROLE) ===== */

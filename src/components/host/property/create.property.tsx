@@ -329,7 +329,7 @@ const CreateProperty = () => {
                         </Form.Item>
 
                         <Button type="primary" htmlType="submit" block>
-                            Tạo Property
+                            Create Property
                         </Button>
                     </Form>
                 </Tabs.TabPane>
@@ -352,7 +352,7 @@ const CreateProperty = () => {
                     <Select
                         mode="multiple"
                         style={{ width: "100%" }}
-                        placeholder="Chọn tiện ích cho property"
+                        placeholder="Choose amenity for the property"
                         value={amenities}
                         onChange={setAmenities}
                         optionFilterProp="label"
