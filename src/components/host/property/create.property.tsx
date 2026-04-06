@@ -77,7 +77,7 @@ const CreateProperty = () => {
                 });
                 setAmenityList(res.data?.result ?? []);
             } catch (e) {
-                message.error("Không tải được danh sách tiện ích");
+                message.error("Unable to load the list of amenities!");
             }
         })();
     }, []);
@@ -102,7 +102,7 @@ const CreateProperty = () => {
     /* ================= STEP 1 ================= */
     const onCreateProperty = async (values: any) => {
         if (!values.latitude || !values.longitude) {
-            message.error("Vui lòng chọn vị trí trên bản đồ");
+            message.error("Please select a location on the map");
             return;
         }
 
@@ -112,21 +112,21 @@ const CreateProperty = () => {
         const id = res?.data?.id;
 
         if (!id) {
-            message.error("Không tạo được property");
+            message.error("Property cannot be created");
             return;
         }
 
         setPropertyId(id);
         localStorage.setItem("creatingPropertyId", String(id));
 
-        message.success("Tạo property thành công");
+        message.success("Color creation successful");
         setActiveTab("2");
     };
 
     /* ================= STEP 2: UPLOAD ================= */
     const handleUpload = async ({ file, onSuccess, onError }: any) => {
         if (!propertyId) {
-            message.error("Property chưa được tạo");
+            message.error("Property not yet created");
             return;
         }
 
@@ -147,10 +147,10 @@ const CreateProperty = () => {
             ]);
 
             onSuccess("ok");
-            message.success("Upload ảnh thành công");
+            message.success("Image uploaded successfully");
         } catch (err) {
             onError(err);
-            message.error("Upload thất bại");
+            message.error("Upload failed");
         }
     };
 
@@ -162,10 +162,10 @@ const CreateProperty = () => {
 
         try {
             await deletePropertyImageAPI(propertyId, file.uid);
-            message.success("Xóa ảnh thành công");
+            message.success("Photo deleted successfully");
             return true;
         } catch (err) {
-            message.error("Xóa ảnh thất bại");
+            message.error("Photo deletion failed!");
             return false;
         }
     };
@@ -177,7 +177,7 @@ const CreateProperty = () => {
         console.log(amenities);
 
         await updatePropertyAmenitiesAPI(propertyId, amenities);
-        message.success("Lưu tiện ích thành công");
+        message.success("Saved the extension successfully");
         setActiveTab("4");
     };
 
@@ -186,8 +186,8 @@ const CreateProperty = () => {
         if (!propertyId || !canSubmit) return;
 
         modal.confirm({
-            title: "Gửi property chờ duyệt?",
-            content: "Sau khi gửi, bạn không thể chỉnh sửa",
+            title: "Submit property pending approval?",
+            content: "Once submitted, you cannot edit it",
             onOk: async () => {
                 await submitPropertyAPI(propertyId);
                 localStorage.removeItem("creatingPropertyId");
@@ -198,7 +198,7 @@ const CreateProperty = () => {
                 setAmenities([]);
                 setActiveTab("1");
 
-                message.success("Đã gửi property");
+                message.success("Property has been submitted");
             },
         });
     };
@@ -225,30 +225,30 @@ const CreateProperty = () => {
 
     return (
         <Card style={{ maxWidth: 800, margin: "40px auto" }}>
-            <Title level={3}>Tạo Property</Title>
+            <Title level={3}>Add Property</Title>
             <Divider />
 
             <Tabs activeKey={activeTab} onChange={setActiveTab} type="card">
                 {/* TAB 1 */}
-                <Tabs.TabPane tab="Thông tin" key="1">
+                <Tabs.TabPane tab="Information" key="1">
                     <Form layout="vertical" form={form} onFinish={onCreateProperty}>
-                        <Form.Item label="Tiêu đề" name="title" rules={[{ required: true }]}>
+                        <Form.Item label="Title" name="title" rules={[{ required: true }]}>
                             <Input />
                         </Form.Item>
 
-                        <Form.Item label="Mô tả" name="description">
+                        <Form.Item label="Description" name="description">
                             <Input.TextArea />
                         </Form.Item>
 
-                        <Form.Item label="Địa chỉ" name="address">
+                        <Form.Item label="Address" name="address">
                             <Input />
                         </Form.Item>
 
-                        <Form.Item label="Thành phố" name="city">
+                        <Form.Item label="City" name="city">
                             <Input />
                         </Form.Item>
 
-                        <Form.Item label="Giá / đêm" name="pricePerNight">
+                        <Form.Item label="Price Per Night" name="pricePerNight">
                             <Input type="number" />
                         </Form.Item>
 
@@ -261,11 +261,11 @@ const CreateProperty = () => {
                             />
                         </Form.Item>
 
-                        <Form.Item label="Số khách tối đa" name="maxGuests">
+                        <Form.Item label="Max Guests" name="maxGuests">
                             <Input type="number" />
                         </Form.Item>
 
-                        <Form.Item label="Loại property" name="propertyTypeId">
+                        <Form.Item label="Property Type" name="propertyTypeId">
                             <Select
                                 options={propertyTypes.map(p => ({
                                     label: p.name,
@@ -285,7 +285,7 @@ const CreateProperty = () => {
 
                         <Divider />
 
-                        <Form.Item label="Chọn vị trí trên bản đồ">
+                        <Form.Item label="Select a location on the map">
                             <div
                                 style={{
                                     height: 400,
@@ -335,7 +335,7 @@ const CreateProperty = () => {
                 </Tabs.TabPane>
 
                 {/* TAB 2 */}
-                <Tabs.TabPane tab="Hình ảnh" key="2" disabled={!propertyId}>
+                <Tabs.TabPane tab="Image" key="2" disabled={!propertyId}>
                     <Upload
                         customRequest={handleUpload}
                         listType="picture-card"
@@ -348,7 +348,7 @@ const CreateProperty = () => {
                 </Tabs.TabPane>
 
                 {/* TAB 3 */}
-                <Tabs.TabPane tab="Tiện ích" key="3" disabled={!propertyId}>
+                <Tabs.TabPane tab="Amenities" key="3" disabled={!propertyId}>
                     <Select
                         mode="multiple"
                         style={{ width: "100%" }}
@@ -376,14 +376,14 @@ const CreateProperty = () => {
                         style={{ marginTop: 16 }}
                         disabled={!canUpdateAmenity}
                     >
-                        Lưu tiện ích
+                        Save Amenities
                     </Button>
                 </Tabs.TabPane>
 
                 {/* TAB 4 */}
-                <Tabs.TabPane tab="Hoàn tất" key="4" disabled={!propertyId}>
+                <Tabs.TabPane tab="Complete" key="4" disabled={!propertyId}>
                     <Button type="primary" danger onClick={onSubmitProperty}>
-                        Gửi Property
+                        Send Property
                     </Button>
                 </Tabs.TabPane>
             </Tabs>

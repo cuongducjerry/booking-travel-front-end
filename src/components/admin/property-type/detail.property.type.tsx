@@ -24,13 +24,13 @@ const DetailPropertyType = (props: IProps) => {
 
     return (
         <Drawer
-            title="Chức năng xem chi tiết"
+            title="Details viewing function"
             width="50vw"
             onClose={onClose}
             open={openViewDetail}
         >
             <Descriptions
-                title="Thông tin Property Type"
+                title="Property Type Information"
                 bordered
                 column={2}
             >

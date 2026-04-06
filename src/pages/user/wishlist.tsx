@@ -19,7 +19,7 @@ const MyWishlist = () => {
             setData(res.data?.result ?? []);
             setTotal(res.data?.meta.total ?? 0);
         } catch {
-            message.error("Không tải được wishlist");
+            message.error("Unable to load wishlist");
         }
     };
 
@@ -29,10 +29,10 @@ const MyWishlist = () => {
 
     return (
         <div style={{ padding: 24 }}>
-            <h2 style={{marginBottom: 30}}>❤️ Danh sách yêu thích</h2>
+            <h2 style={{marginBottom: 30}}>❤️ Favorites list</h2>
 
             {data.length === 0 ? (
-                <Empty description="Chưa có bất động sản yêu thích" />
+                <Empty description="No favorite property yet!" />
             ) : (
                 <>
                     <Row gutter={[16, 16]}>

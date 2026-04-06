@@ -38,7 +38,7 @@ const HostTableProperty = () => {
                 });
                 setPropertyTypes(res.data?.result ?? []);
             } catch (err) {
-                message.error("Không tải được danh sách Property Type");
+                message.error("Property Type list failed to load!");
             }
         };
 
@@ -167,21 +167,21 @@ const HostTableProperty = () => {
 
                         {allowDelete && (
                             <Popconfirm
-                                title="Xác nhận xóa property"
-                                description="Property sẽ được gửi yêu cầu xóa và chờ admin duyệt"
-                                okText="Xóa"
-                                cancelText="Hủy"
+                                title="Confirm property deletion"
+                                description="The property will be submitted for deletion and await admin approval"
+                                okText="Delete"
+                                cancelText="Cancel"
                                 onConfirm={async () => {
                                     try {
                                         await hostDeletePropertyAPI(entity.id);
                                         message.success(
-                                            "Đã gửi yêu cầu xóa, chờ admin duyệt"
+                                            "The deletion request has been submitted and is awaiting admin approval"
                                         );
                                         actionRef.current?.reload();
                                     } catch (err: any) {
                                         message.error(
                                             err?.response?.data?.message ||
-                                            "Xóa property thất bại"
+                                            "Property deletion failed"
                                         );
                                     }
                                 }}

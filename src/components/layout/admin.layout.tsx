@@ -126,18 +126,18 @@ const LayoutAdmin = () => {
 
     const itemsDropdown = [
         {
-            label: <Link to={'/'}>Trang chủ</Link>,
+            label: <Link to={'/'}>Home</Link>,
             key: 'home',
         },
         {
-            label: <Link to={`/profile/${user?.id}`}>Quản lý tài khoản</Link>,
+            label: <Link to={`/profile/${user?.id}`}>Personal information</Link>,
             key: 'account',
         },
         {
             label: <label
                 style={{ cursor: 'pointer' }}
                 onClick={() => handleLogout()}
-            >Đăng xuất</label>,
+            >Logout</label>,
             key: 'logout',
         },
 

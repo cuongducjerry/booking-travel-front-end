@@ -4,7 +4,7 @@ import { Client } from "@stomp/stompjs";
 let stompClient: Client | null = null;
 
 export const connectNotificationWS = (onMessage: (data: any) => void) => {
-    const token = localStorage.getItem("access_token"); // hoặc nơi bạn lưu token
+    const token = localStorage.getItem("access_token");
 
     const socket = new SockJS(
         `http://localhost:8080/ws?token=${token}`

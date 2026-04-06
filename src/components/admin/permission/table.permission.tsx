@@ -47,7 +47,7 @@ const TablePermission = () => {
             request={async (params, sort) => {
 
                 if (!hasPermission('PERMISSION_LIST_ALL')) {
-                    message.error('Bạn không có quyền xem permission');
+                    message.error('You do not have permission to view the permissions');
                     return {
                         data: [],
                         total: 0,

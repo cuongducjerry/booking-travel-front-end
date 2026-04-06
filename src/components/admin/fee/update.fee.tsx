@@ -42,11 +42,11 @@ const UpdateFee = (props: IProps) => {
 
         try {
             await updateFeeStatusAPI(dataUpdate.id, actionType);
-            message.success(`Đã cập nhật fee thành ${actionType}`);
+            message.success(`The fee has been updated to ${actionType}`);
             refreshTable();
             onClose();
         } catch (err: any) {
-            message.error(err?.response?.data?.message || "Cập nhật fee thất bại");
+            message.error(err?.response?.data?.message || "Fee update failed");
         }
     };
 
@@ -73,7 +73,7 @@ const UpdateFee = (props: IProps) => {
             </p>
 
             <p>
-                Trạng thái hiện tại:{" "}
+                Current status:{" "}
                 <Tag color={statusColorMap[dataUpdate?.status ?? "PENDING"]}>
                     {dataUpdate?.status}
                 </Tag>
@@ -86,7 +86,7 @@ const UpdateFee = (props: IProps) => {
 
             <Form form={form} layout="vertical" onFinish={onFinish}>
                 <Space style={{ marginTop: 24 }}>
-                    {/* CHỌN ACTION */}
+                    {/* SELECT ACTION */}
                     {canUpdate &&
                         !actionType &&
                         dataUpdate?.status !== "PAID" && (

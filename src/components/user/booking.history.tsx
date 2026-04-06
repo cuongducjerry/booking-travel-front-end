@@ -41,12 +41,12 @@ const BookingHistoryPage = () => {
     const handleDeleteReview = async (reviewId: number) => {
         try {
             await deleteReviewAPI(reviewId);
-            message.success("Đã xóa đánh giá");
+            message.success("Review deleted");
 
             // Reload the table, keeping the current page.
             loadData(pagination.current, pagination.pageSize);
         } catch {
-            message.error("Xóa đánh giá thất bại");
+            message.error("Delete a failed rating");
         }
     };
 
@@ -143,7 +143,7 @@ const BookingHistoryPage = () => {
                     <Space>
                         {/* CREATE */}
                         {!review && canCreate && (
-                            <Tooltip title="Đánh giá">
+                            <Tooltip title="Review">
                                 <Button
                                     type="text"
                                     icon={<PlusCircleOutlined />}
@@ -160,7 +160,7 @@ const BookingHistoryPage = () => {
 
                         {/* VIEW */}
                         {review && (
-                            <Tooltip title="Xem đánh giá">
+                            <Tooltip title="View review">
                                 <Button
                                     type="text"
                                     icon={<EyeOutlined />}
@@ -177,7 +177,7 @@ const BookingHistoryPage = () => {
 
                         {/* UPDATE */}
                         {review && canUpdate && (
-                            <Tooltip title="Sửa đánh giá">
+                            <Tooltip title="Edit review">
                                 <Button
                                     type="text"
                                     icon={<EditOutlined />}
@@ -195,7 +195,7 @@ const BookingHistoryPage = () => {
                         {/* DELETE */}
                         {review && canDelete && (
                             <Popconfirm
-                                title="Xóa đánh giá này?"
+                                title="Delete this review?"
                                 onConfirm={() => handleDeleteReview(review.id)}
                             >
                                 <Button

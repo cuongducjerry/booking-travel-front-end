@@ -30,13 +30,13 @@ const TableUser = () => {
         setIsDeleteUser(true);
         const res = await deleteUserAPI(id);
         if (res.statusCode === 200) {
-            message.success('Xóa user thành công');
+            message.success('User deletion successful');
             refreshTable();
             return;
         }
         else {
             notification.error({
-                message: 'Đã có lỗi xảy ra',
+                message: 'An error has occurred',
                 description: res.message
             })
         }
@@ -136,11 +136,11 @@ const TableUser = () => {
                         {hasPermission("USER_DELETE") && (
                             <Popconfirm
                                 placement="leftTop"
-                                title={"Xác nhận xóa user"}
-                                description={"Bạn có chắc chắn muốn xóa user này ?"}
+                                title={"Confirm user deletion"}
+                                description={"Are you sure you want to delete this user ?"}
                                 onConfirm={() => handleDeleteUser(entity.id)}
-                                okText="Xác nhận"
-                                cancelText="Hủy"
+                                okText="Confirm"
+                                cancelText="Cancel"
                                 okButtonProps={{ loading: isDeleteUser }}
                             >
                                 <span style={{ cursor: "pointer", marginLeft: 20 }}>

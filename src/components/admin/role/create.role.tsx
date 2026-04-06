@@ -44,14 +44,14 @@ const CreateRole = (props: IProps) => {
         const res = await createRoleAPI(payload);
 
         if (res.data && res.statusCode === 201) {
-            message.success('Tạo role thành công');
+            message.success('Role created successfully');
             form.resetFields();
             setOpenModalCreate(false);
             refreshTable();
         } else {
             notification.error({
-                message: 'Đã có lỗi xảy ra',
-                description: res.message || 'Lỗi hệ thống',
+                message: 'An error has occurred',
+                description: res.message || 'System error',
             });
         }
 
@@ -60,15 +60,15 @@ const CreateRole = (props: IProps) => {
 
     return (
         <Modal
-            title="Thêm mới role"
+            title="Add new role"
             open={openModalCreate}
             onOk={() => form.submit()}
             onCancel={() => {
                 setOpenModalCreate(false);
                 form.resetFields();
             }}
-            okText="Tạo mới"
-            cancelText="Hủy"
+            okText="Add new"
+            cancelText="Cancel"
             confirmLoading={isSubmit}
         >
             <Divider />
@@ -80,15 +80,15 @@ const CreateRole = (props: IProps) => {
                 autoComplete="off"
             >
                 <Form.Item<FieldType>
-                    label="Tên role"
+                    label="Personnel name"
                     name="name"
-                    rules={[{ required: true, message: 'Vui lòng nhập tên role' }]}
+                    rules={[{ required: true, message: 'Please enter the role name' }]}
                 >
-                    <Input placeholder="VD: ADMIN_BUSINESS" />
+                    <Input placeholder="Example: ADMIN, HOST, USER" />
                 </Form.Item>
 
                 <Form.Item<FieldType>
-                    label="Mô tả"
+                    label="Description"
                     name="description"
                 >
                     <Input.TextArea rows={3} />
@@ -97,11 +97,11 @@ const CreateRole = (props: IProps) => {
                 <Form.Item<FieldType>
                     label="Permissions"
                     name="permissionIds"
-                    rules={[{ required: true, message: 'Vui lòng chọn permission' }]}
+                    rules={[{ required: true, message: 'Please select a permission' }]}
                 >
                     <Select
                         mode="multiple"
-                        placeholder="Chọn permission"
+                        placeholder="Select permission"
                         optionFilterProp="label"
                     >
                         {permissions.map(p => (

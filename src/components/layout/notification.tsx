@@ -60,7 +60,7 @@ const NotificationBell = () => {
                     <List
                         style={{ width: 360, maxHeight: 400, overflowY: "auto" }}
                         dataSource={list}
-                        locale={{ emptyText: "Không có thông báo" }}
+                        locale={{ emptyText: "No notification" }}
                         header={
                             (
                                 <div style={{ textAlign: "left" }}>
@@ -71,7 +71,7 @@ const NotificationBell = () => {
                                             setList(prev => prev.map(n => ({ ...n, read: true })));
                                         }}
                                     >
-                                        Đánh dấu đã xem tất cả
+                                        Mark as viewed
                                     </a>
                                 </div>
                             )

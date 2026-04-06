@@ -40,7 +40,7 @@ const DetailAmenity = (props: IProps) => {
             open={openViewDetail}
         >
             <Descriptions
-                title="Thông tin tiện ích"
+                title="Amenity information"
                 bordered
                 column={2}
             >
@@ -48,7 +48,7 @@ const DetailAmenity = (props: IProps) => {
                     {dataViewDetail?.id}
                 </Descriptions.Item>
 
-                <Descriptions.Item label="Tên tiện ích">
+                <Descriptions.Item label="Name">
                     {dataViewDetail?.name}
                 </Descriptions.Item>
 

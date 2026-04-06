@@ -22,14 +22,14 @@ const PropertyPage = () => {
                     setCurrentProperty(res.data);
                 } else {
                     notification.error({
-                        message: "Đã có lỗi xảy ra",
-                        description: res?.message || "Không tìm thấy property",
+                        message: "An error has occurred",
+                        description: res?.message || "No property found",
                     });
                 }
             } catch (error) {
                 notification.error({
-                    message: "Đã có lỗi xảy ra",
-                    description: "Không thể tải dữ liệu property",
+                    message: "An error has occurred",
+                    description: "Property data could not be loaded",
                 });
             } 
         };

@@ -47,7 +47,7 @@ const UpdateProperty = (props: IProps) => {
   /* ================= APPROVE ================= */
   const handleApprove = async () => {
     await decidePropertyAPI(dataUpdate.id, { decision: "APPROVED" });
-    message.success("Duyệt property thành công");
+    message.success("Property approval successful");
     refreshTable();
     onClose();
   };
@@ -59,7 +59,7 @@ const UpdateProperty = (props: IProps) => {
       decision: "REJECTED",
       reason,
     });
-    message.success("Từ chối property thành công");
+    message.success("Property rejection successful");
     refreshTable();
     onClose();
   };
@@ -67,7 +67,7 @@ const UpdateProperty = (props: IProps) => {
   /* ================= REQUEST EDIT ================= */
   const handleRequestEdit = async () => {
     await decidePropertyAPI(dataUpdate.id, { decision: "DRAFT" });
-    message.success("Đã yêu cầu host chỉnh sửa property");
+    message.success("Have requested the host to edit the property");
     refreshTable();
     onClose();
   };
@@ -75,14 +75,14 @@ const UpdateProperty = (props: IProps) => {
   /* ================= APPROVE DELETE ================= */
   const handleApproveDelete = async () => {
     await approveDeletePropertyAPI(dataUpdate.id);
-    message.success("Duyệt xóa property thành công");
+    message.success("Property deletion process successful");
     refreshTable();
     onClose();
   };
 
   return (
     <Modal
-      title="Admin cập nhật Property"
+      title="Admin updates Property"
       open={openModalUpdate}
       onCancel={onClose}
       footer={null}
@@ -97,7 +97,7 @@ const UpdateProperty = (props: IProps) => {
       </p>
 
       <p>
-        Trạng thái hiện tại:{" "}
+        Current status:{" "}
         <Tag color={statusColorMap[dataUpdate.status]}>
           {dataUpdate.status}
         </Tag>
@@ -107,10 +107,10 @@ const UpdateProperty = (props: IProps) => {
       <Form form={form} layout="vertical">
         {canDecide && hasPermission("PROPERTY_APPROVE") && (
           <Form.Item
-            label="Lý do từ chối"
+            label="Reason for refusal"
             name="reason"
             rules={[
-              { required: true, message: "Vui lòng nhập lý do từ chối" },
+              { required: true, message: "Please enter the reason for refusal" },
             ]}
           >
             <Input.TextArea rows={3} />

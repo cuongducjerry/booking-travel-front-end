@@ -1,16 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DatePicker, Dropdown, Input } from "antd";
 import "styles/components/home.search.scss";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
+import { getPropertyTypesAPI } from "@/services/api";
 
-const locations = [
-  "Hà Nội",
-  "Hồ Chí Minh",
-  "Đà Nẵng",
-  "Nha Trang",
-  "Phú Quốc",
-];
+const locations = ["Hà Nội", "Hồ Chí Minh", "Đà Nẵng", "Nha Trang", "Phú Quốc"];
 
 const HomeSearch = () => {
   const navigate = useNavigate();
@@ -21,8 +16,20 @@ const HomeSearch = () => {
   const [openWhere, setOpenWhere] = useState(false);
   const [openGuest, setOpenGuest] = useState(false);
 
-  const filteredLocations = locations.filter(l =>
-    l.toLowerCase().includes(where.toLowerCase())
+  const [types, setTypes] = useState<IPropertyType[]>([]);
+  const [selectedType, setSelectedType] = useState<string>("");
+  const [openType, setOpenType] = useState(false);
+
+  useEffect(() => {
+    const fetchTypes = async () => {
+      const res = await getPropertyTypesAPI({ page: 0, size: 20 });
+      setTypes(res.data?.result || []);
+    };
+    fetchTypes();
+  }, []);
+
+  const filteredLocations = locations.filter((l) =>
+    l.toLowerCase().includes(where.toLowerCase()),
   );
 
   const onSearch = () => {
@@ -33,6 +40,7 @@ const HomeSearch = () => {
         guests: String(guests),
         checkIn: checkIn ? dayjs(checkIn).format("YYYY-MM-DD") : "",
         checkOut: checkOut ? dayjs(checkOut).format("YYYY-MM-DD") : "",
+        type: selectedType,
       }).toString(),
     });
   };
@@ -46,7 +54,7 @@ const HomeSearch = () => {
         onOpenChange={setOpenWhere}
         dropdownRender={() => (
           <div className="dropdown-box">
-            {filteredLocations.map(item => (
+            {filteredLocations.map((item) => (
               <div
                 key={item}
                 className="dropdown-item"
@@ -59,7 +67,7 @@ const HomeSearch = () => {
               </div>
             ))}
             {!filteredLocations.length && (
-              <div className="dropdown-empty">Không tìm thấy</div>
+              <div className="dropdown-empty">Not found</div>
             )}
           </div>
         )}
@@ -73,9 +81,42 @@ const HomeSearch = () => {
             className="value-input"
             placeholder="Search destinations"
             value={where}
-            onChange={e => setWhere(e.target.value)}
+            onChange={(e) => setWhere(e.target.value)}
             bordered={false}
           />
+        </div>
+      </Dropdown>
+
+      <div className="divider" />
+
+      {/* TYPE */}
+      <Dropdown
+        trigger={["click"]}
+        open={openType}
+        onOpenChange={setOpenType}
+        dropdownRender={() => (
+          <div className="dropdown-box">
+            {types.map((item) => (
+              <div
+                key={item.id}
+                className="dropdown-item"
+                onClick={() => {
+                  setSelectedType(item.name);
+                  setOpenType(false);
+                }}
+              >
+                {item.name}
+              </div>
+            ))}
+          </div>
+        )}
+      >
+        <div
+          className={`search-section ${openType ? "active" : ""}`}
+          onClick={() => setOpenType(true)}
+        >
+          <span className="label">Property Type</span>
+          <p className="value">{selectedType || "Select type"}</p>
         </div>
       </Dropdown>
 
@@ -115,7 +156,9 @@ const HomeSearch = () => {
             <div className="guest-row">
               <span>Guests</span>
               <div className="guest-control">
-                <button onClick={() => setGuests(Math.max(1, guests - 1))}>−</button>
+                <button onClick={() => setGuests(Math.max(1, guests - 1))}>
+                  −
+                </button>
                 <b>{guests}</b>
                 <button onClick={() => setGuests(guests + 1)}>+</button>
               </div>
@@ -143,4 +186,3 @@ const HomeSearch = () => {
 };
 
 export default HomeSearch;
-

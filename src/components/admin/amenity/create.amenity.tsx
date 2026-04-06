@@ -39,13 +39,13 @@ const CreateAmenity = (props: IProps) => {
         });
 
         if (res.statusCode === 201) {
-            message.success("Tạo amenity thành công");
+            message.success("Amenity created successfully");
             form.resetFields();
             setOpenModalCreate(false);
             refreshTable();
         } else {
             notification.error({
-                message: "Đã có lỗi xảy ra",
+                message: "An error has occurred",
                 description: res.message,
             });
         }
@@ -55,15 +55,15 @@ const CreateAmenity = (props: IProps) => {
 
     return (
         <Modal
-            title="Thêm Amenity"
+            title="Add Amenity"
             open={openModalCreate}
             onOk={() => form.submit()}
             onCancel={() => {
                 setOpenModalCreate(false);
                 form.resetFields();
             }}
-            okText="Tạo mới"
-            cancelText="Hủy"
+            okText="Add new"
+            cancelText="Cancel"
             confirmLoading={isSubmit}
             width={700}
         >
@@ -75,17 +75,17 @@ const CreateAmenity = (props: IProps) => {
                 onFinish={onFinish}
             >
                 <Form.Item
-                    label="Tên amenity"
+                    label="Name of amenity"
                     name="name"
-                    rules={[{ required: true, message: "Vui lòng nhập tên" }]}
+                    rules={[{ required: true, message: "Please enter amenity name" }]}
                 >
                     <Input />
                 </Form.Item>
 
                 <Form.Item
-                    label="Chọn icon"
+                    label="Select icon"
                     name="icon"
-                    rules={[{ required: true, message: "Vui lòng chọn icon" }]}
+                    rules={[{ required: true, message: "Please select an icon" }]}
                 >
                     <AmenityIconPicker
                         disabledIcons={usedIcons}

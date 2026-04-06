@@ -59,15 +59,15 @@ const UpdateAmenity = (props: IProps) => {
                 icon: values.icon,
             });
 
-            message.success("Cập nhật amenity thành công");
+            message.success("Amenity update successful");
             setOpenModalUpdate(false);
             setDataUpdate(null);
             form.resetFields();
             refreshTable();
         } catch (error: any) {
             notification.error({
-                message: "Cập nhật thất bại",
-                description: error?.message || "Lỗi hệ thống",
+                message: "Update failed",
+                description: error?.message || "System error",
             });
         } finally {
             setIsSubmit(false);
@@ -76,7 +76,7 @@ const UpdateAmenity = (props: IProps) => {
 
     return (
         <Modal
-            title="Cập nhật amenity"
+            title="Update amenity"
             open={openModalUpdate}
             onOk={() => form.submit()}
             onCancel={() => {
@@ -84,8 +84,8 @@ const UpdateAmenity = (props: IProps) => {
                 setDataUpdate(null);
                 form.resetFields();
             }}
-            okText="Cập nhật"
-            cancelText="Hủy"
+            okText="Update"
+            cancelText="Cancel"
             confirmLoading={isSubmit}
         >
             <Divider />
@@ -93,9 +93,9 @@ const UpdateAmenity = (props: IProps) => {
             <Form form={form} layout="vertical" onFinish={onFinish}>
                 {/* NAME */}
                 <Form.Item<FieldType>
-                    label="Tên tiện nghi"
+                    label="Amenities Name"
                     name="name"
-                    rules={[{ required: true, message: "Vui lòng nhập tên tiện nghi" }]}
+                    rules={[{ required: true, message: "Please enter the name of the amenity" }]}
                 >
                     <Input />
                 </Form.Item>
@@ -104,7 +104,7 @@ const UpdateAmenity = (props: IProps) => {
                 <Form.Item<FieldType>
                     label="Icon"
                     name="icon"
-                    rules={[{ required: true, message: "Vui lòng chọn icon" }]}
+                    rules={[{ required: true, message: "Please select an icon" }]}
                 >
                     <div className="amenity-icon-grid">
                         {AMENITY_ICON_OPTIONS.map(opt => {

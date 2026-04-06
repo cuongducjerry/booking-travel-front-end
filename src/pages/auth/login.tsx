@@ -37,11 +37,11 @@ const LoginPage = () => {
                 'permissions',
                 JSON.stringify(res.data.permissions)
             );
-            message.success("Đăng nhập tài khoản thành công.");
+            message.success("Account logged in successfully.");
             navigate('/');
         } else {
             notification.error({
-                message: "Có lỗi xảy ra",
+                message: "An error occurred",
                 description:
                     res.message && Array.isArray(res.message) ? res.message[0] : res.message,
                 duration: 5
@@ -84,7 +84,7 @@ const LoginPage = () => {
                     JSON.stringify(res.data.permissions)
                 );
 
-                message.success("Đăng nhập Google thành công 🎉");
+                message.success("Successfully logged into Google 🎉");
                 navigate("/");
             }
         }
@@ -96,11 +96,11 @@ const LoginPage = () => {
 
             <div className="login-card">
                 <div className="back-home">
-                    <Link to="/">← Về trang chủ</Link>
+                    <Link to="/">← Back to homepage</Link>
                 </div>
                 <div className="heading">
-                    <h2>Đăng nhập</h2>
-                    <p>Chào mừng bạn quay lại 👋</p>
+                    <h2>Login</h2>
+                    <p>Welcome back! 👋</p>
                 </div>
 
                 <Form
@@ -113,18 +113,18 @@ const LoginPage = () => {
                         label="Email"
                         name="username"
                         rules={[
-                            { required: true, message: 'Email không được để trống!' },
-                            { type: "email", message: 'Email không đúng định dạng!' }
+                            { required: true, message: 'Email address cannot be left blank!' },
+                            { type: "email", message: 'Email is not in the correct format!' }
                         ]}
                     >
                         <Input placeholder="email@example.com" />
                     </Form.Item>
 
                     <Form.Item<FieldType>
-                        label="Mật khẩu"
+                        label="Password"
                         name="password"
                         rules={[
-                            { required: true, message: 'Mật khẩu không được để trống!' }
+                            { required: true, message: 'The password cannot be left blank!' }
                         ]}
                     >
                         <Input.Password />
@@ -140,14 +140,14 @@ const LoginPage = () => {
                         }}
                     >
                         <span>
-                            Chưa có tài khoản?
+                            No account yet?
                             <Link to="/register" style={{ marginLeft: 4 }}>
-                                Đăng ký
+                                Register
                             </Link>
                         </span>
 
                         <Link to="/forgot-password">
-                            Quên mật khẩu?
+                            Forgot your password?
                         </Link>
                     </div>
 
@@ -157,14 +157,14 @@ const LoginPage = () => {
                         loading={isSubmit}
                         block
                     >
-                        Đăng nhập
+                        Login
                     </Button>
 
-                    <Divider>Hoặc</Divider>
+                    <Divider>Or</Divider>
 
                     <div
                         onClick={() => loginGoogle()}
-                        title="Đăng nhập với Google"
+                        title="Sign in with Google"
                         style={{
                             display: "flex",
                             alignItems: "center",
@@ -176,7 +176,7 @@ const LoginPage = () => {
                             border: "1px solid #eee"
                         }}
                     >
-                        <span>Đăng nhập với</span>
+                        <span>Log in with</span>
                         <GooglePlusOutlined style={{ fontSize: 26, color: "orange" }} />
                     </div>
                 </Form>

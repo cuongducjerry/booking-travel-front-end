@@ -28,14 +28,14 @@ const CreatePropertyType = (props: IProps) => {
         });
 
         if (res.data && res.statusCode === 201) {
-            message.success("Tạo mới Property Type thành công");
+            message.success("Property Type created successfully");
             form.resetFields();
             setOpenModalCreate(false);
             refreshTable();
         } else {
             notification.error({
-                message: "Đã có lỗi xảy ra",
-                description: res.message || "Lỗi hệ thống",
+                message: "An error has occurred",
+                description: res.message || "System error",
             });
         }
 
@@ -44,15 +44,15 @@ const CreatePropertyType = (props: IProps) => {
 
     return (
         <Modal
-            title="Thêm mới Property Type"
+            title="Add new Property Type"
             open={openModalCreate}
             onOk={() => form.submit()}
             onCancel={() => {
                 setOpenModalCreate(false);
                 form.resetFields();
             }}
-            okText="Tạo mới"
-            cancelText="Hủy"
+            okText="Add new"
+            cancelText="Cancel"
             confirmLoading={isSubmit}
         >
             <Divider />
@@ -67,11 +67,11 @@ const CreatePropertyType = (props: IProps) => {
                     label="Tên Property Type"
                     name="name"
                     rules={[
-                        { required: true, message: "Vui lòng nhập tên Property Type" },
-                        { min: 3, message: "Tên phải có ít nhất 3 ký tự" },
+                        { required: true, message: "Please enter the Property Type name" },
+                        { min: 3, message: "The name must have at least 3 characters" },
                     ]}
                 >
-                    <Input placeholder="Ví dụ: Apartment, House, Villa..." />
+                    <Input placeholder="Example: Apartment, House, Villa..." />
                 </Form.Item>
             </Form>
         </Modal>

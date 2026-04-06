@@ -51,11 +51,11 @@ const PropertyCard = ({ propertyId }: IProps) => {
 
             message.success(
                 !liked
-                    ? "Đã thêm vào danh sách yêu thích ❤️"
-                    : "Đã xóa khỏi danh sách yêu thích"
+                    ? "Added to favorites list ❤️"
+                    : "Removed from favorites list"
             );
         } catch {
-            message.error("Không thể cập nhật wishlist");
+            message.error("Unable to update wishlist");
         }
     };
 

@@ -41,7 +41,7 @@ const HomePropertySlider = ({ title = "Property", properties }: Props) => {
                     ))
                 ) : (
                     <div className="empty-center">
-                        <Empty description={`Chưa có ${title}`} />
+                        <Empty description={`Not yet ${title}`} />
                     </div>
                 )}
             </div>

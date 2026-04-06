@@ -33,7 +33,7 @@ const UpdateBooking = (props: IProps) => {
     const handleConfirm = async () => {
         if (!dataUpdate) return;
         await confirmBookingAPI(dataUpdate.id);
-        message.success("Xác nhận booking thành công");
+        message.success("Booking confirmed");
         refreshTable();
         onClose();
     };
@@ -41,7 +41,7 @@ const UpdateBooking = (props: IProps) => {
     const handleCancel = async () => {
         if (!dataUpdate) return;
         await cancelBookingAPI(dataUpdate.id);
-        message.success("Hủy booking thành công");
+        message.success("Booking cancelled successfully");
         refreshTable();
         onClose();
     };
@@ -49,7 +49,7 @@ const UpdateBooking = (props: IProps) => {
     const handleDone = async () => {
         if (!dataUpdate) return;
         await doneBookingAPI(dataUpdate.id);
-        message.success("Booking đã hoàn tất");
+        message.success("Booking is complete");
         refreshTable();
         onClose();
     };
@@ -65,7 +65,7 @@ const UpdateBooking = (props: IProps) => {
 
     return (
         <Modal
-            title="Cập nhật trạng thái booking"
+            title="Update booking status"
             open={openModalUpdate}
             onCancel={onClose}
             footer={null}
@@ -76,7 +76,7 @@ const UpdateBooking = (props: IProps) => {
             </p>
 
             <p>
-                Trạng thái hiện tại:{" "}
+                Current status:{" "}
                 <Tag color={statusColorMap[dataUpdate?.status ?? ""]}>
                     {dataUpdate?.status}
                 </Tag>

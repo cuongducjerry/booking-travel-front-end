@@ -63,7 +63,7 @@ const CreatePayout = (props: IProps) => {
         );
 
         if (!contract) {
-            message.error("Contract không hợp lệ");
+            message.error("Invalid contract!");
             setIsSubmit(false);
             return;
         }
@@ -75,13 +75,13 @@ const CreatePayout = (props: IProps) => {
         });
 
         if (res.statusCode === 201) {
-            message.success("Tạo payout thành công");
+            message.success("Payout created successfully");
             form.resetFields();
             setOpenModalCreate(false);
             refreshTable();
         } else {
             notification.error({
-                message: "Đã có lỗi xảy ra",
+                message: "An error has occurred",
                 description: res.message,
             });
         }
@@ -91,15 +91,15 @@ const CreatePayout = (props: IProps) => {
 
     return (
         <Modal
-            title="Tạo Host Payout"
+            title="Add Host Payout"
             open={openModalCreate}
             onOk={() => form.submit()}
             onCancel={() => {
                 setOpenModalCreate(false);
                 form.resetFields();
             }}
-            okText="Tạo payout"
-            cancelText="Hủy"
+            okText="Add payout"
+            cancelText="Cancel"
             confirmLoading={isSubmit}
             width={650}
         >
@@ -115,12 +115,12 @@ const CreatePayout = (props: IProps) => {
                     label="Contract"
                     name="contractId"
                     rules={[
-                        { required: true, message: "Vui lòng chọn contract" },
+                        { required: true, message: "Please select a contract" },
                     ]}
                 >
                     <Select
                         loading={loadingContracts}
-                        placeholder="Chọn contract"
+                        placeholder="Select contract"
                         showSearch
                         optionFilterProp="label"
                         options={contracts.map((c) => ({
@@ -135,10 +135,10 @@ const CreatePayout = (props: IProps) => {
 
                 {/* PERIOD */}
                 <Form.Item
-                    label="Kỳ payout"
+                    label="Payout period"
                     name="period"
                     rules={[
-                        { required: true, message: "Vui lòng chọn kỳ payout" },
+                        { required: true, message: "Please select your payout period" },
                     ]}
                 >
                     <DatePicker.RangePicker

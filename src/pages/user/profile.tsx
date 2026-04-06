@@ -23,14 +23,14 @@ const ProfilePage = () => {
                     setCurrentUser(res.data);
                 } else {
                     notification.error({
-                        message: "Đã có lỗi xảy ra",
-                        description: res?.message || "Không tìm thấy property",
+                        message: "An error has occurred",
+                        description: res?.message || "User not found",
                     });
                 }
             } catch (error) {
                 notification.error({
-                    message: "Đã có lỗi xảy ra",
-                    description: "Không thể tải dữ liệu property",
+                    message: "An error has occurred",
+                    description: "Unable to load user data",
                 });
             } 
         };

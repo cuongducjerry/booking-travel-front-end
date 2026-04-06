@@ -87,7 +87,7 @@ const HostTableBooking = () => {
         },
 
         {
-            title: "Khách",
+            title: "Customer",
             dataIndex: "userName",
             hideInSearch: true,
         },
@@ -114,7 +114,7 @@ const HostTableBooking = () => {
         },
 
         {
-            title: "Tổng tiền",
+            title: "Total amount",
             dataIndex: "grossAmount",
             hideInSearch: true,
             render: (_, r) =>
@@ -158,7 +158,7 @@ const HostTableBooking = () => {
                 actionRef={actionRef}
                 rowKey="id"
                 columns={columns}
-                headerTitle="Danh sách booking của tôi"
+                headerTitle="Booking list (customer)"
                 search={{ collapseRender: false }}
                 pagination={{ showSizeChanger: true }}
                 request={async (params, sort) => {
@@ -185,8 +185,8 @@ const HostTableBooking = () => {
                         };
                     } catch (error: any) {
                         notification.error({
-                            message: "Không thể tải booking",
-                            description: error?.message || "Lỗi hệ thống",
+                            message: "Unable to load booking",
+                            description: error?.message || "System error",
                         });
                         return { data: [], success: false };
                     }

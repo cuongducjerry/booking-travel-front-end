@@ -48,21 +48,21 @@ const UpdatePropertyType = (props: IProps) => {
             });
 
             if (res.statusCode === 200) {
-                message.success("Cập nhật Property Type thành công");
+                message.success("Property Type update successful");
                 setOpenModalUpdate(false);
                 setDataUpdate(null);
                 form.resetFields();
                 refreshTable();
             } else {
                 notification.error({
-                    message: "Cập nhật thất bại",
+                    message: "Update failed",
                     description: res.message,
                 });
             }
         } catch (error: any) {
             notification.error({
-                message: "Cập nhật thất bại",
-                description: error?.message || "Lỗi hệ thống",
+                message: "Update failed",
+                description: error?.message || "System error",
             });
         } finally {
             setIsSubmit(false);
@@ -71,7 +71,7 @@ const UpdatePropertyType = (props: IProps) => {
 
     return (
         <Modal
-            title="Cập nhật Property Type"
+            title="Update Property Type"
             open={openModalUpdate}
             onOk={() => form.submit()}
             onCancel={() => {
@@ -79,8 +79,8 @@ const UpdatePropertyType = (props: IProps) => {
                 setDataUpdate(null);
                 form.resetFields();
             }}
-            okText="Cập nhật"
-            cancelText="Hủy"
+            okText="Update"
+            cancelText="Cancel"
             confirmLoading={isSubmit}
         >
             <Divider />
@@ -91,14 +91,14 @@ const UpdatePropertyType = (props: IProps) => {
                 onFinish={onFinish}
             >
                 <Form.Item<FieldType>
-                    label="Tên Property Type"
+                    label="Property Name Type"
                     name="name"
                     rules={[
-                        { required: true, message: "Vui lòng nhập tên Property Type" },
-                        { max: 100, message: "Tên tối đa 100 ký tự" },
+                        { required: true, message: "Please enter the Property Type name" },
+                        { max: 100, message: "Name length: maximum 100 characters" },
                     ]}
                 >
-                    <Input placeholder="Nhập tên Property Type" />
+                    <Input placeholder="Enter Property Type name" />
                 </Form.Item>
             </Form>
         </Modal>

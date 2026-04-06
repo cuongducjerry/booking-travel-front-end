@@ -138,7 +138,7 @@ const HostUpdateProperty = ({ propertyId }: Props) => {
             setPropertyTypes(typeRes?.data?.result ?? []);
         } catch (err) {
             console.error(err);
-            message.error("Load master data thất bại");
+            message.error("Load master data failed!");
         }
     };
 
@@ -162,9 +162,9 @@ const HostUpdateProperty = ({ propertyId }: Props) => {
             ]);
 
             onSuccess?.("ok");
-            message.success("Cập nhật ảnh thành công");
+            message.success("Photo update successful");
         } catch (err) {
-            message.error("Upload ảnh thất bại");
+            message.error("Image upload failed");
             onError?.(err);
         }
     };
@@ -174,17 +174,17 @@ const HostUpdateProperty = ({ propertyId }: Props) => {
 
         if (file.isDraft) {
             if (!file.imageId) {
-                message.error("Thiếu imageId (draft)");
+                message.error("Lack of imageId (draft)");
                 return false;
             }
 
             try {
                 await deletePropertyImageDraftAPI(propertyId, file.imageId);
                 setFileList(prev => prev.filter(f => f.uid !== file.uid));
-                message.success("Đã xoá ảnh (draft)");
+                message.success("The photo has been deleted (draft)");
                 return true;
             } catch {
-                message.error("Xoá ảnh draft thất bại");
+                message.error("Deleting the draft image failed");
                 return false;
             }
         }
@@ -193,10 +193,10 @@ const HostUpdateProperty = ({ propertyId }: Props) => {
             try {
                 await deletePropertyImageAPI(propertyId, file.imageId);
                 setFileList(prev => prev.filter(f => f.imageId !== file.imageId));
-                message.success("Đã xoá ảnh");
+                message.success("The photo has been deleted");
                 return true;
             } catch {
-                message.error("Xoá ảnh thất bại");
+                message.error("Photo deletion failed");
                 return false;
             }
         }
@@ -209,10 +209,10 @@ const HostUpdateProperty = ({ propertyId }: Props) => {
         try {
             await updatePropertyAPI(propertyId, values);
             await updatePropertyAmenitiesAPI(propertyId, amenities);
-            message.success("Cập nhật property thành công");
+            message.success("Property update successful");
             loadDetail();
         } catch (err: any) {
-            message.error(err?.response?.data?.message || "Update thất bại");
+            message.error(err?.response?.data?.message || "Update failed");
         }
     };
 
@@ -220,10 +220,10 @@ const HostUpdateProperty = ({ propertyId }: Props) => {
     const onSubmit = async () => {
         try {
             await submitPropertyAPI(propertyId);
-            message.success("Đã gửi duyệt property");
+            message.success("Property has been submitted for approval");
             loadDetail();
         } catch {
-            message.error("Submit thất bại");
+            message.error("Submit failed");
         }
     };
 
@@ -256,7 +256,7 @@ const HostUpdateProperty = ({ propertyId }: Props) => {
             <Title level={4}>Update Property</Title>
 
             <Form form={form} layout="vertical" onFinish={onUpdateProperty}>
-                <Divider orientation="left">Thông tin</Divider>
+                <Divider orientation="left">Information</Divider>
 
                 <Form.Item name="title" label="Title" rules={[{ required: true }]}>
                     <Input disabled={isPending} />
@@ -321,7 +321,7 @@ const HostUpdateProperty = ({ propertyId }: Props) => {
 
                 <Divider orientation="left">Location</Divider>
 
-                <Form.Item label="Chọn vị trí trên bản đồ">
+                <Form.Item label="Select a location on the map">
                     <div
                         style={{
                             height: 400,

@@ -87,7 +87,7 @@ const AdminTableBooking = () => {
         },
 
         {
-            title: "Khách",
+            title: "Customer",
             dataIndex: "userName",
             hideInSearch: true,
         },
@@ -134,7 +134,7 @@ const AdminTableBooking = () => {
                 actionRef={actionRef}
                 rowKey="id"
                 columns={columns}
-                headerTitle="Danh sách booking (Admin)"
+                headerTitle="Booking list (Admin)"
                 search={{ collapseRender: false }}
                 pagination={{ showSizeChanger: true }}
                 request={async (params, sort) => {
@@ -163,8 +163,8 @@ const AdminTableBooking = () => {
                         };
                     } catch (err: any) {
                         notification.error({
-                            message: "Không thể tải booking",
-                            description: err?.message || "Lỗi hệ thống",
+                            message: "Unable to load booking",
+                            description: err?.message || "System error",
                         });
                         return { data: [], success: false };
                     }

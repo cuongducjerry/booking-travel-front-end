@@ -16,7 +16,7 @@ interface IProps {
     openModalCreate: boolean;
     setOpenModalCreate: (v: boolean) => void;
     refreshTable: () => void;
-    properties: IPropertyDetail[]; // truyền từ parent (property của host)
+    properties: IPropertyDetail[]; 
 }
 
 const CreateHostContract = (props: IProps) => {
@@ -39,14 +39,14 @@ const CreateHostContract = (props: IProps) => {
         const res = await createHostContractAPI(payload);
 
         if (res.data && res.statusCode === 201) {
-            message.success("Gửi yêu cầu hợp đồng thành công");
+            message.success("Contract request successfully submitted");
             form.resetFields();
             setOpenModalCreate(false);
             refreshTable();
         } else {
             notification.error({
-                message: "Không thể tạo hợp đồng",
-                description: res.message || "Lỗi hệ thống",
+                message: "Unable to create a contract",
+                description: res.message || "System error",
             });
         }
         setIsSubmit(false);
@@ -54,15 +54,15 @@ const CreateHostContract = (props: IProps) => {
 
     return (
         <Modal
-            title="Tạo hợp đồng mới"
+            title="Create a new contract"
             open={openModalCreate}
             onOk={() => form.submit()}
             onCancel={() => {
                 setOpenModalCreate(false);
                 form.resetFields();
             }}
-            okText="Gửi yêu cầu"
-            cancelText="Hủy"
+            okText="Submit a request"
+            cancelText="Cancel"
             confirmLoading={isSubmit}
         >
             <Divider />
@@ -74,10 +74,10 @@ const CreateHostContract = (props: IProps) => {
                 autoComplete="off"
             >
                 <Form.Item<FieldType>
-                    label="Tỷ lệ hoa hồng (%)"
+                    label="Commission rate (%)"
                     name="expectedCommissionRate"
                     rules={[
-                        { required: true, message: "Vui lòng nhập hoa hồng" },
+                        { required: true, message: "Please enter the commission" },
                         { type: "number", min: 0.01, max: 1 },
                     ]}
                 >
@@ -94,9 +94,9 @@ const CreateHostContract = (props: IProps) => {
                 </Form.Item>
 
                 <Form.Item<FieldType>
-                    label="Ngày bắt đầu"
+                    label="Start Date"
                     name="startDate"
-                    rules={[{ required: true, message: "Chọn ngày bắt đầu" }]}
+                    rules={[{ required: true, message: "Select a start date" }]}
                 >
                     <DatePicker
                         style={{ width: "100%" }}
@@ -105,20 +105,20 @@ const CreateHostContract = (props: IProps) => {
                 </Form.Item>
 
                 <Form.Item<FieldType>
-                    label="Ngày kết thúc"
+                    label="End Date"
                     name="endDate"
-                    rules={[{ required: true, message: "Chọn ngày kết thúc" }]}
+                    rules={[{ required: true, message: "Select the end date" }]}
                 >
                     <DatePicker style={{ width: "100%" }} />
                 </Form.Item>
 
                 <Form.Item<FieldType>
-                    label="Property áp dụng"
+                    label="Property applies"
                     name="propertyIds"
                 >
                     <Select
                         mode="multiple"
-                        placeholder="Chọn property"
+                        placeholder="Select property"
                         optionFilterProp="label"
                     >
                         {properties.map(p => (

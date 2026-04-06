@@ -66,15 +66,15 @@ const UpdateRole = (props: IProps) => {
 
             await updateRoleAPI(payload);
 
-            message.success("Cập nhật role thành công");
+            message.success("Role update successful");
             setOpenModalUpdate(false);
             setDataUpdate(null);
             form.resetFields();
             refreshTable();
         } catch (error: any) {
             notification.error({
-                message: "Cập nhật thất bại",
-                description: error?.message || "Lỗi hệ thống",
+                message: "Update failed",
+                description: error?.message || "System error",
             });
         } finally {
             setIsSubmit(false);
@@ -83,7 +83,7 @@ const UpdateRole = (props: IProps) => {
 
     return (
         <Modal
-            title="Cập nhật role"
+            title="Update role"
             open={openModalUpdate}
             onOk={() => form.submit()}
             onCancel={() => {
@@ -91,8 +91,8 @@ const UpdateRole = (props: IProps) => {
                 setDataUpdate(null);
                 form.resetFields();
             }}
-            okText="Cập nhật"
-            cancelText="Hủy"
+            okText="Update"
+            cancelText="Cancel"
             confirmLoading={isSubmit}
         >
             <Divider />
@@ -104,16 +104,16 @@ const UpdateRole = (props: IProps) => {
             >
                 {/* NAME */}
                 <Form.Item<FieldType>
-                    label="Tên role"
+                    label="Role name"
                     name="name"
-                    rules={[{ required: true, message: "Vui lòng nhập tên role" }]}
+                    rules={[{ required: true, message: "Please enter the role name" }]}
                 >
                     <Input />
                 </Form.Item>
 
                 {/* DESCRIPTION */}
                 <Form.Item<FieldType>
-                    label="Mô tả"
+                    label="Description"
                     name="description"
                 >
                     <Input.TextArea rows={3} />
@@ -123,11 +123,11 @@ const UpdateRole = (props: IProps) => {
                 <Form.Item<FieldType>
                     label="Permissions"
                     name="permissionIds"
-                    rules={[{ required: true, message: "Vui lòng chọn permission" }]}
+                    rules={[{ required: true, message: "Please select a permission" }]}
                 >
                     <Select
                         mode="multiple"
-                        placeholder="Chọn permission"
+                        placeholder="Select permission"
                         optionFilterProp="label"
                     >
                         {permissions.map(p => (

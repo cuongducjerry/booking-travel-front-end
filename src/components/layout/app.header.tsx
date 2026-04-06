@@ -42,7 +42,7 @@ const AppHeader = () => {
   if (isUser || isHost || isAdmin) {
     items.push({
       key: "account",
-      label: <Link to={`/profile/${user?.id}`}>Quản lý tài khoản</Link>,
+      label: <Link to={`/profile/${user?.id}`}>Personal information</Link>,
     });
   }
 
@@ -51,11 +51,11 @@ const AppHeader = () => {
     items.push(
       {
         key: "history",
-        label: <Link to="/booking-history">Lịch sử booking</Link>,
+        label: <Link to="/booking-history">Booking history</Link>,
       },
       {
         key: "wishlist",
-        label: <Link to="/my-wishlist">Danh sách yêu thích</Link>,
+        label: <Link to="/my-wishlist">Favorites list</Link>,
       },
     );
   }
@@ -64,7 +64,7 @@ const AppHeader = () => {
   if (isHost) {
     items.push({
       key: "host",
-      label: <Link to="/host">Trang quản trị host</Link>,
+      label: <Link to="/host">Host administration page</Link>,
     });
   }
 
@@ -72,14 +72,14 @@ const AppHeader = () => {
   if (isAdmin) {
     items.push({
       key: "admin",
-      label: <Link to="/admin">Trang quản trị admin</Link>,
+      label: <Link to="/admin">Administration page</Link>,
     });
   }
 
   /* ===== LOGOUT (TẤT CẢ ROLE) ===== */
   items.push({
     key: "logout",
-    label: <span onClick={handleLogout}>Đăng xuất</span>,
+    label: <span onClick={handleLogout}>Logout</span>,
   });
 
   return (
@@ -105,9 +105,9 @@ const AppHeader = () => {
             {!isAuthenticated ? (
               !isAuthPage && (
                 <div className="auth-actions">
-                  <Link to="/login">Đăng nhập</Link>
+                  <Link to="/login">Login</Link>
                   <Link to="/register" className="btn-register">
-                    Đăng ký
+                    Register
                   </Link>
                 </div>
               )
@@ -136,13 +136,13 @@ const AppHeader = () => {
         onClose={() => setOpenDrawer(false)}
         open={openDrawer}
       >
-        <p onClick={() => navigate("/")}>Trang chủ</p>
+        <p onClick={() => navigate("/")}>Home Page</p>
         <Divider />
         {isAuthenticated && (
           <>
-            <p onClick={() => setOpenManageAccount(true)}>Tài khoản</p>
+            <p onClick={() => setOpenManageAccount(true)}>Account</p>
             <Divider />
-            <p onClick={handleLogout}>Đăng xuất</p>
+            <p onClick={handleLogout}>Logout</p>
           </>
         )}
       </Drawer>

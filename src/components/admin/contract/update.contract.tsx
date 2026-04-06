@@ -36,7 +36,7 @@ const UpdateContract = (props: IProps) => {
         if (!dataUpdate) return;
 
         await approveContractAPI(dataUpdate.id);
-        message.success("Duyệt hợp đồng thành công");
+        message.success("Contract approved successfully");
         refreshTable();
         onClose();
     };
@@ -48,7 +48,7 @@ const UpdateContract = (props: IProps) => {
         const { reason } = await form.validateFields();
         await rejectContractAPI(dataUpdate.id, reason);
 
-        message.success("Từ chối hợp đồng thành công");
+        message.success("The contract was successfully rejected");
         refreshTable();
         onClose();
     };
@@ -66,7 +66,7 @@ const UpdateContract = (props: IProps) => {
 
     return (
         <Modal
-            title="Cập nhật trạng thái hợp đồng"
+            title="Update contract status"
             open={openModalUpdate}
             onCancel={onClose}
             footer={null}
@@ -77,7 +77,7 @@ const UpdateContract = (props: IProps) => {
             </p>
 
             <p>
-                Trạng thái hiện tại:{" "}
+                Current status:{" "}
                 <Tag color={statusColorMap[dataUpdate?.status ?? ""]}>
                     {dataUpdate?.status}
                 </Tag>
@@ -87,18 +87,18 @@ const UpdateContract = (props: IProps) => {
             <Form form={form} layout="vertical">
                 {canUpdate && hasPermission("CONTRACT_REJECT") && (
                     <Form.Item
-                        label="Lý do từ chối"
+                        label="Reason for refusal"
                         name="reason"
                         rules={[
                             {
                                 required: true,
-                                message: "Vui lòng nhập lý do từ chối",
+                                message: "Please enter the reason for refusal",
                             },
                         ]}
                     >
                         <Input.TextArea
                             rows={3}
-                            placeholder="Nhập lý do từ chối hợp đồng"
+                            placeholder="Enter the reason for rejecting the contract"
                         />
                     </Form.Item>
                 )}

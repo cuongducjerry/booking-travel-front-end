@@ -136,7 +136,7 @@ const HostPayoutTable = () => {
                             success: true,
                         };
                     } catch {
-                        message.error("Không tải được danh sách payout");
+                        message.error("Unable to load payout list");
                         return { data: [], success: false };
                     }
                 }}

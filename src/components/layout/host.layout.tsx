@@ -101,18 +101,18 @@ const LayoutHost = () => {
 
     const dropdownItems: MenuProps["items"] = [
         {
-            label: <Link to={'/'}>Trang chủ</Link>,
+            label: <Link to={'/'}>Home</Link>,
             key: 'home',
         },
         {
             key: "profile",
-            label: <Link to={`/profile/${user?.id}`}>Quản lý tài khoản</Link>,
+            label: <Link to={`/profile/${user?.id}`}>Personal information</Link>,
         },
         {
             key: "logout",
             label: (
                 <span onClick={handleLogout} style={{ cursor: "pointer" }}>
-                    Đăng xuất
+                    Logout
                 </span>
             ),
         },

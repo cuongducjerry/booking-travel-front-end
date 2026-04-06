@@ -42,7 +42,7 @@ const UpdateUser = (props: IProps) => {
         fetchRoles();
     }, []);
 
-    // set default form value khi mở modal
+
     useEffect(() => {
         if (dataUpdate) {
             form.setFieldsValue({
@@ -64,15 +64,15 @@ const UpdateUser = (props: IProps) => {
             // Update status
             await updateUserStatusAPI(dataUpdate.id, values.status);
 
-            message.success("Cập nhật user thành công");
+            message.success("User update successful");
             setOpenModalUpdate(false);
             setDataUpdate(null);
             form.resetFields();
             refreshTable();
         } catch (error: any) {
             notification.error({
-                message: "Cập nhật thất bại",
-                description: error?.message || "Lỗi hệ thống",
+                message: "Update failed",
+                description: error?.message || "System error",
             });
         } finally {
             setIsSubmit(false);
@@ -81,7 +81,7 @@ const UpdateUser = (props: IProps) => {
 
     return (
         <Modal
-            title="Cập nhật người dùng"
+            title="Update user"
             open={openModalUpdate}
             onOk={() => form.submit()}
             onCancel={() => {
@@ -89,8 +89,8 @@ const UpdateUser = (props: IProps) => {
                 setDataUpdate(null);
                 form.resetFields();
             }}
-            okText="Cập nhật"
-            cancelText="Hủy"
+            okText="Update"
+            cancelText="Cancel"
             confirmLoading={isSubmit}
         >
             <Divider />
@@ -105,9 +105,9 @@ const UpdateUser = (props: IProps) => {
                     <Form.Item<FieldType>
                         label="Role"
                         name="roleId"
-                        rules={[{ required: true, message: "Vui lòng chọn role" }]}
+                        rules={[{ required: true, message: "Please select a role" }]}
                     >
-                        <Select placeholder="Chọn role">
+                        <Select placeholder="Select role">
                             {roles
                                 .filter(r => r.name !== ROLE.SUPER_ADMIN) 
                                 .map(r => (
@@ -123,7 +123,7 @@ const UpdateUser = (props: IProps) => {
                 <Form.Item<FieldType>
                     label="Status"
                     name="status"
-                    rules={[{ required: true, message: "Vui lòng chọn trạng thái" }]}
+                    rules={[{ required: true, message: "Please select a status" }]}
                 >
                     <Select>
                         <Select.Option value="PENDING">Pending</Select.Option>

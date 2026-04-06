@@ -28,13 +28,13 @@ const TableRole = () => {
         setIsDeleteRole(true);
         const res = await deleteRoleAPI(id);
         if (res.statusCode === 200) {
-            message.success('Xóa role thành công');
+            message.success('Route deleted successfully');
             refreshTable();
             return;
         }
         else {
             notification.error({
-                message: 'Đã có lỗi xảy ra',
+                message: 'An error has occurred',
                 description: res.message
             })
         }
@@ -109,8 +109,8 @@ const TableRole = () => {
                         {hasPermission("ROLE_DELETE") && (
                             <Popconfirm
                                 placement="leftTop"
-                                title={"Xác nhận xóa role"}
-                                description={"Bạn có chắc chắn muốn xóa role này ?"}
+                                title={"Confirm role deletion"}
+                                description={"Are you sure you want to delete this role ?"}
                                 onConfirm={() => handleDeleteRole(entity.id)}
                                 okText="Xác nhận"
                                 cancelText="Hủy"
@@ -145,7 +145,7 @@ const TableRole = () => {
                 pagination={{ showSizeChanger: true }}
                 request={async (params, sort) => {
                     if (!hasPermission('ROLE_LIST_ALL')) {
-                        message.error('Bạn không có quyền xem role');
+                        message.error('You do not have permission to view the role');
                         return {
                             data: [],
                             success: false,

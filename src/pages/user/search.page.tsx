@@ -16,18 +16,19 @@ const SearchPage = () => {
     pageSize: 8,
   });
 
+  const type = params.get("type") || undefined;
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
 
       const res = await fetchHomeProperties({
         address: params.get("address") || undefined,
-        guests: params.get("guests")
-          ? Number(params.get("guests"))
-          : undefined,
+        guests: params.get("guests") ? Number(params.get("guests")) : undefined,
         checkIn: params.get("checkIn") || undefined,
         checkOut: params.get("checkOut") || undefined,
-        page: meta.current - 1, 
+        propertyType: type, 
+        page: meta.current - 1,
         size: meta.pageSize,
       });
 

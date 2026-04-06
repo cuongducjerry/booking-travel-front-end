@@ -15,11 +15,11 @@ const ForgotPasswordPage = () => {
         const res = await forgotPasswordAPI(values.email);
 
         if (res?.data) {
-            message.success("Mật khẩu mới đã được gửi về email 📩");
+            message.success("The new password has been sent to your email 📩");
             navigate("/login");
         } else {
             notification.error({
-                message: "Có lỗi xảy ra",
+                message: "An error occurred",
                 description: res.message
             });
         }
@@ -31,12 +31,12 @@ const ForgotPasswordPage = () => {
 
             <div className="login-card">
                 <div className="back-home">
-                    <Link to="/login">← Quay lại đăng nhập</Link>
+                    <Link to="/login">← Go back to login</Link>
                 </div>
 
                 <div className="heading">
-                    <h2>Quên mật khẩu</h2>
-                    <p>Nhập email để nhận mật khẩu mới 📧</p>
+                    <h2>Forgot password</h2>
+                    <p>Enter your email to receive a new password 📧</p>
                 </div>
 
                 <Form
@@ -48,8 +48,8 @@ const ForgotPasswordPage = () => {
                         label="Email"
                         name="email"
                         rules={[
-                            { required: true, message: "Email không được để trống" },
-                            { type: "email", message: "Email không hợp lệ" }
+                            { required: true, message: "Email address cannot be left blank" },
+                            { type: "email", message: "Invalid email" }
                         ]}
                     >
                         <Input placeholder="email@example.com" />
@@ -60,7 +60,7 @@ const ForgotPasswordPage = () => {
                         htmlType="submit"
                         block
                     >
-                        Gửi mật khẩu mới
+                        Send new password
                     </Button>
                 </Form>
             </div>

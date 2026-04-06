@@ -48,7 +48,7 @@ const RegisterPage = () => {
     const res = await registerAPI(payload);
 
     if (res.statusCode === 201 && res.data) {
-      message.success("Đăng ký thành công.");
+      message.success("Registration successful.");
       navigate("/login");
     } else {
       message.error(res.message);
@@ -65,11 +65,11 @@ const RegisterPage = () => {
 
       <div className="register-card">
         <div className="back-home">
-          <Link to="/">← Về trang chủ</Link>
+          <Link to="/">← Back to homepage</Link>
         </div>
         <div className="heading">
-          <h2>Đăng ký tài khoản</h2>
-          <p>Bắt đầu hành trình đặt chỗ của bạn ✨</p>
+          <h2>Register an account</h2>
+          <p>Start your booking journey ✨</p>
         </div>
 
         <Form
@@ -79,9 +79,9 @@ const RegisterPage = () => {
           autoComplete="off"
         >
           <Form.Item<FieldType>
-            label="Họ tên"
+            label="Full Name"
             name="fullName"
-            rules={[{ required: true, message: "Họ tên không được để trống!" }]}
+            rules={[{ required: true, message: "The full name cannot be left blank!" }]}
           >
             <Input />
           </Form.Item>
@@ -90,18 +90,18 @@ const RegisterPage = () => {
             label="Email"
             name="email"
             rules={[
-              { required: true, message: "Email không được để trống!" },
-              { type: "email", message: "Email không đúng định dạng!" },
+              { required: true, message: "Email address cannot be left blank!" },
+              { type: "email", message: "Email is not in the correct format!" },
             ]}
           >
             <Input />
           </Form.Item>
 
           <Form.Item<FieldType>
-            label="Mật khẩu"
+            label="Password"
             name="password"
             rules={[
-              { required: true, message: "Mật khẩu không được để trống!" },
+              { required: true, message: "The password cannot be left blank!" },
             ]}
           >
             <Input.Password />
@@ -109,12 +109,12 @@ const RegisterPage = () => {
 
           <div className="grid">
             <Form.Item<FieldType>
-              label="Số điện thoại"
+              label="Phone"
               name="phone"
               rules={[
                 {
                   required: true,
-                  message: "Số điện thoại không được để trống!",
+                  message: "The phone number must not be left blank!",
                 },
               ]}
             >
@@ -122,10 +122,10 @@ const RegisterPage = () => {
             </Form.Item>
 
             <Form.Item<FieldType>
-              label="Ngày sinh"
+              label="Birth of Date"
               name="dateOfBirth"
               rules={[
-                { required: true, message: "Ngày sinh không được để trống!" },
+                { required: true, message: "Date of birth cannot be left blank!" },
               ]}
             >
               <DatePicker format="DD/MM/YYYY" style={{ width: "100%", height: 43 }} />
@@ -133,35 +133,35 @@ const RegisterPage = () => {
           </div>
 
           <Form.Item<FieldType>
-            label="Địa chỉ"
+            label="Address"
             name="address"
             rules={[
-              { required: true, message: "Địa chỉ không được để trống!" },
+              { required: true, message: "The address must not be left blank!" },
             ]}
           >
             <Input />
           </Form.Item>
 
           <Form.Item
-            label="Vai trò"
+            label="Role"
             name="roleId"
-            rules={[{ required: true, message: "Vui lòng chọn vai trò!" }]}
+            rules={[{ required: true, message: "Please select a role!" }]}
           >
             <select className="role-select">
-              <option value="">-- Chọn vai trò --</option>
-              <option value={4}>USER (Đặt chỗ)</option>
-              <option value={3}>HOST (Cho thuê)</option>
+              <option value="">-- Choose a role --</option>
+              <option value={4}>USER (Make a reservation)</option>
+              <option value={3}>HOST (Lease)</option>
             </select>
           </Form.Item>
 
           <Button type="primary" htmlType="submit" loading={isSubmit} block>
-            Đăng ký
+            Register
           </Button>
           <Divider />
 
           <p className="switch-auth">
-            Đã có tài khoản?
-            <Link to="/login"> Đăng nhập</Link>
+            Do you already have an account?
+            <Link to="/login"> Login</Link>
           </p>
         </Form>
       </div>

@@ -58,14 +58,14 @@ const CreateUser = (props: IProps) => {
     const res = await createUserAPI(payload);
 
     if (res.data && res.statusCode === 201) {
-      message.success("Tạo mới user thành công");
+      message.success("New user created successfully");
       form.resetFields();
       setOpenModalCreate(false);
       refreshTable();
     } else {
       notification.error({
-        message: "Đã có lỗi xảy ra",
-        description: res.message || "Lỗi hệ thống",
+        message: "An error has occurred",
+        description: res.message || "System error",
       });
     }
 
@@ -74,15 +74,15 @@ const CreateUser = (props: IProps) => {
 
   return (
     <Modal
-      title="Thêm mới người dùng"
+      title="Add a new user"
       open={openModalCreate}
       onOk={() => form.submit()}
       onCancel={() => {
         setOpenModalCreate(false);
         form.resetFields();
       }}
-      okText={"Tạo mới"}
-      cancelText={"Hủy"}
+      okText={"Add new"}
+      cancelText={"Cancel"}
       confirmLoading={isSubmit}
     >
       <Divider />
@@ -94,9 +94,9 @@ const CreateUser = (props: IProps) => {
         autoComplete="off"
       >
         <Form.Item
-          label="Tên hiển thị"
+          label="Full Name"
           name="fullName"
-          rules={[{ required: true, message: "Vui lòng nhập tên hiển thị" }]}
+          rules={[{ required: true, message: "Please enter the display name" }]}
         >
           <Input />
         </Form.Item>
@@ -105,41 +105,41 @@ const CreateUser = (props: IProps) => {
           label="Email"
           name="email"
           rules={[
-            { required: true, message: "Vui lòng nhập email" },
-            { type: "email", message: "Email không hợp lệ" },
+            { required: true, message: "Please enter your email address" },
+            { type: "email", message: "Invalid email" },
           ]}
         >
           <Input />
         </Form.Item>
 
         <Form.Item
-          label="Mật khẩu"
+          label="Password"
           name="password"
-          rules={[{ required: true, message: "Vui lòng nhập mật khẩu" }]}
+          rules={[{ required: true, message: "Please enter the password" }]}
         >
           <Input.Password />
         </Form.Item>
 
         <Form.Item
-          label="Số điện thoại"
+          label="Phone"
           name="phone"
-          rules={[{ required: true, message: "Vui lòng nhập số điện thoại" }]}
+          rules={[{ required: true, message: "Please enter the phone number" }]}
         >
           <Input />
         </Form.Item>
 
         <Form.Item
-          label="Địa chỉ"
+          label="Address"
           name="address"
-          rules={[{ required: true, message: "Vui lòng nhập địa chỉ" }]}
+          rules={[{ required: true, message: "Please enter the address" }]}
         >
           <Input />
         </Form.Item>
 
         <Form.Item
-          label="Ngày sinh"
+          label="Birth of Date"
           name="dateOfBirth"
-          rules={[{ required: true, message: "Vui lòng chọn ngày sinh" }]}
+          rules={[{ required: true, message: "Please select your date of birth" }]}
         >
           <DatePicker style={{ width: "100%" }} format="DD/MM/YYYY" />
         </Form.Item>
@@ -147,9 +147,9 @@ const CreateUser = (props: IProps) => {
         <Form.Item
           label="Role"
           name="roleId"
-          rules={[{ required: true, message: "Vui lòng chọn role" }]}
+          rules={[{ required: true, message: "Please select a role" }]}
         >
-          <Select placeholder="Chọn role">
+          <Select placeholder="Select role">
             {roles
               .filter((role) => role.name !== ROLE.SUPER_ADMIN)
               .map((role) => (

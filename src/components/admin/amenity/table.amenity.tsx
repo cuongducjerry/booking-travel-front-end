@@ -32,11 +32,11 @@ const TableAmenity = () => {
             const res = await deleteAmenityAPI(id);
 
             if (res.statusCode === 200) {
-                message.success('Xóa amenity thành công');
+                message.success('Amenity removal successful');
                 refreshTable();
             } else {
                 notification.error({
-                    message: 'Có lỗi xảy ra',
+                    message: 'An error occurred',
                     description: res.message,
                 });
             }
@@ -118,7 +118,7 @@ const TableAmenity = () => {
                     {hasPermission('AMENITY_DELETE') && (
                         <Popconfirm
                             placement="leftTop"
-                            title="Xác nhận xóa amenity"
+                            title="Confirm removal of amenity"
                             onConfirm={() => handleDelete(entity.id)}
                             okButtonProps={{ loading: isDelete }}
                         >

@@ -31,15 +31,15 @@ const DetailUser = (props: IProps) => {
 
   return (
     <Drawer
-      title="Chức năng xem chi tiết"
+      title="Details viewing function"
       width={"50vw"}
       onClose={onClose}
       open={openViewDetail}
     >
-      <Descriptions title="Thông tin user" bordered column={2}>
+      <Descriptions title="User information" bordered column={2}>
         <Descriptions.Item label="Id">{dataViewDetail.id}</Descriptions.Item>
 
-        <Descriptions.Item label="Tên hiển thị">
+        <Descriptions.Item label="Full Name">
           {dataViewDetail.fullName}
         </Descriptions.Item>
 
@@ -47,11 +47,11 @@ const DetailUser = (props: IProps) => {
           {dataViewDetail.email}
         </Descriptions.Item>
 
-        <Descriptions.Item label="Số điện thoại">
+        <Descriptions.Item label="Phone">
           {dataViewDetail.phone || "--"}
         </Descriptions.Item>
 
-        <Descriptions.Item label="Địa chỉ">
+        <Descriptions.Item label="Address">
           {dataViewDetail.address || "--"}
         </Descriptions.Item>
 
@@ -59,17 +59,17 @@ const DetailUser = (props: IProps) => {
           {dataViewDetail.bio || "--"}
         </Descriptions.Item>
 
-        <Descriptions.Item label="Ngày sinh">
+        <Descriptions.Item label="Birth of Date">
           {dataViewDetail.dateOfBirth
             ? dayjs(dataViewDetail.dateOfBirth).format("DD/MM/YYYY")
             : "--"}
         </Descriptions.Item>
 
-        <Descriptions.Item label="Tuổi">
+        <Descriptions.Item label="Age">
           {getAge(dataViewDetail.dateOfBirth)}
         </Descriptions.Item>
 
-        <Descriptions.Item label="Trạng thái">
+        <Descriptions.Item label="Status">
           <Badge
             status={
               dataViewDetail.status === "ACTIVE"

@@ -28,12 +28,12 @@ const TablePropertyType = () => {
         setIsDeleting(true);
         const res = await deletePropertyTypeAPI(id);
         if (res.statusCode === 200) {
-            message.success('Xóa Property Type thành công');
+            message.success('Property Type deletion successful');
             refreshTable();
             return;
         } else {
             notification.error({
-                message: 'Có lỗi xảy ra',
+                message: 'An error occurred',
                 description: res.message,
             });
         }
@@ -113,8 +113,8 @@ const TablePropertyType = () => {
 
                     {hasPermission('PROPERTY_TYPE_DELETE') && (
                         <Popconfirm
-                            title="Xác nhận xóa"
-                            description="Bạn có chắc muốn xóa Property Type này?"
+                            title="Confirm deletion"
+                            description="Are you sure you want to delete this Property Type?"
                             onConfirm={() => handleDelete(entity.id)}
                             okButtonProps={{ loading: isDeleting }}
                         >

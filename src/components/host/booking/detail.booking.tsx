@@ -32,18 +32,18 @@ const DetailBooking = (props: IProps) => {
 
     return (
         <Drawer
-            title="Chi tiết booking"
+            title="Booking details"
             width="55vw"
             onClose={onClose}
             open={openViewDetail}
         >
             {/* ================= BOOKING INFO ================= */}
-            <Descriptions title="Thông tin booking" bordered column={2}>
+            <Descriptions title="Booking information" bordered column={2}>
                 <Descriptions.Item label="Booking ID">
                     {dataViewDetail?.id}
                 </Descriptions.Item>
 
-                <Descriptions.Item label="Trạng thái">
+                <Descriptions.Item label="Status">
                     <Tag color={statusColorMap[dataViewDetail?.status ?? ""]}>
                         {dataViewDetail?.status}
                     </Tag>
@@ -73,35 +73,35 @@ const DetailBooking = (props: IProps) => {
                         : "--"}
                 </Descriptions.Item>
 
-                <Descriptions.Item label="Số đêm">
+                <Descriptions.Item label="Number of nights">
                     {dataViewDetail?.nights ?? "--"}
                 </Descriptions.Item>
 
-                <Descriptions.Item label="Giá / đêm">
+                <Descriptions.Item label="Price per night">
                     {dataViewDetail?.pricePerNightSnapshot
                         ? formatVND(dataViewDetail.pricePerNightSnapshot)
                         : "--"}
                 </Descriptions.Item>
 
-                <Descriptions.Item label="Tổng tiền">
+                <Descriptions.Item label="Total amount">
                     {dataViewDetail?.grossAmount
                         ? formatVND(dataViewDetail.grossAmount)
                         : "--"}
                 </Descriptions.Item>
 
-                <Descriptions.Item label="Phí hoa hồng">
+                <Descriptions.Item label="Commission fee">
                     {dataViewDetail?.commissionFee
                         ? formatVND(dataViewDetail.commissionFee)
                         : "--"}
                 </Descriptions.Item>
 
-                <Descriptions.Item label="Tỷ lệ hoa hồng">
+                <Descriptions.Item label="Commission rate">
                     {dataViewDetail?.commissionRate
                         ? `${dataViewDetail.commissionRate}%`
                         : "--"}
                 </Descriptions.Item>
 
-                <Descriptions.Item label="Thu nhập host">
+                <Descriptions.Item label="Host income">
                     {dataViewDetail?.hostEarning
                         ? formatVND(dataViewDetail.hostEarning)
                         : "--"}
@@ -110,28 +110,28 @@ const DetailBooking = (props: IProps) => {
 
             {/* ================= USER INFO ================= */}
             <Descriptions
-                title="Thông tin khách"
+                title="Customer information"
                 bordered
                 column={2}
                 style={{ marginTop: 24 }}
             >
-                <Descriptions.Item label="Tên khách">
+                <Descriptions.Item label="Guest's name">
                     {dataViewDetail?.userName}
                 </Descriptions.Item>
 
-                <Descriptions.Item label="Email khách">
+                <Descriptions.Item label="Customer Email">
                     {dataViewDetail?.userEmail}
                 </Descriptions.Item>
             </Descriptions>
 
             {/* ================= PROPERTY INFO ================= */}
             <Descriptions
-                title="Thông tin chỗ ở"
+                title="Accommodation information"
                 bordered
                 column={2}
                 style={{ marginTop: 24 }}
             >
-                <Descriptions.Item label="Tên property">
+                <Descriptions.Item label="Property Name">
                     {dataViewDetail?.propertyName}
                 </Descriptions.Item>
             </Descriptions>

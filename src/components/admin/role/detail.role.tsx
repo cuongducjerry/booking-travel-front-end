@@ -33,21 +33,21 @@ const DetailRole = (props: IProps) => {
 
     return (
         <Drawer
-            title="Chức năng xem chi tiết Role"
+            title="Function to view Role details"
             width="50vw"
             onClose={onClose}
             open={openViewDetail}
         >
-            <Descriptions title="Thông tin Role" bordered column={2}>
+            <Descriptions title="Role Information" bordered column={2}>
                 <Descriptions.Item label="Id">
                     {dataViewDetail?.id}
                 </Descriptions.Item>
 
-                <Descriptions.Item label="Tên Role">
+                <Descriptions.Item label="Role Name">
                     <Badge status="processing" text={dataViewDetail?.name} />
                 </Descriptions.Item>
 
-                <Descriptions.Item label="Mô tả" span={2}>
+                <Descriptions.Item label="Description" span={2}>
                     {dataViewDetail?.description || "--"}
                 </Descriptions.Item>
 

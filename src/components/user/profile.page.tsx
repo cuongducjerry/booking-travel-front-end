@@ -66,7 +66,7 @@ const ProfileDetail = ({ user }: Props) => {
           : undefined,
       });
 
-      message.success("Cập nhật thông tin thành công");
+      message.success("Information updated successfully");
     } finally {
       setLoading(false);
     }
@@ -75,7 +75,7 @@ const ProfileDetail = ({ user }: Props) => {
   /* ===== CHANGE PASSWORD ===== */
   const onChangePassword = async (values: any) => {
     if (values.newPassword !== values.confirmPassword) {
-      return message.error("Mật khẩu xác nhận không khớp");
+      return message.error("The verification password does not match");
     }
 
     const res = await updateUserPasswordAPI({
@@ -84,9 +84,9 @@ const ProfileDetail = ({ user }: Props) => {
     });
 
     if (res.data) {
-      message.success("Đổi mật khẩu thành công");
+      message.success("Password changed successfully");
     } else {
-      message.error("Mật khẩu cũ không khớp!");
+      message.error("The old password doesn't match!");
     }
   };
 
@@ -94,7 +94,7 @@ const ProfileDetail = ({ user }: Props) => {
   const onUploadAvatar = async (file: File) => {
     await updateUserAvatarAPI(file);
     setAvatar(URL.createObjectURL(file));
-    message.success("Cập nhật avatar thành công");
+    message.success("Avatar update successful");
     return false;
   };
 
@@ -125,7 +125,7 @@ const ProfileDetail = ({ user }: Props) => {
 
           <Tabs defaultActiveKey="1" type="card" size="large" centered>
             {/* ===== PROFILE ===== */}
-            <Tabs.TabPane tab="Thông tin cá nhân" key="1">
+            <Tabs.TabPane tab="Personal information" key="1">
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <Form
                   form={form}
@@ -137,27 +137,27 @@ const ProfileDetail = ({ user }: Props) => {
                     <Input disabled />
                   </Form.Item>
 
-                  <Form.Item label="Giới thiệu" name="bio">
+                  <Form.Item label="Bio" name="bio">
                     <Input.TextArea rows={3} maxLength={500} />
                   </Form.Item>
 
                   <Form.Item
-                    label="Họ tên"
+                    label="Full Name"
                     name="fullName"
                     rules={[{ required: true }]}
                   >
                     <Input />
                   </Form.Item>
 
-                  <Form.Item label="Số điện thoại" name="phone">
+                  <Form.Item label="Phone" name="phone">
                     <Input />
                   </Form.Item>
 
-                  <Form.Item label="Địa chỉ" name="address">
+                  <Form.Item label="Address" name="address">
                     <Input />
                   </Form.Item>
 
-                  <Form.Item label="Ngày sinh" name="dateOfBirth">
+                  <Form.Item label="Birth of Date" name="dateOfBirth">
                     <DatePicker style={{ width: "100%" }} format="DD/MM/YYYY" />
                   </Form.Item>
 
@@ -168,14 +168,14 @@ const ProfileDetail = ({ user }: Props) => {
                     size="large"
                     loading={loading}
                   >
-                    Lưu thay đổi
+                    Save changes
                   </Button>
                 </Form>
               </div>
             </Tabs.TabPane>
 
             {/* ===== AVATAR ===== */}
-            <Tabs.TabPane tab="Ảnh đại diện" key="2">
+            <Tabs.TabPane tab="Avatar" key="2">
               <Space
                 direction="vertical"
                 align="center"
@@ -189,15 +189,15 @@ const ProfileDetail = ({ user }: Props) => {
                   beforeUpload={onUploadAvatar}
                   accept="image/*"
                 >
-                  <Button icon={<UploadOutlined />}>Upload ảnh mới</Button>
+                  <Button icon={<UploadOutlined />}>Upload new photos</Button>
                 </Upload>
 
-                <Text type="secondary">PNG, JPG – tối đa 2MB</Text>
+                <Text type="secondary">PNG, JPG – maximum 2MB</Text>
               </Space>
             </Tabs.TabPane>
 
             {/* ===== PASSWORD ===== */}
-            <Tabs.TabPane tab="Đổi mật khẩu" key="3">
+            <Tabs.TabPane tab="Change password" key="3">
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <Form
                   layout="vertical"
@@ -205,7 +205,7 @@ const ProfileDetail = ({ user }: Props) => {
                   style={{ width: "100%", maxWidth: 380 }}
                 >
                   <Form.Item
-                    label="Mật khẩu cũ"
+                    label="Old password"
                     name="oldPassword"
                     rules={[{ required: true }]}
                   >
@@ -213,7 +213,7 @@ const ProfileDetail = ({ user }: Props) => {
                   </Form.Item>
 
                   <Form.Item
-                    label="Mật khẩu mới"
+                    label="New password"
                     name="newPassword"
                     rules={[{ required: true, min: 6 }]}
                   >
@@ -221,7 +221,7 @@ const ProfileDetail = ({ user }: Props) => {
                   </Form.Item>
 
                   <Form.Item
-                    label="Xác nhận mật khẩu"
+                    label="Confirm password"
                     name="confirmPassword"
                     rules={[{ required: true }]}
                   >
@@ -229,7 +229,7 @@ const ProfileDetail = ({ user }: Props) => {
                   </Form.Item>
 
                   <Button type="primary" htmlType="submit" block size="large">
-                    Đổi mật khẩu
+                    Save
                   </Button>
                 </Form>
               </div>

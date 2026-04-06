@@ -42,12 +42,12 @@ const UpdatePayout = (props: IProps) => {
 
         if (actionType === "PAID") {
             await markPaidPayoutAPI(dataUpdate.id, values.transactionRef);
-            message.success("Đã mark payout là PAID");
+            message.success("Payout has been marked as PAID");
         }
 
         if (actionType === "REJECT") {
             await markRejectedPayoutAPI(dataUpdate.id, values.reason);
-            message.success("Reject payout thành công");
+            message.success("Reject payout successful");
         }
 
         refreshTable();
@@ -75,7 +75,7 @@ const UpdatePayout = (props: IProps) => {
             </p>
 
             <p>
-                Trạng thái hiện tại:{" "}
+                Current status:{" "}
                 <Tag color={statusColorMap[dataUpdate?.status ?? "PENDING"]}>
                     {dataUpdate?.status}
                 </Tag>
@@ -95,7 +95,7 @@ const UpdatePayout = (props: IProps) => {
                         rules={[
                             {
                                 required: true,
-                                message: "Vui lòng nhập mã giao dịch",
+                                message: "Please enter the transaction code",
                             },
                         ]}
                     >
@@ -111,13 +111,13 @@ const UpdatePayout = (props: IProps) => {
                         rules={[
                             {
                                 required: true,
-                                message: "Vui lòng nhập lý do từ chối payout",
+                                message: "Please enter the reason for rejecting the payout",
                             },
                         ]}
                     >
                         <Input.TextArea
                             rows={3}
-                            placeholder="Nhập lý do từ chối payout"
+                            placeholder="Enter the reason for rejecting the payout"
                         />
                     </Form.Item>
                 )}

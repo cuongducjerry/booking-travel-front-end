@@ -33,7 +33,7 @@ const AdminTableProperty = () => {
                 const res = await getPropertyTypesAPI({ page: 0, size: 1000 });
                 setPropertyTypes(res.data?.result ?? []);
             } catch {
-                message.error("Không tải được danh sách Property Type");
+                message.error("Property Type list failed to load!");
             }
         })();
     }, []);
